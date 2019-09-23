@@ -27,11 +27,8 @@ Requires Virutalbox - If it is already installed then there is no need for a new
           - For MacOS
           curl -Lo minikube https://storage.googleapis.com/minikube/releases/v0.25.0/minikube-darwin-amd64 && chmod +x minikube && sudo mv minikube /usr/local/bin/
           - For Windows
-          download "minikube-windows-amd64" from https://github.com/kubernetes/minikube/releases/tag/v0.25.0
-
-          2. rename the exe to minikube.exe
-
-          3. put the directory where minikube is saved into the path environment variable 
+          Download and install
+          https://github.com/kubernetes/minikube/releases/latest/download/minikube-installer.exe
 
 ------------------------------------------------------------------
 
