@@ -1,0 +1,1466 @@
+$
+$
+$
+$
+$
+$
+$
+$
+$
+$
+$
+$
+$ pwd
+/home/docker
+$
+$
+$ docker container ls | grep -v k8s
+CONTAINER ID        IMAGE                  COMMAND                  CREATED             STATUS              PORTS                  NAMES
+0c449eb76c34        nginx-code             "nginx -g 'daemon of…"   19 hours ago        Up 19 hours         0.0.0.0:9095->80/tcp   infallible_ganguly
+$ docker container ls -a| grep -v k8s
+CONTAINER ID        IMAGE                  COMMAND                  CREATED             STATUS                      PORTS                  NAMES
+0c449eb76c34        nginx-code             "nginx -g 'daemon of…"   19 hours ago        Up 19 hours                 0.0.0.0:9095->80/tcp   infallible_ganguly
+$ docker container rm -f 0c449eb76c34
+0c449eb76c34
+$ docker container ls -a| grep -v k8s
+CONTAINER ID        IMAGE                  COMMAND                  CREATED             STATUS                      PORTS               NAMES
+$ docker image pull nginx:alpine
+alpine: Pulling from library/nginx
+9d48c3bd43c5: Pull complete
+b6dac14ba0a9: Pull complete
+Digest: sha256:99be6ae8d32943b676031b3513782ad55c8540c1d040b1f7b8c335c67a241b06
+Status: Downloaded newer image for nginx:alpine
+$
+$ docker image ls nginx
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+nginx               latest              ab56bba91343        11 days ago         126MB
+nginx               alpine              d87c83ec7a66        3 weeks ago         21.2MB
+$ pwd
+/home/docker
+$ export PS1='\n======$PWD\n> '
+
+======/home/docker
+> cd /c/Users/Aditya/docker-workshop/
+
+======/c/Users/Aditya/docker-workshop
+> mkdir sep23
+
+======/c/Users/Aditya/docker-workshop
+> cd sep2
+-bash: cd: sep2: No such file or directory
+
+======/c/Users/Aditya/docker-workshop
+> cd sep23
+
+======/c/Users/Aditya/docker-workshop/sep23
+>
+
+======/c/Users/Aditya/docker-workshop/sep23
+> mkdir app
+
+======/c/Users/Aditya/docker-workshop/sep23
+> cd app/
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+> ls
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+> ls
+Dockerfile
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+>
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+> cat Dockerfile
+FROM alpine
+RUN apk update
+RUN apk install apache2
+======/c/Users/Aditya/docker-workshop/sep23/app
+> export PS1='\n\n======$PWD\n> '
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+> cat Dockerfile
+FROM alpine
+RUN apk update
+RUN apk install apache2
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+> docker image build -f Dockerfile -t app:latest -t app:1 .
+Sending build context to Docker daemon  2.048kB
+Step 1/3 : FROM alpine
+latest: Pulling from library/alpine
+9d48c3bd43c5: Already exists
+Digest: sha256:72c42ed48c3a2db31b7dafe17d275b634664a708d901ec9fd57b1529280f01fb
+Status: Downloaded newer image for alpine:latest
+ ---> 961769676411
+Step 2/3 : RUN apk update
+ ---> Running in 20623002d599
+fetch http://dl-cdn.alpinelinux.org/alpine/v3.10/main/x86_64/APKINDEX.tar.gz
+fetch http://dl-cdn.alpinelinux.org/alpine/v3.10/community/x86_64/APKINDEX.tar.gz
+v3.10.2-60-g56ceaae5ce [http://dl-cdn.alpinelinux.org/alpine/v3.10/main]
+v3.10.2-42-g95d37f7648 [http://dl-cdn.alpinelinux.org/alpine/v3.10/community]
+OK: 10336 distinct packages available
+Removing intermediate container 20623002d599
+ ---> e47bd72730b1
+Step 3/3 : RUN apk install apache2
+ ---> Running in 45ca65963b8c
+ERROR: 'install' is not an apk command. See 'apk --help'.
+The command '/bin/sh -c apk install apache2' returned a non-zero code: 1
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+> docker image build -f Dockerfile -t app:latest -t app:1 .
+Sending build context to Docker daemon  2.048kB
+Step 1/3 : FROM alpine
+ ---> 961769676411
+Step 2/3 : RUN apk update
+ ---> Using cache
+ ---> e47bd72730b1
+Step 3/3 : RUN apk add apache2
+ ---> Running in 568e65eee3b3
+(1/6) Installing libuuid (2.33.2-r0)
+(2/6) Installing apr (1.6.5-r0)
+(3/6) Installing expat (2.2.8-r0)
+(4/6) Installing apr-util (1.6.1-r6)
+(5/6) Installing pcre (8.43-r0)
+(6/6) Installing apache2 (2.4.41-r0)
+Executing apache2-2.4.41-r0.pre-install
+Executing busybox-1.30.1-r2.trigger
+OK: 9 MiB in 20 packages
+Removing intermediate container 568e65eee3b3
+ ---> 8ddb58977f7c
+Successfully built 8ddb58977f7c
+Successfully tagged app:latest
+Successfully tagged app:1
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+>
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+> docker image ls alpine
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+alpine              latest              961769676411        4 weeks ago         5.58MB
+alpine              3.9                 055936d39205        4 months ago        5.53MB
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+> docker image ls app
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+app                 1                   8ddb58977f7c        7 minutes ago       10.6MB
+app                 latest              8ddb58977f7c        7 minutes ago       10.6MB
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+>
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+> docker image history alpine
+IMAGE               CREATED             CREATED BY                                      SIZE                COMMENT
+961769676411        4 weeks ago         /bin/sh -c #(nop)  CMD ["/bin/sh"]              0B
+<missing>           4 weeks ago         /bin/sh -c #(nop) ADD file:fe64057fbb83dccb9…   5.58MB
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+> docker image history app
+IMAGE               CREATED             CREATED BY                                      SIZE                COMMENT
+8ddb58977f7c        8 minutes ago       /bin/sh -c apk add apache2                      3.6MB
+e47bd72730b1        9 minutes ago       /bin/sh -c apk update                           1.42MB
+961769676411        4 weeks ago         /bin/sh -c #(nop)  CMD ["/bin/sh"]              0B
+<missing>           4 weeks ago         /bin/sh -c #(nop) ADD file:fe64057fbb83dccb9…   5.58MB
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+> docker image ls app
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+app                 1                   8ddb58977f7c        9 minutes ago       10.6MB
+app                 latest              8ddb58977f7c        9 minutes ago       10.6MB
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+> docker image ls | grep e47bd72730b1
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+> docker image ls -a | grep e47bd72730b1
+<none>                                    <none>              e47bd72730b1        10 minutes ago      7MB
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+> docker image rm e47bd72730b1
+Error response from daemon: conflict: unable to delete e47bd72730b1 (cannot be forced) - image has dependent child images
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+> docker image tag e47bd72730b1 app:intermediate
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+> docker image rm app:intermediate
+Error response from daemon: conflict: unable to remove repository reference "app:intermediate" (must force) - container 45ca65963b8c is using its referenced image e47bd72730b1
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+> docker image rm -f app:intermediate
+Untagged: app:intermediate
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+> docker image rm -f app:intermediate
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+> docker image build -f Dockerfile -t app:latest -t app:1 .
+Sending build context to Docker daemon  2.048kB
+Step 1/3 : FROM alpine
+ ---> 961769676411
+Step 2/3 : RUN apk update
+ ---> Using cache
+ ---> e47bd72730b1
+Step 3/3 : RUN apk add apache2
+ ---> Using cache
+ ---> 8ddb58977f7c
+Successfully built 8ddb58977f7c
+Successfully tagged app:latest
+Successfully tagged app:1
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+> docker image build --no-cache -f Dockerfile -t app:latest -t app:1 .
+Sending build context to Docker daemon  2.048kB
+Step 1/3 : FROM alpine
+ ---> 961769676411
+Step 2/3 : RUN apk update
+ ---> Running in ae105d8f9f89
+fetch http://dl-cdn.alpinelinux.org/alpine/v3.10/main/x86_64/APKINDEX.tar.gz
+fetch http://dl-cdn.alpinelinux.org/alpine/v3.10/community/x86_64/APKINDEX.tar.gz
+v3.10.2-60-g56ceaae5ce [http://dl-cdn.alpinelinux.org/alpine/v3.10/main]
+v3.10.2-42-g95d37f7648 [http://dl-cdn.alpinelinux.org/alpine/v3.10/community]
+OK: 10336 distinct packages available
+Removing intermediate container ae105d8f9f89
+ ---> f22020aa5021
+Step 3/3 : RUN apk add apache2
+ ---> Running in 2e0caeeb266f
+(1/6) Installing libuuid (2.33.2-r0)
+(2/6) Installing apr (1.6.5-r0)
+(3/6) Installing expat (2.2.8-r0)
+(4/6) Installing apr-util (1.6.1-r6)
+(5/6) Installing pcre (8.43-r0)
+(6/6) Installing apache2 (2.4.41-r0)
+Executing apache2-2.4.41-r0.pre-install
+Executing busybox-1.30.1-r2.trigger
+OK: 9 MiB in 20 packages
+Removing intermediate container 2e0caeeb266f
+ ---> 9e16e7ac4d82
+Successfully built 9e16e7ac4d82
+Successfully tagged app:latest
+Successfully tagged app:1
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+>
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+> docker image prune
+WARNING! This will remove all dangling images.
+Are you sure you want to continue? [y/N] y
+Deleted Images:
+deleted: sha256:8ddb58977f7c55790267a513e5031e45860a98abde2e68274d54da75612019fe
+deleted: sha256:bf20ad55da966ac0105bb4142a6351c548199e9637fa8d3d2ac32874afec4a4a
+
+Total reclaimed space: 3.603MB
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+> docker image ls -a | grep e47bd72730b1
+<none>                                    <none>              e47bd72730b1        23 minutes ago      7MB
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+> docker image prune
+WARNING! This will remove all dangling images.
+Are you sure you want to continue? [y/N] y
+Total reclaimed space: 0B
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+> docker image rm -f e47bd72730b1
+Deleted: sha256:e47bd72730b1c8c6649b40f5e05efabd782eca732b578e2a6da5492f893bb0e5
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+>
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+> docker image ls app
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+app                 1                   9e16e7ac4d82        4 minutes ago       10.6MB
+app                 latest              9e16e7ac4d82        4 minutes ago       10.6MB
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+> ls
+Dockerfile
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+>
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+> ls
+Dockerfile  mypage.html
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+> cat Dockerfile
+FROM alpine
+RUN apk update
+RUN apk add apache2
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+> cat mypage.html
+<h1> My Product </h1>
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+> docker image build -t app:latest -t app:2 .
+Sending build context to Docker daemon  3.072kB
+Step 1/4 : FROM alpine
+ ---> 961769676411
+Step 2/4 : RUN apk update
+ ---> Using cache
+ ---> f22020aa5021
+Step 3/4 : RUN apk add apache2
+ ---> Using cache
+ ---> 9e16e7ac4d82
+Step 4/4 : COPY mypage.html /var/www/localhost/htdocs
+ ---> 10e8a1c19e22
+Successfully built 10e8a1c19e22
+Successfully tagged app:latest
+Successfully tagged app:2
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+>
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+> docker image history alpine
+IMAGE               CREATED             CREATED BY                                      SIZE                COMMENT
+961769676411        4 weeks ago         /bin/sh -c #(nop)  CMD ["/bin/sh"]              0B
+<missing>           4 weeks ago         /bin/sh -c #(nop) ADD file:fe64057fbb83dccb9…   5.58MB
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+> docker image history app:1
+IMAGE               CREATED             CREATED BY                                      SIZE                COMMENT
+9e16e7ac4d82        12 minutes ago      /bin/sh -c apk add apache2                      3.6MB
+f22020aa5021        12 minutes ago      /bin/sh -c apk update                           1.42MB
+961769676411        4 weeks ago         /bin/sh -c #(nop)  CMD ["/bin/sh"]              0B
+<missing>           4 weeks ago         /bin/sh -c #(nop) ADD file:fe64057fbb83dccb9…   5.58MB
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+> docker image history app:2
+IMAGE               CREATED             CREATED BY                                      SIZE                COMMENT
+10e8a1c19e22        33 seconds ago      /bin/sh -c #(nop) COPY file:8989c3c617bfa7c9…   21B
+9e16e7ac4d82        12 minutes ago      /bin/sh -c apk add apache2                      3.6MB
+f22020aa5021        12 minutes ago      /bin/sh -c apk update                           1.42MB
+961769676411        4 weeks ago         /bin/sh -c #(nop)  CMD ["/bin/sh"]              0B
+<missing>           4 weeks ago         /bin/sh -c #(nop) ADD file:fe64057fbb83dccb9…   5.58MB
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+>
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+> docker image build -t app:latest -t app:2
+"docker image build" requires exactly 1 argument.
+See 'docker image build --help'.
+
+Usage:  docker image build [OPTIONS] PATH | URL | -
+
+Build an image from a Dockerfile
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+> docker image build -t app:latest -t app:2 .
+Sending build context to Docker daemon  3.072kB
+Step 1/4 : FROM alpine
+ ---> 961769676411
+Step 2/4 : RUN apk update
+ ---> Using cache
+ ---> f22020aa5021
+Step 3/4 : RUN apk add apache2
+ ---> Using cache
+ ---> 9e16e7ac4d82
+Step 4/4 : COPY mypage1.html /var/www/localhost/htdocs
+COPY failed: stat /var/lib/docker/tmp/docker-builder894665398/mypage1.html: no such file or directory
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+>
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+> docker image build -t app:latest -t app:2 .
+Sending build context to Docker daemon  3.072kB
+Step 1/4 : FROM alpine
+ ---> 961769676411
+Step 2/4 : RUN apk update
+ ---> Using cache
+ ---> f22020aa5021
+Step 3/4 : RUN apk add apache2
+ ---> Using cache
+ ---> 9e16e7ac4d82
+Step 4/4 : COPY mypage.html /var/www/localhost/htdocs
+ ---> Using cache
+ ---> 10e8a1c19e22
+Successfully built 10e8a1c19e22
+Successfully tagged app:latest
+Successfully tagged app:2
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+> cd ../..
+
+
+======/c/Users/Aditya/docker-workshop
+> ls
+aug20  aug5  nginx-code  nginx-code.tar  proj1  rough-diag.pptx  sep23  sep3  sept16
+
+
+======/c/Users/Aditya/docker-workshop
+>
+
+
+======/c/Users/Aditya/docker-workshop
+> ls
+aug20  aug5  nginx-code  nginx-code.tar  proj1  rough-diag.pptx  sep23  sep3  sept16
+
+
+======/c/Users/Aditya/docker-workshop
+> cd -
+/c/Users/Aditya/docker-workshop/sep23/app
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+>
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+>
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+> docker image ls app
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+app                 2                   10e8a1c19e22        6 minutes ago       10.6MB
+app                 latest              10e8a1c19e22        6 minutes ago       10.6MB
+app                 1                   9e16e7ac4d82        18 minutes ago      10.6MB
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+> docker container ls -a| grep -v k8s
+CONTAINER ID        IMAGE                  COMMAND                  CREATED             STATUS                      PORTS               NAMES
+45ca65963b8c        e47bd72730b1           "/bin/sh -c 'apk ins…"   39 minutes ago      Exited (1) 39 minutes ago                       dazzling_panini
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+> docker container prune
+WARNING! This will remove all stopped containers.
+Are you sure you want to continue? [y/N] y
+Deleted Containers:
+45ca65963b8c3017b790b4feac2a12ea8991991bf5cf465fdbafb712ba139145
+e732ca1311ff13e6598c301de0795fcf9bb30ba790f7332f1099e9e97154eacf
+27d4e9c1e11b98f2dc49bff3e6437acec731d2656e4689d3f59ee1504ae084c5
+43a8918b552fc5cc0471a8e67d1f987daea2b879dd707ce4af0ded1001ea81d6
+abb2d9f362bf846eb69c2f7130bbcee57111518b39d2a96aa4dd3c0dc4cd3523
+e9482b00c81eaac2c8d33b527fe8421cc42a0359ce0792be134deae044d7bb6c
+5f6cc966f7790b19ac9372b69a93f5a6ea3ae1613f8c246a98ed314652769bdb
+a2e44ceca69da2164a50f3052795843919364f1f40bf92f8d8d43850b58d439b
+1f910c10b7a9d03aabb04729697293a142f42293d3e8e80cbc7b0d801a9d1fe4
+0f1b2f082d7d1a502d9c627a46ae782c8bafa3d18c7bdc48662f6ea239774a31
+77905cd82d82fa7af4bc3b60085f7575c5db6df675cd284df6a3016f72da0cc6
+e897ede9b8ade96c0da393b2f23e97adca858a94ca8c9d8d5e13d204c5cc1230
+79d067468c79d894e700f6441d4290b3597a8b1c97e32a76b1a90ef9c26ee9ad
+781b801d6f0e37efb2ae1adb057c66513f3fa90cc2a4cd91559d621106b836e8
+5b77297b8e15609a4c7811167b23af4a0a1181ed8e60e6e85520e9c2c5873d75
+dbe83a2b4bd071ceca0813174ae76df6fb406ca339208aaac926af86ad14863f
+
+Total reclaimed space: 3.377MB
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+>
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+> docker container run -d app
+55e0445c2a9aafe4f9a4fc639fa266fca9309060f181d49ac1ea79b9d0e1f870
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+> docker container ls | grep -v k8s
+CONTAINER ID        IMAGE                  COMMAND                  CREATED             STATUS              PORTS               NAMES
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+> docker container ls -a| grep -v k8s
+CONTAINER ID        IMAGE                  COMMAND                  CREATED             STATUS                      PORTS               NAMES
+55e0445c2a9a        app                    "/bin/sh"                18 seconds ago      Exited (0) 17 seconds ago                       jolly_ptolemy
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+> docker container run -d nginx
+9cef611e758fc2459490d9c0fb705c4f9c1203996d690593c2e7699e9b36e61e
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+> docker container ls -a| grep -v k8s
+CONTAINER ID        IMAGE                  COMMAND                  CREATED              STATUS                          PORTS               NAMES
+9cef611e758f        nginx                  "nginx -g 'daemon of…"   6 seconds ago        Up 5 seconds                    80/tcp              sleepy_ardinghelli
+55e0445c2a9a        app                    "/bin/sh"                About a minute ago   Exited (0) About a minute ago                       jolly_ptolemy
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+>
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+> docker container run -d app ping google.com
+0a7059b384777711bdc44d42e1e381aeddd4b2368a5f22a45e8f0a5023edc13a
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+> docker container ls -a| grep -v k8s
+CONTAINER ID        IMAGE                  COMMAND                  CREATED             STATUS                     PORTS               NAMES
+0a7059b38477        app                    "ping google.com"        3 seconds ago       Up 2 seconds                                   priceless_jennings
+9cef611e758f        nginx                  "nginx -g 'daemon of…"   3 minutes ago       Up 3 minutes               80/tcp              sleepy_ardinghelli
+55e0445c2a9a        app                    "/bin/sh"                5 minutes ago       Exited (0) 5 minutes ago                       jolly_ptolemy
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+> docker container run -d app ping -c20 google.com
+01fae0ba02d6a58c98a226df4bfc117ae056c84fbf7e301a39c32d8aa2c49ec8
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+> docker container ls -a| grep -v k8s
+CONTAINER ID        IMAGE                  COMMAND                  CREATED              STATUS                     PORTS               NAMES
+01fae0ba02d6        app                    "ping -c20 google.com"   4 seconds ago        Up 3 seconds                                   eager_stonebraker
+0a7059b38477        app                    "ping google.com"        About a minute ago   Up About a minute                              priceless_jennings
+9cef611e758f        nginx                  "nginx -g 'daemon of…"   5 minutes ago        Up 5 minutes               80/tcp              sleepy_ardinghelli
+55e0445c2a9a        app                    "/bin/sh"                6 minutes ago        Exited (0) 6 minutes ago                       jolly_ptolemy
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+> docker container ls -a| grep -v k8s
+CONTAINER ID        IMAGE                  COMMAND                  CREATED              STATUS                     PORTS               NAMES
+01fae0ba02d6        app                    "ping -c20 google.com"   18 seconds ago       Up 17 seconds                                  eager_stonebraker
+0a7059b38477        app                    "ping google.com"        About a minute ago   Up About a minute                              priceless_jennings
+9cef611e758f        nginx                  "nginx -g 'daemon of…"   5 minutes ago        Up 5 minutes               80/tcp              sleepy_ardinghelli
+55e0445c2a9a        app                    "/bin/sh"                6 minutes ago        Exited (0) 6 minutes ago                       jolly_ptolemy
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+> docker container ls -a| grep -v k8s
+CONTAINER ID        IMAGE                  COMMAND                  CREATED              STATUS                     PORTS               NAMES
+01fae0ba02d6        app                    "ping -c20 google.com"   26 seconds ago       Exited (0) 6 seconds ago                       eager_stonebraker
+0a7059b38477        app                    "ping google.com"        About a minute ago   Up About a minute                              priceless_jennings
+9cef611e758f        nginx                  "nginx -g 'daemon of…"   5 minutes ago        Up 5 minutes               80/tcp              sleepy_ardinghelli
+55e0445c2a9a        app                    "/bin/sh"                7 minutes ago        Exited (0) 7 minutes ago                       jolly_ptolemy
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+>
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+> docker container run app ping -c2 google.com
+PING google.com (216.58.200.142): 56 data bytes
+64 bytes from 216.58.200.142: seq=0 ttl=52 time=49.435 ms
+
+--- google.com ping statistics ---
+2 packets transmitted, 1 packets received, 50% packet loss
+round-trip min/avg/max = 49.435/49.435/49.435 ms
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+> docker container ls -a| grep -v k8s
+CONTAINER ID        IMAGE                  COMMAND                  CREATED              STATUS                          PORTS               NAMES
+b281495a984c        app                    "ping -c2 google.com"    About a minute ago   Exited (0) About a minute ago                       youthful_kirch
+01fae0ba02d6        app                    "ping -c20 google.com"   4 minutes ago        Exited (0) 3 minutes ago                            eager_stonebraker
+0a7059b38477        app                    "ping google.com"        5 minutes ago        Up 5 minutes                                        priceless_jennings
+9cef611e758f        nginx                  "nginx -g 'daemon of…"   9 minutes ago        Up 9 minutes                    80/tcp              sleepy_ardinghelli
+55e0445c2a9a        app                    "/bin/sh"                10 minutes ago       Exited (0) 10 minutes ago                           jolly_ptolemy
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+> docker container logs 01fae0ba02d6
+PING google.com (216.58.200.142): 56 data bytes
+64 bytes from 216.58.200.142: seq=0 ttl=52 time=35.643 ms
+64 bytes from 216.58.200.142: seq=1 ttl=52 time=21.913 ms
+64 bytes from 216.58.200.142: seq=2 ttl=52 time=39.998 ms
+64 bytes from 216.58.200.142: seq=3 ttl=52 time=40.107 ms
+64 bytes from 216.58.200.142: seq=4 ttl=52 time=84.114 ms
+64 bytes from 216.58.200.142: seq=5 ttl=52 time=1903.180 ms
+64 bytes from 216.58.200.142: seq=6 ttl=52 time=1022.113 ms
+64 bytes from 216.58.200.142: seq=7 ttl=52 time=97.409 ms
+64 bytes from 216.58.200.142: seq=8 ttl=52 time=63.724 ms
+64 bytes from 216.58.200.142: seq=9 ttl=52 time=30.803 ms
+64 bytes from 216.58.200.142: seq=10 ttl=52 time=97.051 ms
+64 bytes from 216.58.200.142: seq=11 ttl=52 time=31.730 ms
+64 bytes from 216.58.200.142: seq=12 ttl=52 time=43.597 ms
+64 bytes from 216.58.200.142: seq=13 ttl=52 time=53.799 ms
+64 bytes from 216.58.200.142: seq=14 ttl=52 time=24.176 ms
+64 bytes from 216.58.200.142: seq=15 ttl=52 time=51.158 ms
+64 bytes from 216.58.200.142: seq=16 ttl=52 time=1956.307 ms
+64 bytes from 216.58.200.142: seq=17 ttl=52 time=1059.474 ms
+64 bytes from 216.58.200.142: seq=18 ttl=52 time=97.687 ms
+64 bytes from 216.58.200.142: seq=19 ttl=52 time=29.036 ms
+
+--- google.com ping statistics ---
+20 packets transmitted, 20 packets received, 0% packet loss
+round-trip min/avg/max = 21.913/339.150/1956.307 ms
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+> docker container ls -a| grep -v k8s
+CONTAINER ID        IMAGE                  COMMAND                  CREATED             STATUS                      PORTS               NAMES
+b281495a984c        app                    "ping -c2 google.com"    3 minutes ago       Exited (0) 3 minutes ago                        youthful_kirch
+01fae0ba02d6        app                    "ping -c20 google.com"   5 minutes ago       Exited (0) 5 minutes ago                        eager_stonebraker
+0a7059b38477        app                    "ping google.com"        7 minutes ago       Up 7 minutes                                    priceless_jennings
+9cef611e758f        nginx                  "nginx -g 'daemon of…"   11 minutes ago      Up 11 minutes               80/tcp              sleepy_ardinghelli
+55e0445c2a9a        app                    "/bin/sh"                12 minutes ago      Exited (0) 12 minutes ago                       jolly_ptolemy
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+> docker image history nginx
+IMAGE               CREATED             CREATED BY                                      SIZE                COMMENT
+ab56bba91343        11 days ago         /bin/sh -c #(nop)  CMD ["nginx" "-g" "daemon…   0B
+<missing>           11 days ago         /bin/sh -c #(nop)  STOPSIGNAL SIGTERM           0B
+<missing>           11 days ago         /bin/sh -c #(nop)  EXPOSE 80                    0B
+<missing>           11 days ago         /bin/sh -c ln -sf /dev/stdout /var/log/nginx…   22B
+<missing>           11 days ago         /bin/sh -c set -x     && addgroup --system -…   56.8MB
+<missing>           11 days ago         /bin/sh -c #(nop)  ENV PKG_RELEASE=1~buster     0B
+<missing>           11 days ago         /bin/sh -c #(nop)  ENV NJS_VERSION=0.3.5        0B
+<missing>           11 days ago         /bin/sh -c #(nop)  ENV NGINX_VERSION=1.17.3     0B
+<missing>           11 days ago         /bin/sh -c #(nop)  LABEL maintainer=NGINX Do…   0B
+<missing>           12 days ago         /bin/sh -c #(nop)  CMD ["bash"]                 0B
+<missing>           12 days ago         /bin/sh -c #(nop) ADD file:1901172d265456090…   69.2MB
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+>
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+> docker container ls -a| grep -v k8s
+CONTAINER ID        IMAGE                  COMMAND                  CREATED             STATUS                      PORTS               NAMES
+b281495a984c        app                    "ping -c2 google.com"    7 minutes ago       Exited (0) 7 minutes ago                        youthful_kirch
+01fae0ba02d6        app                    "ping -c20 google.com"   10 minutes ago      Exited (0) 10 minutes ago                       eager_stonebraker
+0a7059b38477        app                    "ping google.com"        11 minutes ago      Up 11 minutes                                   priceless_jennings
+9cef611e758f        nginx                  "nginx -g 'daemon of…"   15 minutes ago      Up 15 minutes               80/tcp              sleepy_ardinghelli
+55e0445c2a9a        app                    "/bin/sh"                16 minutes ago      Exited (0) 16 minutes ago                       jolly_ptolemy
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+> docker container exec -it 0a7059b38477 sh
+/ # ps
+PID   USER     TIME  COMMAND
+    1 root      0:00 ping google.com
+    7 root      0:00 sh
+   13 root      0:00 ps
+/ #
+/ # ps
+PID   USER     TIME  COMMAND
+    1 root      0:00 ping google.com
+    7 root      0:00 sh
+   14 root      0:00 ps
+/ # httpd
+AH00558: httpd: Could not reliably determine the server's fully qualified domain name, using 172.17.0.5. Set the 'ServerName' directive globally to suppress this message
+/ # ps
+PID   USER     TIME  COMMAND
+    1 root      0:00 ping google.com
+    7 root      0:00 sh
+   16 root      0:00 httpd
+   17 apache    0:00 httpd
+   18 apache    0:00 httpd
+   19 apache    0:00 httpd
+   20 apache    0:00 httpd
+   21 apache    0:00 httpd
+   22 root      0:00 ps
+/ # exit
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+> ls
+Dockerfile  mypage.html
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+>
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+> docker image build -t app:latest -t app:3 .
+Sending build context to Docker daemon  3.072kB
+Step 1/5 : FROM alpine
+ ---> 961769676411
+Step 2/5 : RUN apk update
+ ---> Using cache
+ ---> f22020aa5021
+Step 3/5 : RUN apk add apache2
+ ---> Using cache
+ ---> 9e16e7ac4d82
+Step 4/5 : COPY mypage.html /var/www/localhost/htdocs
+ ---> Using cache
+ ---> 10e8a1c19e22
+Step 5/5 : CMD ["httpd", "-D", "FOREGROUND"]
+ ---> Running in 3f569af68d5f
+Removing intermediate container 3f569af68d5f
+ ---> d9c583d5cfac
+Successfully built d9c583d5cfac
+Successfully tagged app:latest
+Successfully tagged app:3
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+>
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+> docker container ls -a| grep -v k8s
+CONTAINER ID        IMAGE                  COMMAND                  CREATED             STATUS                         PORTS               NAMES
+b281495a984c        10e8a1c19e22           "ping -c2 google.com"    About an hour ago   Exited (0) About an hour ago                       youthful_kirch
+01fae0ba02d6        10e8a1c19e22           "ping -c20 google.com"   About an hour ago   Exited (0) About an hour ago                       eager_stonebraker
+0a7059b38477        10e8a1c19e22           "ping google.com"        About an hour ago   Up About an hour                                   priceless_jennings
+9cef611e758f        nginx                  "nginx -g 'daemon of…"   About an hour ago   Up About an hour               80/tcp              sleepy_ardinghelli
+55e0445c2a9a        10e8a1c19e22           "/bin/sh"                About an hour ago   Exited (0) About an hour ago                       jolly_ptolemy
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+> docker container ls -a| grep -v k8s | cut -f 1 -d " "
+CONTAINER
+b281495a984c
+01fae0ba02d6
+0a7059b38477
+9cef611e758f
+55e0445c2a9a
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+> docker container rm -f `docker container ls -a| grep -v k8s | cut -f 1 -d " "`
+b281495a984c
+01fae0ba02d6
+0a7059b38477
+9cef611e758f
+55e0445c2a9a
+Error: No such container: CONTAINER
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+>
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+> docker image history app
+IMAGE               CREATED             CREATED BY                                      SIZE                COMMENT
+d9c583d5cfac        3 minutes ago       /bin/sh -c #(nop)  CMD ["httpd" "-D" "FOREGR…   0B
+10e8a1c19e22        About an hour ago   /bin/sh -c #(nop) COPY file:8989c3c617bfa7c9…   21B
+9e16e7ac4d82        About an hour ago   /bin/sh -c apk add apache2                      3.6MB
+f22020aa5021        About an hour ago   /bin/sh -c apk update                           1.42MB
+961769676411        4 weeks ago         /bin/sh -c #(nop)  CMD ["/bin/sh"]              0B
+<missing>           4 weeks ago         /bin/sh -c #(nop) ADD file:fe64057fbb83dccb9…   5.58MB
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+> docker image run -d -p 9090:80 app
+unknown shorthand flag: 'd' in -d
+See 'docker image --help'.
+
+Usage:  docker image COMMAND
+
+Manage images
+
+Commands:
+  build       Build an image from a Dockerfile
+  history     Show the history of an image
+  import      Import the contents from a tarball to create a filesystem image
+  inspect     Display detailed information on one or more images
+  load        Load an image from a tar archive or STDIN
+  ls          List images
+  prune       Remove unused images
+  pull        Pull an image or a repository from a registry
+  push        Push an image or a repository to a registry
+  rm          Remove one or more images
+  save        Save one or more images to a tar archive (streamed to STDOUT by default)
+  tag         Create a tag TARGET_IMAGE that refers to SOURCE_IMAGE
+
+Run 'docker image COMMAND --help' for more information on a command.
+
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+> docker container run -d -p 9090:80 app
+04c1953147bedb29db599ea38486b569136bb4e4cb908a133894a4a36589b724
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+> docker container ls | grep -v k8s
+CONTAINER ID        IMAGE                  COMMAND                  CREATED             STATUS              PORTS                  NAMES
+04c1953147be        app                    "httpd -D FOREGROUND"    7 seconds ago       Up 7 seconds        0.0.0.0:9090->80/tcp   dreamy_lamport
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+> docker container exec -it 04c1953147be sh
+/ # ps
+PID   USER     TIME  COMMAND
+    1 root      0:00 httpd -D FOREGROUND
+    6 apache    0:00 httpd -D FOREGROUND
+    7 apache    0:00 httpd -D FOREGROUND
+    8 apache    0:00 httpd -D FOREGROUND
+    9 apache    0:00 httpd -D FOREGROUND
+   10 apache    0:00 httpd -D FOREGROUND
+   11 apache    0:00 httpd -D FOREGROUND
+   12 root      0:00 sh
+   17 root      0:00 ps
+/ #
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+> docker container exec -it 04c1953147be sh
+Error response from daemon: Container 04c1953147bedb29db599ea38486b569136bb4e4cb908a133894a4a36589b724 is not running
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+> docker container run -d -p 9090:80 app
+bb3d91b726f17e28aa7a857a6c3ebf6c357b83a3542c55d0e019477f9a5eba58
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+> docker container exec -it bb3d91b sh
+/ # ls
+bin    etc    lib    mnt    proc   run    srv    tmp    var
+dev    home   media  opt    root   sbin   sys    usr
+/ # cd proc/
+/proc # ls
+1              buddyinfo      dma            kallsyms       mdstat         scsi           timer_list
+10             bus            driver         kcore          meminfo        self           tty
+11             cgroups        execdomains    key-users      misc           slabinfo       uptime
+17             cmdline        fb             keys           modules        softirqs       version
+6              config.gz      filesystems    kmsg           mounts         stat           vmallocinfo
+7              consoles       fs             kpagecgroup    mtrr           swaps          vmstat
+8              cpuinfo        interrupts     kpagecount     net            sys            zoneinfo
+9              crypto         iomem          kpageflags     pagetypeinfo   sysrq-trigger
+acpi           devices        ioports        loadavg        partitions     sysvipc
+asound         diskstats      irq            locks          schedstat      thread-self
+/proc # cat 1
+cat: read error: Is a directory
+/proc # cd 1
+/proc/1 # ls
+attr             cwd              loginuid         ns               root             statm
+auxv             environ          map_files        numa_maps        schedstat        status
+cgroup           exe              maps             oom_adj          sessionid        syscall
+clear_refs       fd               mem              oom_score        setgroups        task
+cmdline          fdinfo           mountinfo        oom_score_adj    smaps            timerslack_ns
+comm             gid_map          mounts           pagemap          smaps_rollup     uid_map
+coredump_filter  io               mountstats       personality      stack            wchan
+cpuset           limits           net              projid_map       stat
+/proc/1 # cd ..
+/proc # exit
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+>
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+>
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+>
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+> ls
+Dockerfile  mypage.html
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+>
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+> docker container rm -f `docker container ls -a| grep -v k8s | cut -f 1 -d " "`
+bb3d91b726f1
+04c1953147be
+Error: No such container: CONTAINER
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+>
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+> docker container run -d -v /var/log/apache2 app
+39723f732cc0dfbf02ace87b1c5b16f2707d647dbd1403d6559575ea4915bb2c
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+> docker container exec 39723f7 ls /var/log/apache2
+access.log
+error.log
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+> docker container inspect 39723f732c
+[
+    {
+        "Id": "39723f732cc0dfbf02ace87b1c5b16f2707d647dbd1403d6559575ea4915bb2c",
+        "Created": "2019-09-24T07:10:31.89086163Z",
+        "Path": "httpd",
+        "Args": [
+            "-D",
+            "FOREGROUND"
+        ],
+        "State": {
+            "Status": "running",
+            "Running": true,
+            "Paused": false,
+            "Restarting": false,
+            "OOMKilled": false,
+            "Dead": false,
+            "Pid": 2533,
+            "ExitCode": 0,
+            "Error": "",
+            "StartedAt": "2019-09-24T07:10:32.457575171Z",
+            "FinishedAt": "0001-01-01T00:00:00Z"
+        },
+        "Image": "sha256:d9c583d5cfac44c52bd0b39c4c6fd41a491640925a077344458cfa3c2abc2567",
+        "ResolvConfPath": "/var/lib/docker/containers/39723f732cc0dfbf02ace87b1c5b16f2707d647dbd1403d6559575ea4915bb2c/resolv.conf",
+        "HostnamePath": "/var/lib/docker/containers/39723f732cc0dfbf02ace87b1c5b16f2707d647dbd1403d6559575ea4915bb2c/hostname",
+        "HostsPath": "/var/lib/docker/containers/39723f732cc0dfbf02ace87b1c5b16f2707d647dbd1403d6559575ea4915bb2c/hosts",
+        "LogPath": "/var/lib/docker/containers/39723f732cc0dfbf02ace87b1c5b16f2707d647dbd1403d6559575ea4915bb2c/39723f732cc0dfbf02ace87b1c5b16f2707d647dbd1403d6559575ea4915bb2c-json.log",
+        "Name": "/agitated_johnson",
+        "RestartCount": 0,
+        "Driver": "overlay2",
+        "Platform": "linux",
+        "MountLabel": "",
+        "ProcessLabel": "",
+        "AppArmorProfile": "",
+        "ExecIDs": null,
+        "HostConfig": {
+            "Binds": null,
+            "ContainerIDFile": "",
+            "LogConfig": {
+                "Type": "json-file",
+                "Config": {}
+            },
+            "NetworkMode": "default",
+            "PortBindings": {},
+            "RestartPolicy": {
+                "Name": "no",
+                "MaximumRetryCount": 0
+            },
+            "AutoRemove": false,
+            "VolumeDriver": "",
+            "VolumesFrom": null,
+            "CapAdd": null,
+            "CapDrop": null,
+            "Dns": [],
+            "DnsOptions": [],
+            "DnsSearch": [],
+            "ExtraHosts": null,
+            "GroupAdd": null,
+            "IpcMode": "shareable",
+            "Cgroup": "",
+            "Links": null,
+            "OomScoreAdj": 0,
+            "PidMode": "",
+            "Privileged": false,
+            "PublishAllPorts": false,
+            "ReadonlyRootfs": false,
+            "SecurityOpt": null,
+            "UTSMode": "",
+            "UsernsMode": "",
+            "ShmSize": 67108864,
+            "Runtime": "runc",
+            "ConsoleSize": [
+                0,
+                0
+            ],
+            "Isolation": "",
+            "CpuShares": 0,
+            "Memory": 0,
+            "NanoCpus": 0,
+            "CgroupParent": "",
+            "BlkioWeight": 0,
+            "BlkioWeightDevice": [],
+            "BlkioDeviceReadBps": null,
+            "BlkioDeviceWriteBps": null,
+            "BlkioDeviceReadIOps": null,
+            "BlkioDeviceWriteIOps": null,
+            "CpuPeriod": 0,
+            "CpuQuota": 0,
+            "CpuRealtimePeriod": 0,
+            "CpuRealtimeRuntime": 0,
+            "CpusetCpus": "",
+            "CpusetMems": "",
+            "Devices": [],
+            "DeviceCgroupRules": null,
+            "DiskQuota": 0,
+            "KernelMemory": 0,
+            "MemoryReservation": 0,
+            "MemorySwap": 0,
+            "MemorySwappiness": null,
+            "OomKillDisable": false,
+            "PidsLimit": 0,
+            "Ulimits": null,
+            "CpuCount": 0,
+            "CpuPercent": 0,
+            "IOMaximumIOps": 0,
+            "IOMaximumBandwidth": 0,
+            "MaskedPaths": [
+                "/proc/asound",
+                "/proc/acpi",
+                "/proc/kcore",
+                "/proc/keys",
+                "/proc/latency_stats",
+                "/proc/timer_list",
+                "/proc/timer_stats",
+                "/proc/sched_debug",
+                "/proc/scsi",
+                "/sys/firmware"
+            ],
+            "ReadonlyPaths": [
+                "/proc/bus",
+                "/proc/fs",
+                "/proc/irq",
+                "/proc/sys",
+                "/proc/sysrq-trigger"
+            ]
+        },
+        "GraphDriver": {
+            "Data": {
+                "LowerDir": "/var/lib/docker/overlay2/1baf1007576b80b3e825a465af11223ea0fede2930294945f3ff79e5297b7628-init/diff:/var/lib/docker/overlay2/56f3fbc5f0e0fe1b3dacb021a633fd2427ed93de42f638abd559ba1143cf4e0c/diff:/var/lib/docker/overlay2/d200d268cd5ec2601b8cb211a7f0f32324f06e7d916cfe7c94fc1f586908b434/diff:/var/lib/docker/overlay2/3964e9c361774bf89266598de0a6fbf06a3a2e6ee6182efd284010eeff7d90c2/diff:/var/lib/docker/overlay2/f1677d03d6342b66f04ef9bfe79c0920cc2421176cd855a53bdb51edb20809a0/diff",
+                "MergedDir": "/var/lib/docker/overlay2/1baf1007576b80b3e825a465af11223ea0fede2930294945f3ff79e5297b7628/merged",
+                "UpperDir": "/var/lib/docker/overlay2/1baf1007576b80b3e825a465af11223ea0fede2930294945f3ff79e5297b7628/diff",
+                "WorkDir": "/var/lib/docker/overlay2/1baf1007576b80b3e825a465af11223ea0fede2930294945f3ff79e5297b7628/work"
+            },
+            "Name": "overlay2"
+        },
+        "Mounts": [
+            {
+                "Type": "volume",
+                "Name": "f838469233824fdb1d67c7a76288e657b883c05b5fb0edfe3b37c84f52be2fd1",
+                "Source": "/var/lib/docker/volumes/f838469233824fdb1d67c7a76288e657b883c05b5fb0edfe3b37c84f52be2fd1/_data",
+                "Destination": "/var/log/apache2",
+                "Driver": "local",
+                "Mode": "",
+                "RW": true,
+                "Propagation": ""
+            }
+        ],
+        "Config": {
+            "Hostname": "39723f732cc0",
+            "Domainname": "",
+            "User": "",
+            "AttachStdin": false,
+            "AttachStdout": false,
+            "AttachStderr": false,
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+            ],
+            "Cmd": [
+                "httpd",
+                "-D",
+                "FOREGROUND"
+            ],
+            "ArgsEscaped": true,
+            "Image": "app",
+            "Volumes": {
+                "/var/log/apache2": {}
+            },
+            "WorkingDir": "",
+            "Entrypoint": null,
+            "OnBuild": null,
+            "Labels": {}
+        },
+        "NetworkSettings": {
+            "Bridge": "",
+            "SandboxID": "5d11d2d21d9a7e19de241b74abab87e7c3ed7e2a1cfcbc464797ded6bb1b037d",
+            "HairpinMode": false,
+            "LinkLocalIPv6Address": "",
+            "LinkLocalIPv6PrefixLen": 0,
+            "Ports": {},
+            "SandboxKey": "/var/run/docker/netns/5d11d2d21d9a",
+            "SecondaryIPAddresses": null,
+            "SecondaryIPv6Addresses": null,
+            "EndpointID": "3cf453e96586f037a721571113e3ff5a24a89fb32b2bd30196c4d4f61e804377",
+            "Gateway": "172.17.0.1",
+            "GlobalIPv6Address": "",
+            "GlobalIPv6PrefixLen": 0,
+            "IPAddress": "172.17.0.4",
+            "IPPrefixLen": 16,
+            "IPv6Gateway": "",
+            "MacAddress": "02:42:ac:11:00:04",
+            "Networks": {
+                "bridge": {
+                    "IPAMConfig": null,
+                    "Links": null,
+                    "Aliases": null,
+                    "NetworkID": "ba2d557793c1a7c5a7a4ddc7d6e4668428636278d5bcbd7b5c234b44abf6cb13",
+                    "EndpointID": "3cf453e96586f037a721571113e3ff5a24a89fb32b2bd30196c4d4f61e804377",
+                    "Gateway": "172.17.0.1",
+                    "IPAddress": "172.17.0.4",
+                    "IPPrefixLen": 16,
+                    "IPv6Gateway": "",
+                    "GlobalIPv6Address": "",
+                    "GlobalIPv6PrefixLen": 0,
+                    "MacAddress": "02:42:ac:11:00:04",
+                    "DriverOpts": null
+                }
+            }
+        }
+    }
+]
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+>
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+> docker container rm -f  39723f732c
+39723f732c
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+>
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+> #docker image pull mysql:5.7
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+> docker image ls mysql
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+mysql               5.7                 f6509bac4980        2 months ago        373MB
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+> env
+BUILDAH_NOPIVOT=true
+SSH_CONNECTION=192.168.99.1 64889 192.168.99.100 22
+OLDPWD=/c/Users/Aditya/docker-workshop
+EDITOR=/bin/vi
+USER=docker
+PAGER=/bin/more
+PWD=/c/Users/Aditya/docker-workshop/sep23/app
+HOME=/home/docker
+SSH_CLIENT=192.168.99.1 64889 22
+SSH_TTY=/dev/pts/0
+MAIL=/var/mail/docker
+TERM=xterm
+SHELL=/bin/bash
+SHLVL=1
+LOGNAME=docker
+PATH=/bin:/sbin:/usr/bin:/usr/sbin
+PS1=\n\n======$PWD\n>
+_=/bin/env
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+>
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+> docker container run --rm app env
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+HOSTNAME=6f544b196e9a
+HOME=/root
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+> docker container run --rm -e http_proxy=some.cm:80 app env
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+HOSTNAME=2c4aff08b11f
+http_proxy=some.cm:80
+HOME=/root
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+> docker container run -d mysql:5.7
+f83719bc68c5dd004231d5df4ba645de5dffae2f8eee87c797a970638ad30341
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+> docker container ls -a | grep -v k8s
+CONTAINER ID        IMAGE                  COMMAND                  CREATED             STATUS                     PORTS               NAMES
+f83719bc68c5        mysql:5.7              "docker-entrypoint.s…"   11 seconds ago      Exited (1) 9 seconds ago                       boring_torvalds
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+> docker container logs f83719bc68c5
+error: database is uninitialized and password option is not specified
+  You need to specify one of MYSQL_ROOT_PASSWORD, MYSQL_ALLOW_EMPTY_PASSWORD and MYSQL_RANDOM_ROOT_PASSWORD
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+>
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+> docker container run -d -e MYSQL_ROOT_PASSWORD=welcome mysql:5.7
+04e07bbdef8c0140c020aa61327efe8d38d2276fa569e3cdabcf7d3e70bf64f5
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+> docker container ls -a | grep -v k8s
+CONTAINER ID        IMAGE                  COMMAND                  CREATED             STATUS                     PORTS                 NAMES
+04e07bbdef8c        mysql:5.7              "docker-entrypoint.s…"   5 seconds ago       Up 4 seconds               3306/tcp, 33060/tcp   romantic_sutherland
+f83719bc68c5        mysql:5.7              "docker-entrypoint.s…"   2 minutes ago       Exited (1) 2 minutes ago                         boring_torvalds
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+> docker container inspect 04e07bb
+[
+    {
+        "Id": "04e07bbdef8c0140c020aa61327efe8d38d2276fa569e3cdabcf7d3e70bf64f5",
+        "Created": "2019-09-24T07:26:59.831861241Z",
+        "Path": "docker-entrypoint.sh",
+        "Args": [
+            "mysqld"
+        ],
+        "State": {
+            "Status": "running",
+            "Running": true,
+            "Paused": false,
+            "Restarting": false,
+            "OOMKilled": false,
+            "Dead": false,
+            "Pid": 10694,
+            "ExitCode": 0,
+            "Error": "",
+            "StartedAt": "2019-09-24T07:27:00.388346999Z",
+            "FinishedAt": "0001-01-01T00:00:00Z"
+        },
+        "Image": "sha256:f6509bac49801f48628167728aba66d64533aaa7d384e03b75a8fe4e6c0f6599",
+        "ResolvConfPath": "/var/lib/docker/containers/04e07bbdef8c0140c020aa61327efe8d38d2276fa569e3cdabcf7d3e70bf64f5/resolv.conf",
+        "HostnamePath": "/var/lib/docker/containers/04e07bbdef8c0140c020aa61327efe8d38d2276fa569e3cdabcf7d3e70bf64f5/hostname",
+        "HostsPath": "/var/lib/docker/containers/04e07bbdef8c0140c020aa61327efe8d38d2276fa569e3cdabcf7d3e70bf64f5/hosts",
+        "LogPath": "/var/lib/docker/containers/04e07bbdef8c0140c020aa61327efe8d38d2276fa569e3cdabcf7d3e70bf64f5/04e07bbdef8c0140c020aa61327efe8d38d2276fa569e3cdabcf7d3e70bf64f5-json.log",
+        "Name": "/romantic_sutherland",
+        "RestartCount": 0,
+        "Driver": "overlay2",
+        "Platform": "linux",
+        "MountLabel": "",
+        "ProcessLabel": "",
+        "AppArmorProfile": "",
+        "ExecIDs": null,
+        "HostConfig": {
+            "Binds": null,
+            "ContainerIDFile": "",
+            "LogConfig": {
+                "Type": "json-file",
+                "Config": {}
+            },
+            "NetworkMode": "default",
+            "PortBindings": {},
+            "RestartPolicy": {
+                "Name": "no",
+                "MaximumRetryCount": 0
+            },
+            "AutoRemove": false,
+            "VolumeDriver": "",
+            "VolumesFrom": null,
+            "CapAdd": null,
+            "CapDrop": null,
+            "Dns": [],
+            "DnsOptions": [],
+            "DnsSearch": [],
+            "ExtraHosts": null,
+            "GroupAdd": null,
+            "IpcMode": "shareable",
+            "Cgroup": "",
+            "Links": null,
+            "OomScoreAdj": 0,
+            "PidMode": "",
+            "Privileged": false,
+            "PublishAllPorts": false,
+            "ReadonlyRootfs": false,
+            "SecurityOpt": null,
+            "UTSMode": "",
+            "UsernsMode": "",
+            "ShmSize": 67108864,
+            "Runtime": "runc",
+            "ConsoleSize": [
+                0,
+                0
+            ],
+            "Isolation": "",
+            "CpuShares": 0,
+            "Memory": 0,
+            "NanoCpus": 0,
+            "CgroupParent": "",
+            "BlkioWeight": 0,
+            "BlkioWeightDevice": [],
+            "BlkioDeviceReadBps": null,
+            "BlkioDeviceWriteBps": null,
+            "BlkioDeviceReadIOps": null,
+            "BlkioDeviceWriteIOps": null,
+            "CpuPeriod": 0,
+            "CpuQuota": 0,
+            "CpuRealtimePeriod": 0,
+            "CpuRealtimeRuntime": 0,
+            "CpusetCpus": "",
+            "CpusetMems": "",
+            "Devices": [],
+            "DeviceCgroupRules": null,
+            "DiskQuota": 0,
+            "KernelMemory": 0,
+            "MemoryReservation": 0,
+            "MemorySwap": 0,
+            "MemorySwappiness": null,
+            "OomKillDisable": false,
+            "PidsLimit": 0,
+            "Ulimits": null,
+            "CpuCount": 0,
+            "CpuPercent": 0,
+            "IOMaximumIOps": 0,
+            "IOMaximumBandwidth": 0,
+            "MaskedPaths": [
+                "/proc/asound",
+                "/proc/acpi",
+                "/proc/kcore",
+                "/proc/keys",
+                "/proc/latency_stats",
+                "/proc/timer_list",
+                "/proc/timer_stats",
+                "/proc/sched_debug",
+                "/proc/scsi",
+                "/sys/firmware"
+            ],
+            "ReadonlyPaths": [
+                "/proc/bus",
+                "/proc/fs",
+                "/proc/irq",
+                "/proc/sys",
+                "/proc/sysrq-trigger"
+            ]
+        },
+        "GraphDriver": {
+            "Data": {
+                "LowerDir": "/var/lib/docker/overlay2/2505826571a078223ee5914f9db2d613d05d4b1006860696b929b0bcc94366cb-init/diff:/var/lib/docker/overlay2/ca4d654217622c0961ef0ca2b52a4f625722f911f6663863a2f7a3ea30c9f583/diff:/var/lib/docker/overlay2/7def5ee510e5f0103b9f9d623dfbb102dabe54c219b9c762f3f02eb2c7168391/diff:/var/lib/docker/overlay2/ecf62443a6d0f591fc5dc9df03a785830ce3c518127b9e8de228b79c8214fdf8/diff:/var/lib/docker/overlay2/c1f75d9b825fa7c43cb613079ba0f1d04eae517c12c4a2a1dcf9ebfe823ccae4/diff:/var/lib/docker/overlay2/969bd71e22e7085dfe49cbfd9ab896e5d6cadff4f8772bcf0e5fb733be43fa8b/diff:/var/lib/docker/overlay2/c500c41fb311220e0350b7fc3030f4a696796424cee3c9a65db626a97765ba90/diff:/var/lib/docker/overlay2/9aa1adf24532686392626fa085ab1bab8ed55c126434b2c292fcb58d952fd1e7/diff:/var/lib/docker/overlay2/a61c2d11b14e31261de3aaa91b49431542ed4949a1d2f01334412bea31dcf89d/diff:/var/lib/docker/overlay2/b43eb64a6311e5f5fb0f6e3d57f15b5d3e5c5915f0c8c771b110e48b97b46c59/diff:/var/lib/docker/overlay2/8eb52958d40937cbef1c9ac7a42553cf0dd316d35e65b7e14e239861df8a0611/diff:/var/lib/docker/overlay2/e7a9dc8688349acbeda0f42e33b191ecfebed2ac526c22e7f233c87170c7ddb0/diff",
+                "MergedDir": "/var/lib/docker/overlay2/2505826571a078223ee5914f9db2d613d05d4b1006860696b929b0bcc94366cb/merged",
+                "UpperDir": "/var/lib/docker/overlay2/2505826571a078223ee5914f9db2d613d05d4b1006860696b929b0bcc94366cb/diff",
+                "WorkDir": "/var/lib/docker/overlay2/2505826571a078223ee5914f9db2d613d05d4b1006860696b929b0bcc94366cb/work"
+            },
+            "Name": "overlay2"
+        },
+        "Mounts": [
+            {
+                "Type": "volume",
+                "Name": "f45630754aed1f6e84be677831f4729753d3fc7b987e76b42a3cde1e6fa05f2d",
+                "Source": "/var/lib/docker/volumes/f45630754aed1f6e84be677831f4729753d3fc7b987e76b42a3cde1e6fa05f2d/_data",
+                "Destination": "/var/lib/mysql",
+                "Driver": "local",
+                "Mode": "",
+                "RW": true,
+                "Propagation": ""
+            }
+        ],
+        "Config": {
+            "Hostname": "04e07bbdef8c",
+            "Domainname": "",
+            "User": "",
+            "AttachStdin": false,
+            "AttachStdout": false,
+            "AttachStderr": false,
+            "ExposedPorts": {
+                "3306/tcp": {},
+                "33060/tcp": {}
+            },
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "MYSQL_ROOT_PASSWORD=welcome",
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "GOSU_VERSION=1.7",
+                "MYSQL_MAJOR=5.7",
+                "MYSQL_VERSION=5.7.27-1debian9"
+            ],
+            "Cmd": [
+                "mysqld"
+            ],
+            "ArgsEscaped": true,
+            "Image": "mysql:5.7",
+            "Volumes": {
+                "/var/lib/mysql": {}
+            },
+            "WorkingDir": "",
+            "Entrypoint": [
+                "docker-entrypoint.sh"
+            ],
+            "OnBuild": null,
+            "Labels": {}
+        },
+        "NetworkSettings": {
+            "Bridge": "",
+            "SandboxID": "81d7e904f2879ec52f96d76b029c130b301c32a2a8dca671985c26b107d4504e",
+            "HairpinMode": false,
+            "LinkLocalIPv6Address": "",
+            "LinkLocalIPv6PrefixLen": 0,
+            "Ports": {
+                "3306/tcp": null,
+                "33060/tcp": null
+            },
+            "SandboxKey": "/var/run/docker/netns/81d7e904f287",
+            "SecondaryIPAddresses": null,
+            "SecondaryIPv6Addresses": null,
+            "EndpointID": "4369c371b378e5d06890a52318f0521ca4741c757a6a841e600c21a5ddb79681",
+            "Gateway": "172.17.0.1",
+            "GlobalIPv6Address": "",
+            "GlobalIPv6PrefixLen": 0,
+            "IPAddress": "172.17.0.4",
+            "IPPrefixLen": 16,
+            "IPv6Gateway": "",
+            "MacAddress": "02:42:ac:11:00:04",
+            "Networks": {
+                "bridge": {
+                    "IPAMConfig": null,
+                    "Links": null,
+                    "Aliases": null,
+                    "NetworkID": "ba2d557793c1a7c5a7a4ddc7d6e4668428636278d5bcbd7b5c234b44abf6cb13",
+                    "EndpointID": "4369c371b378e5d06890a52318f0521ca4741c757a6a841e600c21a5ddb79681",
+                    "Gateway": "172.17.0.1",
+                    "IPAddress": "172.17.0.4",
+                    "IPPrefixLen": 16,
+                    "IPv6Gateway": "",
+                    "GlobalIPv6Address": "",
+                    "GlobalIPv6PrefixLen": 0,
+                    "MacAddress": "02:42:ac:11:00:04",
+                    "DriverOpts": null
+                }
+            }
+        }
+    }
+]
+
+
+======/c/Users/Aditya/docker-workshop/sep23/app
+>
