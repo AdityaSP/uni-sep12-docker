@@ -103,3 +103,360 @@ Aditya@DESKTOP-F88S8GU ~/docker-workshop/sep23/k8s
 
 Aditya@DESKTOP-F88S8GU ~/docker-workshop/sep23/k8s
 λ
+
+-----------------------------------------------------------------------------------------------------------------------
+
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sep23/k8s
+λ kubectl get pods
+No resources found.
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sep23/k8s
+λ kubectl apply -f rc/rc-helloworld.yml
+replicationcontroller/helloworld-controller created
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sep23/k8s
+λ kubectl get replicationcontroller
+NAME                    DESIRED   CURRENT   READY   AGE
+helloworld-controller   2         2         2       38s
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sep23/k8s
+λ kubectl get rc
+NAME                    DESIRED   CURRENT   READY   AGE
+helloworld-controller   2         2         2       49s
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sep23/k8s
+λ kubectl get pods
+NAME                          READY   STATUS    RESTARTS   AGE
+helloworld-controller-ffknz   1/1     Running   0          74s
+helloworld-controller-hdxxk   1/1     Running   0          74s
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sep23/k8s
+λ kubectl delete pod helloworld-controller-ffknz
+pod "helloworld-controller-ffknz" deleted
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sep23/k8s
+λ kubectl get pods
+NAME                          READY   STATUS    RESTARTS   AGE
+helloworld-controller-9qnhg   1/1     Running   0          4s
+helloworld-controller-hdxxk   1/1     Running   0          3m25s
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sep23/k8s
+λ kubectl apply -f rc/rc-helloworld.yml
+replicationcontroller/helloworld-controller configured
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sep23/k8s
+λ kubectl get pods
+NAME                          READY   STATUS              RESTARTS   AGE
+helloworld-controller-9qnhg   1/1     Running             0          3m9s
+helloworld-controller-bl6qf   0/1     ContainerCreating   0          2s
+helloworld-controller-hdxxk   1/1     Running             0          6m30s
+helloworld-controller-m2tnf   0/1     ContainerCreating   0          2s
+helloworld-controller-znxqw   0/1     ContainerCreating   0          2s
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sep23/k8s
+λ kubectl get pods
+NAME                          READY   STATUS    RESTARTS   AGE
+helloworld-controller-9qnhg   1/1     Running   0          5m35s
+helloworld-controller-bl6qf   1/1     Running   0          2m28s
+helloworld-controller-hdxxk   1/1     Running   0          8m56s
+helloworld-controller-m2tnf   1/1     Running   0          2m28s
+helloworld-controller-znxqw   1/1     Running   0          2m28s
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sep23/k8s
+λ kubectl get pods -o wide
+NAME                          READY   STATUS    RESTARTS   AGE     IP           NODE       NOMINATED NODE   READINESS GATES
+helloworld-controller-9qnhg   1/1     Running   0          8m44s   172.17.0.6   minikube   <none>           <none>
+helloworld-controller-bl6qf   1/1     Running   0          5m37s   172.17.0.8   minikube   <none>           <none>
+helloworld-controller-hdxxk   1/1     Running   0          12m     172.17.0.5   minikube   <none>           <none>
+helloworld-controller-m2tnf   1/1     Running   0          5m37s   172.17.0.4   minikube   <none>           <none>
+helloworld-controller-znxqw   1/1     Running   0          5m37s   172.17.0.7   minikube   <none>           <none>
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sep23/k8s
+λ kubectl apply -f rc/rc-helloworld.yml
+replicationcontroller/helloworld-controller configured
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sep23/k8s
+λ kubectl get pods -o wide
+NAME                          READY   STATUS        RESTARTS   AGE     IP           NODE       NOMINATED NODE
+READINESS GATES
+helloworld-controller-9qnhg   1/1     Running       0          9m29s   172.17.0.6   minikube   <none>
+<none>
+helloworld-controller-bl6qf   0/1     Terminating   0          6m22s   172.17.0.8   minikube   <none>
+<none>
+helloworld-controller-hdxxk   1/1     Running       0          12m     172.17.0.5   minikube   <none>
+<none>
+helloworld-controller-m2tnf   0/1     Terminating   0          6m22s   172.17.0.4   minikube   <none>
+<none>
+helloworld-controller-znxqw   0/1     Terminating   0          6m22s   172.17.0.7   minikube   <none>
+<none>
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sep23/k8s
+λ
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sep23/k8s
+λ kubectl get pods -o wide
+NAME                          READY   STATUS    RESTARTS   AGE   IP           NODE       NOMINATED NODE   READINESS GATES
+helloworld-controller-9qnhg   1/1     Running   0          11m   172.17.0.6   minikube   <none>           <none>
+
+helloworld-controller-hdxxk   1/1     Running   0          14m   172.17.0.5   minikube   <none>           <none>
+
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sep23/k8s
+λ kubectl scale rc helloworld-controller --replicas 5
+replicationcontroller/helloworld-controller scaled
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sep23/k8s
+λ kubectl get pods -o wide
+NAME                          READY   STATUS    RESTARTS   AGE   IP           NODE       NOMINATED NODE   READINESS GATES
+helloworld-controller-5mgzq   1/1     Running   0          4s    172.17.0.4   minikube   <none>           <none>
+
+helloworld-controller-9qnhg   1/1     Running   0          13m   172.17.0.6   minikube   <none>           <none>
+
+helloworld-controller-b4kb5   1/1     Running   0          4s    172.17.0.7   minikube   <none>           <none>
+
+helloworld-controller-hdxxk   1/1     Running   0          16m   172.17.0.5   minikube   <none>           <none>
+
+helloworld-controller-hjzz8   1/1     Running   0          4s    172.17.0.8   minikube   <none>           <none>
+
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sep23/k8s
+λ kubectl scale rc helloworld-controller --replicas 2
+replicationcontroller/helloworld-controller scaled
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sep23/k8s
+λ kubectl delete rc helloworld-controller
+replicationcontroller "helloworld-controller" deleted
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sep23/k8s
+λ
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sep23/k8s
+λ kubectl get pods
+No resources found.
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sep23/k8s
+λ kubectl apply -f dep/dep-helloworld.yml
+deployment.extensions/helloworld-dep created
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sep23/k8s
+λ kubectl get deploy
+NAME             READY   UP-TO-DATE   AVAILABLE   AGE
+helloworld-dep   1/1     1            1           19s
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sep23/k8s
+λ kubectl get rs
+NAME                        DESIRED   CURRENT   READY   AGE
+helloworld-dep-85d7854f8b   1         1         1       69s
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sep23/k8s
+λ kubectl get pods
+NAME                              READY   STATUS    RESTARTS   AGE
+helloworld-dep-85d7854f8b-rdhhn   1/1     Running   0          105s
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sep23/k8s
+λ kubectl apply -f dep/dep-helloworld.yml
+deployment.extensions/helloworld-dep configured
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sep23/k8s
+λ kubectl get pods
+NAME                              READY   STATUS    RESTARTS   AGE
+helloworld-dep-85d7854f8b-76kqb   1/1     Running   0          17s
+helloworld-dep-85d7854f8b-kgwct   1/1     Running   0          17s
+helloworld-dep-85d7854f8b-pk8jk   1/1     Running   0          17s
+helloworld-dep-85d7854f8b-rdhhn   1/1     Running   0          2m59s
+helloworld-dep-85d7854f8b-szq8c   1/1     Running   0          17s
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sep23/k8s
+λ kubectl get rs
+NAME                        DESIRED   CURRENT   READY   AGE
+helloworld-dep-85d7854f8b   5         5         5       3m2s
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sep23/k8s
+λ kubectl scale deploy helloworld-dep --replicas 10
+deployment.extensions/helloworld-dep scaled
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sep23/k8s
+λ kubectl get pods
+NAME                              READY   STATUS              RESTARTS   AGE
+helloworld-dep-85d7854f8b-76kqb   1/1     Running             0          94s
+helloworld-dep-85d7854f8b-7n9v4   0/1     ContainerCreating   0          4s
+helloworld-dep-85d7854f8b-8q4nh   0/1     ContainerCreating   0          4s
+helloworld-dep-85d7854f8b-9fz6f   0/1     ContainerCreating   0          4s
+helloworld-dep-85d7854f8b-b7htn   0/1     ContainerCreating   0          4s
+helloworld-dep-85d7854f8b-fgksn   0/1     ContainerCreating   0          4s
+helloworld-dep-85d7854f8b-kgwct   1/1     Running             0          94s
+helloworld-dep-85d7854f8b-pk8jk   1/1     Running             0          94s
+helloworld-dep-85d7854f8b-rdhhn   1/1     Running             0          4m16s
+helloworld-dep-85d7854f8b-szq8c   1/1     Running             0          94s
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sep23/k8s
+λ kubectl get pods
+NAME                              READY   STATUS    RESTARTS   AGE
+helloworld-dep-85d7854f8b-76kqb   1/1     Running   0          5m58s
+helloworld-dep-85d7854f8b-7n9v4   1/1     Running   0          4m28s
+helloworld-dep-85d7854f8b-8q4nh   1/1     Running   0          4m28s
+helloworld-dep-85d7854f8b-9fz6f   1/1     Running   0          4m28s
+helloworld-dep-85d7854f8b-b7htn   1/1     Running   0          4m28s
+helloworld-dep-85d7854f8b-fgksn   1/1     Running   0          4m28s
+helloworld-dep-85d7854f8b-kgwct   1/1     Running   0          5m58s
+helloworld-dep-85d7854f8b-pk8jk   1/1     Running   0          5m58s
+helloworld-dep-85d7854f8b-rdhhn   1/1     Running   0          8m40s
+helloworld-dep-85d7854f8b-szq8c   1/1     Running   0          5m58s
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sep23/k8s
+λ kubectl rollout history deploy helloworld-dep
+deployment.extensions/helloworld-dep
+REVISION  CHANGE-CAUSE
+1         <none>
+
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sep23/k8s
+λ kubectl rollout history deploy helloworld-dep --revision 1
+deployment.extensions/helloworld-dep with revision #1
+Pod Template:
+  Labels:       app=helloworld
+        pod-template-hash=85d7854f8b
+  Containers:
+   web:
+    Image:      nginx:alpine
+    Port:       80/TCP
+    Host Port:  0/TCP
+    Environment:        <none>
+    Mounts:     <none>
+  Volumes:      <none>
+
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sep23/k8s
+λ kubectl get pods
+NAME                              READY   STATUS    RESTARTS   AGE
+helloworld-dep-85d7854f8b-76kqb   1/1     Running   0          44m
+helloworld-dep-85d7854f8b-7n9v4   1/1     Running   0          42m
+helloworld-dep-85d7854f8b-8q4nh   1/1     Running   0          42m
+helloworld-dep-85d7854f8b-9fz6f   1/1     Running   0          42m
+helloworld-dep-85d7854f8b-b7htn   1/1     Running   0          42m
+helloworld-dep-85d7854f8b-fgksn   1/1     Running   0          42m
+helloworld-dep-85d7854f8b-kgwct   1/1     Running   0          44m
+helloworld-dep-85d7854f8b-pk8jk   1/1     Running   0          44m
+helloworld-dep-85d7854f8b-rdhhn   1/1     Running   0          46m
+helloworld-dep-85d7854f8b-szq8c   1/1     Running   0          44m
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sep23/k8s
+λ kubectl rollout status deploy helloworld-dep
+deployment "helloworld-dep" successfully rolled out
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sep23/k8s
+λ kubectl apply -f dep/dep-helloworld.yml
+deployment.extensions/helloworld-dep configured
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sep23/k8s
+λ kubectl rollout status deploy helloworld-dep
+Waiting for deployment "helloworld-dep" rollout to finish: 2 out of 5 new replicas have been updated...
+Waiting for deployment "helloworld-dep" rollout to finish: 2 out of 5 new replicas have been updated...
+Waiting for deployment "helloworld-dep" rollout to finish: 3 out of 5 new replicas have been updated...
+Waiting for deployment "helloworld-dep" rollout to finish: 3 out of 5 new replicas have been updated...
+Waiting for deployment "helloworld-dep" rollout to finish: 3 out of 5 new replicas have been updated...
+Waiting for deployment "helloworld-dep" rollout to finish: 3 out of 5 new replicas have been updated...
+Waiting for deployment "helloworld-dep" rollout to finish: 3 out of 5 new replicas have been updated...
+Waiting for deployment "helloworld-dep" rollout to finish: 3 out of 5 new replicas have been updated...
+Waiting for deployment "helloworld-dep" rollout to finish: 4 out of 5 new replicas have been updated...
+Waiting for deployment "helloworld-dep" rollout to finish: 4 out of 5 new replicas have been updated...
+Waiting for deployment "helloworld-dep" rollout to finish: 4 out of 5 new replicas have been updated...
+Waiting for deployment "helloworld-dep" rollout to finish: 4 out of 5 new replicas have been updated...
+Waiting for deployment "helloworld-dep" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "helloworld-dep" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "helloworld-dep" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "helloworld-dep" rollout to finish: 4 of 5 updated replicas are available...
+deployment "helloworld-dep" successfully rolled out
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sep23/k8s
+λ kubectl rollout history deploy helloworld-dep
+deployment.extensions/helloworld-dep
+REVISION  CHANGE-CAUSE
+1         <none>
+2         <none>
+
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sep23/k8s
+λ kubectl rollout history deploy helloworld-dep --revision 1
+deployment.extensions/helloworld-dep with revision #1
+Pod Template:
+  Labels:       app=helloworld
+        pod-template-hash=85d7854f8b
+  Containers:
+   web:
+    Image:      nginx:alpine
+    Port:       80/TCP
+    Host Port:  0/TCP
+    Environment:        <none>
+    Mounts:     <none>
+  Volumes:      <none>
+
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sep23/k8s
+λ kubectl rollout history deploy helloworld-dep --revision 2
+deployment.extensions/helloworld-dep with revision #2
+Pod Template:
+  Labels:       app=helloworld
+        pod-template-hash=bd678845d
+  Containers:
+   web:
+    Image:      nginx:latest
+    Port:       80/TCP
+    Host Port:  0/TCP
+    Environment:        <none>
+    Mounts:     <none>
+  Volumes:      <none>
+
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sep23/k8s
+λ kubectl rollout undo deploy helloworld-dep --to-revision 1
+deployment.extensions/helloworld-dep rolled back
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sep23/k8s
+λ kubectl rollout status deploy helloworld-dep
+Waiting for deployment "helloworld-dep" rollout to finish: 4 of 5 updated replicas are available...
+deployment "helloworld-dep" successfully rolled out
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sep23/k8s
+λ kubectl rollout history deploy helloworld-dep
+deployment.extensions/helloworld-dep
+REVISION  CHANGE-CAUSE
+2         <none>
+3         <none>
+
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sep23/k8s
+λ kubectl rollout history deploy helloworld-dep --revision 2
+deployment.extensions/helloworld-dep with revision #2
+Pod Template:
+  Labels:       app=helloworld
+        pod-template-hash=bd678845d
+  Containers:
+   web:
+    Image:      nginx:latest
+    Port:       80/TCP
+    Host Port:  0/TCP
+    Environment:        <none>
+    Mounts:     <none>
+  Volumes:      <none>
+
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sep23/k8s
+λ kubectl rollout history deploy helloworld-dep --revision 3
+deployment.extensions/helloworld-dep with revision #3
+Pod Template:
+  Labels:       app=helloworld
+        pod-template-hash=85d7854f8b
+  Containers:
+   web:
+    Image:      nginx:alpine
+    Port:       80/TCP
+    Host Port:  0/TCP
+    Environment:        <none>
+    Mounts:     <none>
+  Volumes:      <none>
+
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sep23/k8s
+λ
