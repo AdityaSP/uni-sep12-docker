@@ -1,0 +1,105 @@
+Aditya@DESKTOP-F88S8GU /d/sw/cmder
+λ kubectl config get-contexts
+CURRENT   NAME                          CLUSTER      AUTHINFO           NAMESPACE
+          kubernetes-admin@kubernetes   kubernetes   kubernetes-admin
+*         minikube                      minikube     minikube
+
+Aditya@DESKTOP-F88S8GU /d/sw/cmder
+λ cd /c/Users/Aditya/docker-workshop/sep23/k8s/
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sep23/k8s
+λ ls
+blog/  build-machine/  dep/  newcluster/  pod/  pv-pvc/  rc/  readme.txt  resource-quota/  service/
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sep23/k8s
+λ #kubectl apply -f pod/pod-helloworld.yml
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sep23/k8s
+λ kubectl get pods
+No resources found.
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sep23/k8s
+λ kubectl apply -f pod/pod-helloworld.yml
+pod/my-nginx created
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sep23/k8s
+λ kubectl get pods
+NAME       READY   STATUS    RESTARTS   AGE
+my-nginx   1/1     Running   0          26s
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sep23/k8s
+λ kubectl describe pod my-nginx
+Name:         my-nginx
+Namespace:    default
+Priority:     0
+Node:         minikube/10.0.2.15
+Start Time:   Tue, 05 Nov 2019 13:00:34 +0530
+Labels:       app=helloworld2
+Annotations:  kubectl.kubernetes.io/last-applied-configuration:
+                {"apiVersion":"v1","kind":"Pod","metadata":{"annotations":{},"labels":{"app":"helloworld2"},"name":"my-nginx","namespace":"default"},"spec...
+Status:       Running
+IP:           172.17.0.4
+Containers:
+  web:
+    Container ID:   docker://99eef2a306692d6b180b130043f1c9b3655e22f9ca8d8ec054ca9637c25191f7
+    Image:          nginx:alpine
+    Image ID:       docker-pullable://nginx@sha256:99be6ae8d32943b676031b3513782ad55c8540c1d040b1f7b8c335c67a241b06
+    Port:           80/TCP
+    Host Port:      0/TCP
+    State:          Running
+      Started:      Tue, 05 Nov 2019 13:00:35 +0530
+    Ready:          True
+    Restart Count:  0
+    Environment:    <none>
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from default-token-t7c9v (ro)
+Conditions:
+  Type              Status
+  Initialized       True
+  Ready             True
+  ContainersReady   True
+  PodScheduled      True
+Volumes:
+  default-token-t7c9v:
+    Type:        Secret (a volume populated by a Secret)
+    SecretName:  default-token-t7c9v
+    Optional:    false
+QoS Class:       BestEffort
+Node-Selectors:  <none>
+Tolerations:     node.kubernetes.io/not-ready:NoExecute for 300s
+                 node.kubernetes.io/unreachable:NoExecute for 300s
+Events:
+  Type    Reason     Age   From               Message
+  ----    ------     ----  ----               -------
+  Normal  Scheduled  75s   default-scheduler  Successfully assigned default/my-nginx to minikube
+  Normal  Pulled     74s   kubelet, minikube  Container image "nginx:alpine" already present on machine
+  Normal  Created    74s   kubelet, minikube  Created container web
+  Normal  Started    74s   kubelet, minikube  Started container web
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sep23/k8s
+λ kubectl get pods
+NAME       READY   STATUS    RESTARTS   AGE
+my-nginx   1/1     Running   0          15m
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sep23/k8s
+λ kubectl get pod
+NAME       READY   STATUS    RESTARTS   AGE
+my-nginx   1/1     Running   0          16m
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sep23/k8s
+λ kubectl get po
+NAME       READY   STATUS    RESTARTS   AGE
+my-nginx   1/1     Running   0          16m
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sep23/k8s
+λ #kubectl delete pod my-nginx
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sep23/k8s
+λ kubectl delete -f pod/pod-helloworld.yml
+pod "my-nginx" deleted
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sep23/k8s
+λ
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sep23/k8s
+λ
