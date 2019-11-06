@@ -1,10 +1,14 @@
-apiVersion: extensions/v1beta1
+#apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: helloworld-dep
 spec:
   revisionHistoryLimit: 10
-  replicas: 1
+  replicas: 5
+  selector:
+    matchLabels:
+      app: helloworld
   template:
     metadata:
       labels:
@@ -12,7 +16,7 @@ spec:
     spec:
       containers:
       - name: web
-        image: adityaprabhakara/app
+        image: nginx:latest
         imagePullPolicy: IfNotPresent
         ports:
         - name: nginxport
