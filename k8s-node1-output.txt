@@ -1,0 +1,203 @@
+login as: vagrant
+vagrant@192.167.10.71's password:
+Welcome to Ubuntu 16.04.6 LTS (GNU/Linux 4.4.0-150-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+71 packages can be updated.
+33 updates are security updates.
+
+
+Last login: Fri Sep 20 09:15:23 2019 from 192.167.10.1
+vagrant@k8snode1:~$ sudo su
+root@k8snode1:/home/vagrant# kubeadm reset
+[reset] WARNING: Changes made to this host by 'kubeadm init' or 'ku                                                                    beadm join' will be reverted.
+[reset] Are you sure you want to proceed? [y/N]: y
+[preflight] Running pre-flight checks
+W1106 09:00:15.920150    8178 removeetcdmember.go:79] [reset] No ku                                                                    beadm config, using etcd pod spec to get data directory
+[reset] No etcd config found. Assuming external etcd
+[reset] Please, manually reset etcd to prevent further issues
+[reset] Stopping the kubelet service
+[reset] Unmounting mounted directories in "/var/lib/kubelet"
+[reset] Deleting contents of config directories: [/etc/kubernetes/m                                                                    anifests /etc/kubernetes/pki]
+[reset] Deleting files: [/etc/kubernetes/admin.conf /etc/kubernetes                                                                    /kubelet.conf /etc/kubernetes/bootstrap-kubelet.conf /etc/kubernete                                                                    s/controller-manager.conf /etc/kubernetes/scheduler.conf]
+[reset] Deleting contents of stateful directories: [/var/lib/kubele                                                                    t /etc/cni/net.d /var/lib/dockershim /var/run/kubernetes /var/lib/c                                                                    ni]
+
+The reset process does not reset or clean up iptables rules or IPVS                                                                     tables.
+If you wish to reset iptables, you must do so manually by using the                                                                     "iptables" command.
+
+If your cluster was setup to utilize IPVS, run ipvsadm --clear (or                                                                     similar)
+to reset your system's IPVS tables.
+
+The reset process does not clean your kubeconfig files and you must                                                                     remove them manually.
+Please, check the contents of the $HOME/.kube/config file.
+root@k8snode1:/home/vagrant#
+root@k8snode1:/home/vagrant# cd /vagrant
+root@k8snode1:/vagrant# ls
+build-machine-k8s  kube-installations.sh       proj1
+canal.yml          kube-master.sh              rbac.yml
+config             kube-node-output-jun22.txt  readme.md
+data2              master-output-jun22.txt     setup.txt
+hello.txt          master-output.txt           sqldata
+jenkins_home       newfile.txt                 Vagrantfile
+jenkins_home1      node-output.txt
+root@k8snode1:/vagrant# ./kube-installations.sh
+installing docker
+Get:2 https://download.docker.com/linux/ubuntu xenial InRelease [66                                                                    .2 kB]
+Get:3 http://security.ubuntu.com/ubuntu xenial-security InRelease [                                                                    109 kB]
+Hit:4 http://archive.ubuntu.com/ubuntu xenial InRelease
+Get:5 https://download.docker.com/linux/ubuntu xenial/stable amd64                                                                     Packages [11.6 kB]
+Get:6 http://archive.ubuntu.com/ubuntu xenial-updates InRelease [10                                                                    9 kB]
+Get:1 https://packages.cloud.google.com/apt kubernetes-xenial InRel                                                                    ease [8,993 B]
+Get:7 https://packages.cloud.google.com/apt kubernetes-xenial/main                                                                     amd64 Packages [30.8 kB]
+Get:8 http://archive.ubuntu.com/ubuntu xenial-backports InRelease [                                                                    107 kB]
+Get:9 http://security.ubuntu.com/ubuntu xenial-security/main amd64                                                                     Packages [770 kB]
+Get:10 http://archive.ubuntu.com/ubuntu xenial-updates/main amd64 P                                                                    ackages [1,055 kB]
+Get:11 http://security.ubuntu.com/ubuntu xenial-security/main i386                                                                     Packages [607 kB]
+Get:12 http://archive.ubuntu.com/ubuntu xenial-updates/main i386 Pa                                                                    ckages [872 kB]
+Get:13 http://security.ubuntu.com/ubuntu xenial-security/main Trans                                                                    lation-en [298 kB]
+Get:14 http://archive.ubuntu.com/ubuntu xenial-updates/main Transla                                                                    tion-en [408 kB]
+Get:15 http://archive.ubuntu.com/ubuntu xenial-updates/universe amd                                                                    64 Packages [769 kB]
+Get:16 http://security.ubuntu.com/ubuntu xenial-security/universe a                                                                    md64 Packages [463 kB]
+Get:17 http://security.ubuntu.com/ubuntu xenial-security/universe i                                                                    386 Packages [399 kB]
+Get:18 http://archive.ubuntu.com/ubuntu xenial-updates/universe i38                                                                    6 Packages [698 kB]
+Get:19 http://security.ubuntu.com/ubuntu xenial-security/universe T                                                                    ranslation-en [190 kB]
+Get:20 http://archive.ubuntu.com/ubuntu xenial-updates/universe Tra                                                                    nslation-en [322 kB]
+Get:21 http://security.ubuntu.com/ubuntu xenial-security/multiverse                                                                     amd64 Packages [5,728 B]
+Get:22 http://archive.ubuntu.com/ubuntu xenial-updates/multiverse a                                                                    md64 Packages [16.8 kB]
+Get:23 http://security.ubuntu.com/ubuntu xenial-security/multiverse                                                                     i386 Packages [5,888 B]
+Get:24 http://archive.ubuntu.com/ubuntu xenial-updates/multiverse i                                                                    386 Packages [15.9 kB]
+Get:25 http://security.ubuntu.com/ubuntu xenial-security/multiverse                                                                     Translation-en [2,708 B]
+Get:26 http://archive.ubuntu.com/ubuntu xenial-updates/multiverse T                                                                    ranslation-en [8,468 B]
+Fetched 7,350 kB in 23s (319 kB/s)
+Reading package lists... Done
+N: Skipping acquire of configured file 'stable/binary-i386/Packages                                                                    ' as repository 'https://download.docker.com/linux/ubuntu xenial In                                                                    Release' doesn't support architecture 'i386'
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+apt-transport-https is already the newest version (1.2.32).
+ca-certificates is already the newest version (20170717~16.04.2).
+curl is already the newest version (7.47.0-1ubuntu2.14).
+software-properties-common is already the newest version (0.96.20.9                                                                    ).
+0 upgraded, 0 newly installed, 0 to remove and 107 not upgraded.
+OK
+Hit:1 https://download.docker.com/linux/ubuntu xenial InRelease
+Hit:3 http://security.ubuntu.com/ubuntu xenial-security InRelease
+Hit:4 http://archive.ubuntu.com/ubuntu xenial InRelease
+Hit:2 https://packages.cloud.google.com/apt kubernetes-xenial InRel                                                                    ease
+Hit:5 http://archive.ubuntu.com/ubuntu xenial-updates InRelease
+Hit:6 http://archive.ubuntu.com/ubuntu xenial-backports InRelease
+Reading package lists... Done
+N: Skipping acquire of configured file 'stable/binary-i386/Packages                                                                    ' as repository 'https://download.docker.com/linux/ubuntu xenial In                                                                    Release' doesn't support architecture 'i386'
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+docker-ce is already the newest version (17.03.3~ce-0~ubuntu-xenial                                                                    ).
+0 upgraded, 0 newly installed, 0 to remove and 106 not upgraded.
+installing kubeadm and kubectl
+Hit:1 https://download.docker.com/linux/ubuntu xenial InRelease
+Hit:2 http://security.ubuntu.com/ubuntu xenial-security InRelease
+Hit:3 http://archive.ubuntu.com/ubuntu xenial InRelease
+Hit:5 http://archive.ubuntu.com/ubuntu xenial-updates InRelease
+Hit:4 https://packages.cloud.google.com/apt kubernetes-xenial InRel                                                                    ease
+Hit:6 http://archive.ubuntu.com/ubuntu xenial-backports InRelease
+Reading package lists... Done
+N: Skipping acquire of configured file 'stable/binary-i386/Packages                                                                    ' as repository 'https://download.docker.com/linux/ubuntu xenial In                                                                    Release' doesn't support architecture 'i386'
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+apt-transport-https is already the newest version (1.2.32).
+0 upgraded, 0 newly installed, 0 to remove and 107 not upgraded.
+OK
+Hit:1 https://download.docker.com/linux/ubuntu xenial InRelease
+Hit:3 http://archive.ubuntu.com/ubuntu xenial InRelease
+Hit:4 http://security.ubuntu.com/ubuntu xenial-security InRelease
+Hit:5 http://archive.ubuntu.com/ubuntu xenial-updates InRelease
+Hit:2 https://packages.cloud.google.com/apt kubernetes-xenial InRel                                                                    ease
+Hit:6 http://archive.ubuntu.com/ubuntu xenial-backports InRelease
+Reading package lists... Done
+N: Skipping acquire of configured file 'stable/binary-i386/Packages                                                                    ' as repository 'https://download.docker.com/linux/ubuntu xenial In                                                                    Release' doesn't support architecture 'i386'
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+The following packages will be upgraded:
+  kubeadm kubectl kubelet
+3 upgraded, 0 newly installed, 0 to remove and 104 not upgraded.
+Need to get 38.7 MB of archives.
+After this operation, 20.5 kB of additional disk space will be used                                                                    .
+Get:1 https://packages.cloud.google.com/apt kubernetes-xenial/main                                                                     amd64 kubelet amd64 1.16.2-00 [20.7 MB]
+Get:2 https://packages.cloud.google.com/apt kubernetes-xenial/main                                                                     amd64 kubectl amd64 1.16.2-00 [9,234 kB]
+Get:3 https://packages.cloud.google.com/apt kubernetes-xenial/main                                                                     amd64 kubeadm amd64 1.16.2-00 [8,761 kB]
+Fetched 38.7 MB in 1min 1s (634 kB/s)
+(Reading database ... 38925 files and directories currently install                                                                    ed.)
+Preparing to unpack .../kubelet_1.16.2-00_amd64.deb ...
+Unpacking kubelet (1.16.2-00) over (1.16.0-00) ...
+Preparing to unpack .../kubectl_1.16.2-00_amd64.deb ...
+Unpacking kubectl (1.16.2-00) over (1.16.0-00) ...
+Preparing to unpack .../kubeadm_1.16.2-00_amd64.deb ...
+Unpacking kubeadm (1.16.2-00) over (1.16.0-00) ...
+Setting up kubelet (1.16.2-00) ...
+Setting up kubectl (1.16.2-00) ...
+Setting up kubeadm (1.16.2-00) ...
+root@k8snode1:/vagrant# docker container ls
+CONTAINER ID        IMAGE               COMMAND             CREATED                                                                                 STATUS              PORTS               NAMES
+root@k8snode1:/vagrant#
+root@k8snode1:/vagrant# kubeadm join 192.167.10.70:6443 --token 0tyvja.yvpl9vc5mg4yg7mi \
+>     --discovery-token-ca-cert-hash sha256:e478133f31c72aad4a2e451906663ec9503159d891e706e06d8db5ad6c4fb870
+[preflight] Running pre-flight checks
+        [WARNING IsDockerSystemdCheck]: detected "cgroupfs" as the Docker cgroup driver. The recommended driver is "systemd". Please follow the guide at https://kubernetes.io/docs/setup/cri/
+[preflight] Reading configuration from the cluster...
+[preflight] FYI: You can look at this config file with 'kubectl -n kube-system get cm kubeadm-config -oyaml'
+[kubelet-start] Downloading configuration for the kubelet from the "kubelet-config-1.16" ConfigMap in the kube-system namespace
+[kubelet-start] Writing kubelet configuration to file "/var/lib/kubelet/config.yaml"
+[kubelet-start] Writing kubelet environment file with flags to file "/var/lib/kubelet/kubeadm-flags.env"
+[kubelet-start] Activating the kubelet service
+[kubelet-start] Waiting for the kubelet to perform the TLS Bootstrap...
+
+This node has joined the cluster:
+* Certificate signing request was sent to apiserver and a response was received.
+* The Kubelet was informed of the new secure connection details.
+
+Run 'kubectl get nodes' on the control-plane to see this node join the cluster.
+
+root@k8snode1:/vagrant# route
+Kernel IP routing table
+Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+default         10.0.2.2        0.0.0.0         UG    0      0        0 eth0
+10.0.2.0        *               255.255.255.0   U     0      0        0 eth0
+172.17.0.0      *               255.255.0.0     U     0      0        0 docker0
+192.167.10.0    *               255.255.255.0   U     0      0        0 eth1
+192.168.0.0     192.168.0.0     255.255.255.0   UG    0      0        0 flannel.1
+192.168.1.2     *               255.255.255.255 UH    0      0        0 cali23d43678ff7
+192.168.1.3     *               255.255.255.255 UH    0      0        0 cali8cecc99b79f
+192.168.1.14    *               255.255.255.255 UH    0      0        0 calic1b00a832bd
+192.168.1.15    *               255.255.255.255 UH    0      0        0 calia14962d8349
+192.168.1.16    *               255.255.255.255 UH    0      0        0 calid3bbf2ad374
+192.168.1.17    *               255.255.255.255 UH    0      0        0 cali8b6917bda2c
+192.168.1.18    *               255.255.255.255 UH    0      0        0 calib05c8b1ad31
+root@k8snode1:/vagrant#
+login as: vagrant
+vagrant@192.167.10.71's password:
+Welcome to Ubuntu 16.04.6 LTS (GNU/Linux 4.4.0-150-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+109 packages can be updated.
+64 updates are security updates.
+
+
+Last login: Wed Nov  6 08:53:00 2019 from 192.167.10.1
+vagrant@k8snode1:~$
+vagrant@k8snode1:~$ cd /vagrant
+vagrant@k8snode1:/vagrant$ ls
+build-machine-k8s  data2          jh                     kube-node-output-jun22.txt  newfile.txt      rbac.yml   sqldata
+canal.yml          jenkins_home   kube-installations.sh  master-output-jun22.txt     node-output.txt  readme.md  Vagrantfile
+config             jenkins_home1  kube-master.sh         master-output.txt           proj1            setup.txt
+vagrant@k8snode1:/vagrant$ touch new.txt
+vagrant@k8snode1:/vagrant$
+vagrant@k8snode1:/vagrant$
+vagrant@k8snode1:/vagrant$
