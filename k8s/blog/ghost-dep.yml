@@ -24,11 +24,20 @@ spec:
         - name: database__connection__port
           value: "8888"
         - name: database__connection__user
-          value: root
+          valueFrom: 
+            configMapKeyRef:
+              name: myconfig
+              key: dbusername
         - name: database__connection__password
-          value: welcome
+          valueFrom:
+            secretKeyRef:
+              name: mysecret
+              key: dbpwd
         - name: database__connection__database
-          value: ghost
+          valueFrom: 
+            configMapKeyRef:
+              name: myconfig
+              key: dbname
           
 ---
 apiVersion: v1
