@@ -1,0 +1,15 @@
+From Windows
+curl 192.168.99.100:31001  -->LB
+
+From Minikube
+curl 192.168.99.100:31001  --> LB
+curl localhost:31001       --> LB
+curl 10.106.208.225:8888   --> LB
+curl 172.17.0.4:80         --> Not LB
+
+From Pods
+curl localhost:80          --> Not LB
+curl 172.17.0.6:80         --> Not LB
+curl 192.168.99.100:31001  --> LB
+curl 10.106.208.225:8888   --> LB
+curl hw-svc:8888           --> LB
