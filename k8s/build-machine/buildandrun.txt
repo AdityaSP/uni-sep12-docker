@@ -1,0 +1,5 @@
+#BUILD command
+root@k8smaster:/home/vagrant/build-machine# docker image build -f Dockerfile -t build-machine .
+
+#RUN command
+docker container run -d -p 9999:8080 -v /var/run/docker.sock:/var/run/docker.sock -v /etc/kubernetes/admin.conf:/etc/config -e KUBECONFIG=/etc/config -v /vagrant/jh:/var/jenkins_home build-machine
