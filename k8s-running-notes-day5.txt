@@ -1,0 +1,158 @@
+ewReplicaSet:     helloworld-deployment-dbd54bb6d (4/6 replicas created)
+Events:
+  Type    Reason             Age    From                   Message
+  ----    ------             ----   ----                   -------
+  Normal  ScalingReplicaSet  3m19s  deployment-controller  Scaled up replica set helloworld-deployment-dbd54bb6d to 1
+  Normal  ScalingReplicaSet  36s    deployment-controller  Scaled up replica set helloworld-deployment-dbd54bb6d to 6
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sep23/k8s
+λ kubectl get rs -n myspace
+NAME                              DESIRED   CURRENT   READY   AGE
+helloworld-deployment-dbd54bb6d   6         4         4       3m41s
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sep23/k8s
+λ kubectl describe rs helloworld-deployment-dbd54bb6d -n myspace
+Name:           helloworld-deployment-dbd54bb6d
+Namespace:      myspace
+Selector:       app=helloworld,pod-template-hash=dbd54bb6d
+Labels:         app=helloworld
+                pod-template-hash=dbd54bb6d
+Annotations:    deployment.kubernetes.io/desired-replicas: 6
+                deployment.kubernetes.io/max-replicas: 7
+                deployment.kubernetes.io/revision: 1
+Controlled By:  Deployment/helloworld-deployment
+Replicas:       4 current / 6 desired
+Pods Status:    4 Running / 0 Waiting / 0 Succeeded / 0 Failed
+Pod Template:
+  Labels:  app=helloworld
+           pod-template-hash=dbd54bb6d
+  Containers:
+   k8s-demo:
+    Image:      nginx:alpine
+    Port:       80/TCP
+    Host Port:  0/TCP
+    Limits:
+      cpu:     200m
+      memory:  256Mi
+    Requests:
+      cpu:        100m
+      memory:     256Mi
+    Environment:  <none>
+    Mounts:       <none>
+  Volumes:        <none>
+Conditions:
+  Type             Status  Reason
+  ----             ------  ------
+  ReplicaFailure   True    FailedCreate
+Events:
+  Type     Reason            Age                From                   Message
+  ----     ------            ----               ----                   -------
+  Normal   SuccessfulCreate  3m52s              replicaset-controller  Created pod: helloworld-deployment-dbd54bb6d-5fbr4
+  Normal   SuccessfulCreate  70s                replicaset-controller  Created pod: helloworld-deployment-dbd54bb6d-trmbg
+  Normal   SuccessfulCreate  70s                replicaset-controller  Created pod: helloworld-deployment-dbd54bb6d-sz8l2
+  Normal   SuccessfulCreate  70s                replicaset-controller  Created pod: helloworld-deployment-dbd54bb6d-gbbgb
+  Warning  FailedCreate      70s                replicaset-controller  Error creating: pods "helloworld-deployment-dbd54bb6d-g4tr4" is forbidden: exceeded quota: compute-quota, requested: limits.memory=256Mi,requests.memory=256Mi, used: limits.memory=1Gi,requests.memory=1Gi, limited: limits.memory=1Gi,requests.memory=1Gi
+  Warning  FailedCreate      70s                replicaset-controller  Error creating: pods "helloworld-deployment-dbd54bb6d-46c9r" is forbidden: exceeded quota: compute-quota, requested: limits.memory=256Mi,requests.memory=256Mi, used: limits.memory=1Gi,requests.memory=1Gi, limited: limits.memory=1Gi,requests.memory=1Gi
+  Warning  FailedCreate      69s                replicaset-controller  Error creating: pods "helloworld-deployment-dbd54bb6d-4zmzv" is forbidden: exceeded quota: compute-quota, requested: limits.memory=256Mi,requests.memory=256Mi, used: limits.memory=1Gi,requests.memory=1Gi, limited: limits.memory=1Gi,requests.memory=1Gi
+  Warning  FailedCreate      69s                replicaset-controller  Error creating: pods "helloworld-deployment-dbd54bb6d-57n69" is forbidden: exceeded quota: compute-quota, requested: limits.memory=256Mi,requests.memory=256Mi, used: limits.memory=1Gi,requests.memory=1Gi, limited: limits.memory=1Gi,requests.memory=1Gi
+  Warning  FailedCreate      69s                replicaset-controller  Error creating: pods "helloworld-deployment-dbd54bb6d-nbn99" is forbidden: exceeded quota: compute-quota, requested: limits.memory=256Mi,requests.memory=256Mi, used: limits.memory=1Gi,requests.memory=1Gi, limited: limits.memory=1Gi,requests.memory=1Gi
+  Warning  FailedCreate      69s                replicaset-controller  Error creating: pods "helloworld-deployment-dbd54bb6d-thfq8" is forbidden: exceeded quota: compute-quota, requested: limits.memory=256Mi,requests.memory=256Mi, used: limits.memory=1Gi,requests.memory=1Gi, limited: limits.memory=1Gi,requests.memory=1Gi
+  Warning  FailedCreate      69s                replicaset-controller  Error creating: pods "helloworld-deployment-dbd54bb6d-wb88f" is forbidden: exceeded quota: compute-quota, requested: limits.memory=256Mi,requests.memory=256Mi, used: limits.memory=1Gi,requests.memory=1Gi, limited: limits.memory=1Gi,requests.memory=1Gi
+  Warning  FailedCreate      69s                replicaset-controller  Error creating: pods "helloworld-deployment-dbd54bb6d-6bg9q" is forbidden: exceeded quota: compute-quota, requested: limits.memory=256Mi,requests.memory=256Mi, used: limits.memory=1Gi,requests.memory=1Gi, limited: limits.memory=1Gi,requests.memory=1Gi
+  Warning  FailedCreate      69s                replicaset-controller  Error creating: pods "helloworld-deployment-dbd54bb6d-lhffc" is forbidden: exceeded quota: compute-quota, requested: limits.memory=256Mi,requests.memory=256Mi, used: limits.memory=1Gi,requests.memory=1Gi, limited: limits.memory=1Gi,requests.memory=1Gi
+  Warning  FailedCreate      64s (x9 over 68s)  replicaset-controller  (combined from similar events): Error creating: pods "helloworld-deployment-dbd54bb6d-rpwbq" is forbidden: exceeded quota: compute-quota, requested: limits.memory=256Mi,requests.memory=256Mi, used: limits.memory=1Gi,requests.memory=1Gi, limited: limits.memory=1Gi,requests.memory=1Gi
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sep23/k8s
+λ
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sep23/k8s
+λ kubectl config get-contexts
+CURRENT   NAME                          CLUSTER      AUTHINFO           NAMESPACE
+          kubernetes-admin@kubernetes   kubernetes   kubernetes-admin
+*         minikube                      minikube     minikube
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sep23/k8s
+λ kubectl config set-context kubernetes-admin@kubernetes
+Context "kubernetes-admin@kubernetes" modified.
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sep23/k8s
+λ kubectl get pods -n kube-system
+NAME                               READY   STATUS    RESTARTS   AGE
+coredns-5c98db65d4-trt27           1/1     Running   45         95d
+coredns-5c98db65d4-z66tl           1/1     Running   44         95d
+etcd-minikube                      1/1     Running   23         95d
+kube-addon-manager-minikube        1/1     Running   24         95d
+kube-apiserver-minikube            1/1     Running   30         95d
+kube-controller-manager-minikube   1/1     Running   24         77d
+kube-proxy-8dtqq                   1/1     Running   22         95d
+kube-scheduler-minikube            1/1     Running   58         95d
+storage-provisioner                1/1     Running   41         95d
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sep23/k8s
+λ kubectl get nodes
+NAME       STATUS   ROLES    AGE   VERSION
+minikube   Ready    <none>   95d   v1.15.0
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sep23/k8s
+λ kubectl config get-contexts
+CURRENT   NAME                          CLUSTER      AUTHINFO           NAMESPACE
+          kubernetes-admin@kubernetes   kubernetes   kubernetes-admin
+*         minikube                      minikube     minikube
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sep23/k8s
+λ kubectl config use-context kubernetes-admin@kubernetes
+Switched to context "kubernetes-admin@kubernetes".
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sep23/k8s
+λ kubectl config get-contexts
+CURRENT   NAME                          CLUSTER      AUTHINFO           NAMESPACE
+*         kubernetes-admin@kubernetes   kubernetes   kubernetes-admin
+          minikube                      minikube     minikube
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sep23/k8s
+λ kubectl get nodes
+NAME        STATUS   ROLES    AGE   VERSION
+k8smaster   Ready    master   24h   v1.16.2
+k8snode1    Ready    <none>   24h   v1.16.2
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sep23/k8s
+λ kubectl get pods -n kube-system
+NAME                                READY   STATUS    RESTARTS   AGE
+canal-85jh8                         3/3     Running   7          24h
+canal-98mm6                         3/3     Running   7          24h
+coredns-5644d7b6d9-hngf7            1/1     Running   1          24h
+coredns-5644d7b6d9-vq958            1/1     Running   1          24h
+etcd-k8smaster                      1/1     Running   1          24h
+kube-apiserver-k8smaster            1/1     Running   1          24h
+kube-controller-manager-k8smaster   1/1     Running   1          24h
+kube-proxy-89qsg                    1/1     Running   1          24h
+kube-proxy-md5qj                    1/1     Running   1          24h
+kube-scheduler-k8smaster            1/1     Running   1          24h
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sep23/k8s
+λ kubectl get pods -n kube-system -o wide
+NAME                                READY   STATUS    RESTARTS   AGE   IP              NODE        NOMINATED NODE   READINESS GATES
+canal-85jh8                         3/3     Running   7          24h   192.167.10.71   k8snode1    <none>           <none>
+canal-98mm6                         3/3     Running   7          24h   192.167.10.70   k8smaster   <none>           <none>
+coredns-5644d7b6d9-hngf7            1/1     Running   1          24h   192.168.1.21    k8snode1    <none>           <none>
+coredns-5644d7b6d9-vq958            1/1     Running   1          24h   192.168.1.24    k8snode1    <none>           <none>
+etcd-k8smaster                      1/1     Running   1          24h   192.167.10.70   k8smaster   <none>           <none>
+kube-apiserver-k8smaster            1/1     Running   1          24h   192.167.10.70   k8smaster   <none>           <none>
+kube-controller-manager-k8smaster   1/1     Running   1          24h   192.167.10.70   k8smaster   <none>           <none>
+kube-proxy-89qsg                    1/1     Running   1          24h   192.167.10.71   k8snode1    <none>           <none>
+kube-proxy-md5qj                    1/1     Running   1          24h   192.167.10.70   k8smaster   <none>           <none>
+kube-scheduler-k8smaster            1/1     Running   1          24h   192.167.10.70   k8smaster   <none>           <none>
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sep23/k8s
+λ kubectl get deploy -n kube-system
+NAME      READY   UP-TO-DATE   AVAILABLE   AGE
+coredns   2/2     2            2           24h
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sep23/k8s
+λ kubectl get daemonset -n kube-system
+NAME         DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR                 AGE
+canal        2         2         2       2            2           <none>                        24h
+kube-proxy   2         2         2       2            2           beta.kubernetes.io/os=linux   24h
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sep23/k8s
+λ clear
