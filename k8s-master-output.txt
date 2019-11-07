@@ -1,0 +1,1269 @@
+login as: vagrant
+vagrant@192.167.10.70's password:
+Welcome to Ubuntu 16.04.6 LTS (GNU/Linux 4.4.0-150-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+71 packages can be updated.
+33 updates are security updates.
+
+
+Last login: Fri Sep 20 06:43:45 2019 from 192.167.10.1
+vagrant@k8smaster:~$ sudo su
+root@k8smaster:/home/vagrant# kubeadm reset
+[reset] Reading configuration from the cluster...
+[reset] FYI: You can look at this config file with 'kubectl -n kube                                                                                                                                                                                                            -system get cm kubeadm-config -oyaml'
+[reset] WARNING: Changes made to this host by 'kubeadm init' or 'ku                                                                                                                                                                                                            beadm join' will be reverted.
+[reset] Are you sure you want to proceed? [y/N]: y
+[preflight] Running pre-flight checks
+[reset] Removing info for node "k8smaster" from the ConfigMap "kube                                                                                                                                                                                                            adm-config" in the "kube-system" Namespace
+W1106 09:00:07.964599    6781 removeetcdmember.go:61] [reset] faile                                                                                                                                                                                                            d to remove etcd member: error syncing endpoints with etc: etcdclie                                                                                                                                                                                                            nt: no available endpoints
+.Please manually remove this etcd member using etcdctl
+[reset] Stopping the kubelet service
+[reset] Unmounting mounted directories in "/var/lib/kubelet"
+[reset] Deleting contents of config directories: [/etc/kubernetes/m                                                                                                                                                                                                            anifests /etc/kubernetes/pki]
+[reset] Deleting files: [/etc/kubernetes/admin.conf /etc/kubernetes                                                                                                                                                                                                            /kubelet.conf /etc/kubernetes/bootstrap-kubelet.conf /etc/kubernete                                                                                                                                                                                                            s/controller-manager.conf /etc/kubernetes/scheduler.conf]
+[reset] Deleting contents of stateful directories: [/var/lib/etcd /                                                                                                                                                                                                            var/lib/kubelet /etc/cni/net.d /var/lib/dockershim /var/run/kuberne                                                                                                                                                                                                            tes /var/lib/cni]
+
+The reset process does not reset or clean up iptables rules or IPVS                                                                                                                                                                                                             tables.
+If you wish to reset iptables, you must do so manually by using the                                                                                                                                                                                                             "iptables" command.
+
+If your cluster was setup to utilize IPVS, run ipvsadm --clear (or                                                                                                                                                                                                             similar)
+to reset your system's IPVS tables.
+
+The reset process does not clean your kubeconfig files and you must                                                                                                                                                                                                             remove them manually.
+Please, check the contents of the $HOME/.kube/config file.
+root@k8smaster:/home/vagrant#
+root@k8smaster:/home/vagrant# cd /vagrant
+root@k8smaster:/vagrant# ls
+build-machine-k8s  kube-installations.sh       proj1
+canal.yml          kube-master.sh              rbac.yml
+config             kube-node-output-jun22.txt  readme.md
+data2              master-output-jun22.txt     setup.txt
+hello.txt          master-output.txt           sqldata
+jenkins_home       newfile.txt                 Vagrantfile
+jenkins_home1      node-output.txt
+root@k8smaster:/vagrant# ./kube-installations.sh
+installing docker
+Get:1 https://download.docker.com/linux/ubuntu xenial InRelease [66                                                                                                                                                                                                            .2 kB]
+Hit:2 http://archive.ubuntu.com/ubuntu xenial InRelease
+Get:3 https://download.docker.com/linux/ubuntu xenial/stable amd64                                                                                                                                                                                                             Packages [11.6 kB]
+Get:4 http://security.ubuntu.com/ubuntu xenial-security InRelease [                                                                                                                                                                                                            109 kB]
+Get:5 http://archive.ubuntu.com/ubuntu xenial-updates InRelease [10                                                                                                                                                                                                            9 kB]
+Get:6 https://packages.cloud.google.com/apt kubernetes-xenial InRel                                                                                                                                                                                                            ease [8,993 B]
+Get:7 http://archive.ubuntu.com/ubuntu xenial-backports InRelease [                                                                                                                                                                                                            107 kB]
+Get:8 http://security.ubuntu.com/ubuntu xenial-security/main amd64                                                                                                                                                                                                             Packages [770 kB]
+Get:9 https://packages.cloud.google.com/apt kubernetes-xenial/main                                                                                                                                                                                                             amd64 Packages [30.8 kB]
+Get:10 http://archive.ubuntu.com/ubuntu xenial-updates/main amd64 P                                                                                                                                                                                                            ackages [1,055 kB]
+Get:11 http://archive.ubuntu.com/ubuntu xenial-updates/main i386 Pa                                                                                                                                                                                                            ckages [872 kB]
+Get:12 http://security.ubuntu.com/ubuntu xenial-security/main i386                                                                                                                                                                                                             Packages [607 kB]
+Get:13 http://archive.ubuntu.com/ubuntu xenial-updates/main Transla                                                                                                                                                                                                            tion-en [408 kB]
+Get:14 http://archive.ubuntu.com/ubuntu xenial-updates/universe amd                                                                                                                                                                                                            64 Packages [769 kB]
+Get:15 http://security.ubuntu.com/ubuntu xenial-security/main Trans                                                                                                                                                                                                            lation-en [298 kB]
+Get:16 http://archive.ubuntu.com/ubuntu xenial-updates/universe i38                                                                                                                                                                                                            6 Packages [698 kB]
+Get:17 http://security.ubuntu.com/ubuntu xenial-security/universe a                                                                                                                                                                                                            md64 Packages [463 kB]
+Get:18 http://archive.ubuntu.com/ubuntu xenial-updates/universe Tra                                                                                                                                                                                                            nslation-en [322 kB]
+Get:19 http://archive.ubuntu.com/ubuntu xenial-updates/multiverse a                                                                                                                                                                                                            md64 Packages [16.8 kB]
+Get:20 http://archive.ubuntu.com/ubuntu xenial-updates/multiverse i                                                                                                                                                                                                            386 Packages [15.9 kB]
+Get:21 http://archive.ubuntu.com/ubuntu xenial-updates/multiverse T                                                                                                                                                                                                            ranslation-en [8,468 B]
+Get:22 http://security.ubuntu.com/ubuntu xenial-security/universe i                                                                                                                                                                                                            386 Packages [399 kB]
+Get:23 http://security.ubuntu.com/ubuntu xenial-security/universe T                                                                                                                                                                                                            ranslation-en [190 kB]
+Get:24 http://security.ubuntu.com/ubuntu xenial-security/multiverse                                                                                                                                                                                                             amd64 Packages [5,728 B]
+Get:25 http://security.ubuntu.com/ubuntu xenial-security/multiverse                                                                                                                                                                                                             i386 Packages [5,888 B]
+Get:26 http://security.ubuntu.com/ubuntu xenial-security/multiverse                                                                                                                                                                                                             Translation-en [2,708 B]
+Fetched 7,350 kB in 26s (275 kB/s)
+Reading package lists... Done
+N: Skipping acquire of configured file 'stable/binary-i386/Packages                                                                                                                                                                                                            ' as repository 'https://download.docker.com/linux/ubuntu xenial In                                                                                                                                                                                                            Release' doesn't support architecture 'i386'
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+apt-transport-https is already the newest version (1.2.32).
+ca-certificates is already the newest version (20170717~16.04.2).
+curl is already the newest version (7.47.0-1ubuntu2.14).
+software-properties-common is already the newest version (0.96.20.9                                                                                                                                                                                                            ).
+0 upgraded, 0 newly installed, 0 to remove and 107 not upgraded.
+OK
+Hit:1 https://download.docker.com/linux/ubuntu xenial InRelease
+Hit:3 http://archive.ubuntu.com/ubuntu xenial InRelease
+Hit:4 http://security.ubuntu.com/ubuntu xenial-security InRelease
+Hit:5 http://archive.ubuntu.com/ubuntu xenial-updates InRelease
+Hit:2 https://packages.cloud.google.com/apt kubernetes-xenial InRel                                                                                                                                                                                                            ease
+Hit:6 http://archive.ubuntu.com/ubuntu xenial-backports InRelease
+Reading package lists... Done
+N: Skipping acquire of configured file 'stable/binary-i386/Packages                                                                                                                                                                                                            ' as repository 'https://download.docker.com/linux/ubuntu xenial In                                                                                                                                                                                                            Release' doesn't support architecture 'i386'
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+docker-ce is already the newest version (17.03.3~ce-0~ubuntu-xenial                                                                                                                                                                                                            ).
+0 upgraded, 0 newly installed, 0 to remove and 106 not upgraded.
+installing kubeadm and kubectl
+Hit:1 https://download.docker.com/linux/ubuntu xenial InRelease
+Hit:2 http://archive.ubuntu.com/ubuntu xenial InRelease
+Hit:3 http://security.ubuntu.com/ubuntu xenial-security InRelease
+Hit:4 http://archive.ubuntu.com/ubuntu xenial-updates InRelease
+Hit:5 http://archive.ubuntu.com/ubuntu xenial-backports InRelease
+Hit:6 https://packages.cloud.google.com/apt kubernetes-xenial InRel                                                                                                                                                                                                            ease
+Reading package lists... Done
+N: Skipping acquire of configured file 'stable/binary-i386/Packages                                                                                                                                                                                                            ' as repository 'https://download.docker.com/linux/ubuntu xenial In                                                                                                                                                                                                            Release' doesn't support architecture 'i386'
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+apt-transport-https is already the newest version (1.2.32).
+0 upgraded, 0 newly installed, 0 to remove and 107 not upgraded.
+OK
+Hit:2 https://download.docker.com/linux/ubuntu xenial InRelease
+Hit:3 http://security.ubuntu.com/ubuntu xenial-security InRelease
+Hit:4 http://archive.ubuntu.com/ubuntu xenial InRelease
+Hit:1 https://packages.cloud.google.com/apt kubernetes-xenial InRel                                                                                                                                                                                                            ease
+Hit:5 http://archive.ubuntu.com/ubuntu xenial-updates InRelease
+Hit:6 http://archive.ubuntu.com/ubuntu xenial-backports InRelease
+Reading package lists... Done
+N: Skipping acquire of configured file 'stable/binary-i386/Packages                                                                                                                                                                                                            ' as repository 'https://download.docker.com/linux/ubuntu xenial In                                                                                                                                                                                                            Release' doesn't support architecture 'i386'
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+The following packages will be upgraded:
+  kubeadm kubectl kubelet
+3 upgraded, 0 newly installed, 0 to remove and 104 not upgraded.
+Need to get 38.7 MB of archives.
+After this operation, 20.5 kB of additional disk space will be used                                                                                                                                                                                                            .
+Get:1 https://packages.cloud.google.com/apt kubernetes-xenial/main                                                                                                                                                                                                             amd64 kubelet amd64 1.16.2-00 [20.7 MB]
+Get:2 https://packages.cloud.google.com/apt kubernetes-xenial/main                                                                                                                                                                                                             amd64 kubectl amd64 1.16.2-00 [9,234 kB]
+Get:3 https://packages.cloud.google.com/apt kubernetes-xenial/main                                                                                                                                                                                                             amd64 kubeadm amd64 1.16.2-00 [8,761 kB]
+Fetched 38.7 MB in 1min 2s (617 kB/s)
+(Reading database ... 38925 files and directories currently install                                                                                                                                                                                                            ed.)
+Preparing to unpack .../kubelet_1.16.2-00_amd64.deb ...
+Unpacking kubelet (1.16.2-00) over (1.16.0-00) ...
+Preparing to unpack .../kubectl_1.16.2-00_amd64.deb ...
+Unpacking kubectl (1.16.2-00) over (1.16.0-00) ...
+Preparing to unpack .../kubeadm_1.16.2-00_amd64.deb ...
+Unpacking kubeadm (1.16.2-00) over (1.16.0-00) ...
+Setting up kubelet (1.16.2-00) ...
+Setting up kubectl (1.16.2-00) ...
+Setting up kubeadm (1.16.2-00) ...
+root@k8smaster:/vagrant# docker container ls
+CONTAINER ID        IMAGE               COMMAND             CREATED                                                                                                                                                                                                                         STATUS              PORTS               NAMES
+root@k8smaster:/vagrant# ifconfig
+docker0   Link encap:Ethernet  HWaddr 02:42:97:13:b7:68
+          inet addr:172.17.0.1  Bcast:0.0.0.0  Mask:255.255.0.0
+          UP BROADCAST MULTICAST  MTU:1500  Metric:1
+          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0
+          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)
+
+eth0      Link encap:Ethernet  HWaddr 08:00:27:6b:c1:df
+          inet addr:10.0.2.15  Bcast:10.0.2.255  Mask:255.255.255.0
+          inet6 addr: fe80::a00:27ff:fe6b:c1df/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:37294 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:18838 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000
+          RX bytes:49127116 (49.1 MB)  TX bytes:1215536 (1.2 MB)
+
+eth1      Link encap:Ethernet  HWaddr 08:00:27:06:86:52
+          inet addr:192.167.10.70  Bcast:192.167.10.255  Mask:255.2                                                                                                                                                                                                            55.255.0
+          inet6 addr: fe80::a00:27ff:fe06:8652/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:5326 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:6548 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000
+          RX bytes:560454 (560.4 KB)  TX bytes:3943731 (3.9 MB)
+
+flannel.1 Link encap:Ethernet  HWaddr 3a:73:11:2f:7e:c1
+          inet addr:192.168.0.0  Bcast:0.0.0.0  Mask:255.255.255.25                                                                                                                                                                                                            5
+          inet6 addr: fe80::3873:11ff:fe2f:7ec1/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1450  Metric:1
+          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:0 errors:0 dropped:8 overruns:0 carrier:0
+          collisions:0 txqueuelen:0
+          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)
+
+lo        Link encap:Local Loopback
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          inet6 addr: ::1/128 Scope:Host
+          UP LOOPBACK RUNNING  MTU:65536  Metric:1
+          RX packets:77325 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:77325 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1
+          RX bytes:20592007 (20.5 MB)  TX bytes:20592007 (20.5 MB)
+
+root@k8smaster:/vagrant#
+root@k8smaster:/vagrant# kubeadm init --pod-network-cidr=192.168.0.                                                                                                                                                                                                            0/16 --apiserver-advertise-address=192.167.10.70
+[init] Using Kubernetes version: v1.16.2
+[preflight] Running pre-flight checks
+        [WARNING IsDockerSystemdCheck]: detected "cgroupfs" as the                                                                                                                                                                                                             Docker cgroup driver. The recommended driver is "systemd". Please f                                                                                                                                                                                                            ollow the guide at https://kubernetes.io/docs/setup/cri/
+[preflight] Pulling images required for setting up a Kubernetes clu                                                                                                                                                                                                            ster
+[preflight] This might take a minute or two, depending on the speed                                                                                                                                                                                                             of your internet connection
+[preflight] You can also perform this action in beforehand using 'k                                                                                                                                                                                                            ubeadm config images pull'
+[kubelet-start] Writing kubelet environment file with flags to file                                                                                                                                                                                                             "/var/lib/kubelet/kubeadm-flags.env"
+[kubelet-start] Writing kubelet configuration to file "/var/lib/kub                                                                                                                                                                                                            elet/config.yaml"
+[kubelet-start] Activating the kubelet service
+[certs] Using certificateDir folder "/etc/kubernetes/pki"
+[certs] Generating "ca" certificate and key
+[certs] Generating "apiserver" certificate and key
+[certs] apiserver serving cert is signed for DNS names [k8smaster k                                                                                                                                                                                                            ubernetes kubernetes.default kubernetes.default.svc kubernetes.defa                                                                                                                                                                                                            ult.svc.cluster.local] and IPs [10.96.0.1 192.167.10.70]
+[certs] Generating "apiserver-kubelet-client" certificate and key
+[certs] Generating "front-proxy-ca" certificate and key
+[certs] Generating "front-proxy-client" certificate and key
+[certs] Generating "etcd/ca" certificate and key
+[certs] Generating "etcd/server" certificate and key
+[certs] etcd/server serving cert is signed for DNS names [k8smaster                                                                                                                                                                                                             localhost] and IPs [192.167.10.70 127.0.0.1 ::1]
+[certs] Generating "etcd/peer" certificate and key
+[certs] etcd/peer serving cert is signed for DNS names [k8smaster l                                                                                                                                                                                                            ocalhost] and IPs [192.167.10.70 127.0.0.1 ::1]
+[certs] Generating "etcd/healthcheck-client" certificate and key
+[certs] Generating "apiserver-etcd-client" certificate and key
+[certs] Generating "sa" key and public key
+[kubeconfig] Using kubeconfig folder "/etc/kubernetes"
+[kubeconfig] Writing "admin.conf" kubeconfig file
+[kubeconfig] Writing "kubelet.conf" kubeconfig file
+[kubeconfig] Writing "controller-manager.conf" kubeconfig file
+[kubeconfig] Writing "scheduler.conf" kubeconfig file
+[control-plane] Using manifest folder "/etc/kubernetes/manifests"
+[control-plane] Creating static Pod manifest for "kube-apiserver"
+[control-plane] Creating static Pod manifest for "kube-controller-m                                                                                                                                                                                                            anager"
+[control-plane] Creating static Pod manifest for "kube-scheduler"
+[etcd] Creating static Pod manifest for local etcd in "/etc/kuberne                                                                                                                                                                                                            tes/manifests"
+[wait-control-plane] Waiting for the kubelet to boot up the control                                                                                                                                                                                                             plane as static Pods from directory "/etc/kubernetes/manifests". T                                                                                                                                                                                                            his can take up to 4m0s
+[apiclient] All control plane components are healthy after 20.51254                                                                                                                                                                                                            5 seconds
+[upload-config] Storing the configuration used in ConfigMap "kubead                                                                                                                                                                                                            m-config" in the "kube-system" Namespace
+[kubelet] Creating a ConfigMap "kubelet-config-1.16" in namespace k                                                                                                                                                                                                            ube-system with the configuration for the kubelets in the cluster
+[upload-certs] Skipping phase. Please see --upload-certs
+[mark-control-plane] Marking the node k8smaster as control-plane by                                                                                                                                                                                                             adding the label "node-role.kubernetes.io/master=''"
+[mark-control-plane] Marking the node k8smaster as control-plane by                                                                                                                                                                                                             adding the taints [node-role.kubernetes.io/master:NoSchedule]
+[bootstrap-token] Using token: 0tyvja.yvpl9vc5mg4yg7mi
+[bootstrap-token] Configuring bootstrap tokens, cluster-info Config                                                                                                                                                                                                            Map, RBAC Roles
+[bootstrap-token] configured RBAC rules to allow Node Bootstrap tok                                                                                                                                                                                                            ens to post CSRs in order for nodes to get long term certificate cr                                                                                                                                                                                                            edentials
+[bootstrap-token] configured RBAC rules to allow the csrapprover co                                                                                                                                                                                                            ntroller automatically approve CSRs from a Node Bootstrap Token
+[bootstrap-token] configured RBAC rules to allow certificate rotati                                                                                                                                                                                                            on for all node client certificates in the cluster
+[bootstrap-token] Creating the "cluster-info" ConfigMap in the "kub                                                                                                                                                                                                            e-public" namespace
+[addons] Applied essential addon: CoreDNS
+[addons] Applied essential addon: kube-proxy
+
+Your Kubernetes control-plane has initialized successfully!
+
+To start using your cluster, you need to run the following as a reg                                                                                                                                                                                                            ular user:
+
+  mkdir -p $HOME/.kube
+  sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+  sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+You should now deploy a pod network to the cluster.
+Run "kubectl apply -f [podnetwork].yaml" with one of the options li                                                                                                                                                                                                            sted at:
+  https://kubernetes.io/docs/concepts/cluster-administration/addons                                                                                                                                                                                                            /
+
+Then you can join any number of worker nodes by running the followi                                                                                                                                                                                                            ng on each as root:
+
+kubeadm join 192.167.10.70:6443 --token 0tyvja.yvpl9vc5mg4yg7mi \
+    --discovery-token-ca-cert-hash sha256:e478133f31c72aad4a2e45190                                                                                                                                                                                                            6663ec9503159d891e706e06d8db5ad6c4fb870
+root@k8smaster:/vagrant# rm -rf ~/.kube
+root@k8smaster:/vagrant# mkdir -p $HOME/.kube
+root@k8smaster:/vagrant# sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+root@k8smaster:/vagrant# sudo chown $(id -u):$(id -g) $HOME/.kube/config
+root@k8smaster:/vagrant# cd ~/.kube
+root@k8smaster:~/.kube# ls
+config
+root@k8smaster:~/.kube# cat config
+apiVersion: v1
+clusters:
+- cluster:
+    certificate-authority-data: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUN5RENDQWJDZ0F3SUJBZ0lCQURBTkJna3Foa2lHOXcwQkFRc0ZBREFWTVJNd0V                                                                                                                                        RWURWUVFERXdwcmRXSmwKY201bGRHVnpNQjRYRFRFNU1URXdOakE1TWprME4xb1hEVEk1TVRFd016QTVNamswTjFvd0ZURVRNQkVHQTFVRQpBeE1LYTNWaVpYSnVaWFJsY3pDQ0                                                                                                                                        FTSXdEUVlKS29aSWh2Y05BUUVCQlFBRGdnRVBBRENDQVFvQ2dnRUJBTVI5ClRQaHpNZnVJellKS01IYlY3QVRmSU1CVm5FbmFWWjhnaWd3UkVCS0lqZFIyQlVGSDB5cHRMQ0N5c                                                                                                                                        Fh6aXk4Q1UKcEZPQUFVUVgrNFBvRkN5MlFQeUo2WjRjQUpUdnRDRytXcE9jcjd5aDg2dm1nNlBsWEQ2OE9uWWYvMVZnUUJ6QQpUSlJ6eWFFRjFWeDVIbHRZMm43Mmp6a1BmTVFr                                                                                                                                        L2pVTzUvOHJUc2JsSnVOVk5QM1djR3U0aDZ0TE5Kb0dTOG53ClhqVkp4Q0djOE92SGxDQmpyNEE4Y2RYKzF5YXpNZVdjUzMyRUUwSVY5M1UvZTRjTTdCaVRjM2h5QnJSQU1xbWo                                                                                                                                        KR3VVRW1oZHZwbnFaaGpiWXc5dlVqc1BwaFYweGNVcHFWOXk3NmtvVDJiZXo5aWVteXBNbis1RVYydmg5UXRmSgpzclNFZzFGYWJMUkFqTFhqZnM4Q0F3RUFBYU1qTUNFd0RnWU                                                                                                                                        RWUjBQQVFIL0JBUURBZ0trTUE4R0ExVWRFd0VCCi93UUZNQU1CQWY4d0RRWUpLb1pJaHZjTkFRRUxCUUFEZ2dFQkFHUEpWanl1bkwrdE11UCsvS0VNWHFYMDZXQ0kKTWF2ZHFsM                                                                                                                                        0N0MWFOZmlZNklDb3ZQdW9GUW8zMVdpVm9yeVQ4cVlzb3JHRnM1eDEvejVGS2VXajlNaGQ4dVM4Zgp6aXlNM21DbXRnODJFTmoxL01DbjRYNU1DUWI2cGtnNmRSejdrMmcyM2pI                                                                                                                                        SEQ4ZjFnWDgvdnFkL3R2UW5tZXIrCmpUUHBleHp6c09GalQrV2ZEeXA2cENoR1hYS2ppSnp1WW9NQ04vN3c4UzU4VHJ3TEI4UlVMTDB4WDA2SzJIcFYKaG5FUndWRXFaaDZITUZ                                                                                                                                        RT285aUc1Y3NMLzdrWXFDb2lvRnNrVEo2dHRKVkVqM09nT1hvaldJUUprMEIzdVRxMQp5eFdZNGZ1djFrc2NCSWo3VGxWYXZBMXhNUDE1NXRVYWlISDY3Nk9OQ05hdzd0Ym93Q0                                                                                                                                        pCQkg1ZXZmYz0KLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQo=
+    server: https://192.167.10.70:6443
+  name: kubernetes
+contexts:
+- context:
+    cluster: kubernetes
+    user: kubernetes-admin
+  name: kubernetes-admin@kubernetes
+current-context: kubernetes-admin@kubernetes
+kind: Config
+preferences: {}
+users:
+- name: kubernetes-admin
+  user:
+    client-certificate-data: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUM4akNDQWRxZ0F3SUJBZ0lJQlBtQ00zdGxvVHd3RFFZSktvWklodmNOQVFFTEJRQX                                                                                                                                        dGVEVUTUJFR0ExVUUKQXhNS2EzVmlaWEp1WlhSbGN6QWVGdzB4T1RFeE1EWXdPVEk1TkRkYUZ3MHlNREV4TURVd09USTVOVE5hTURReApGekFWQmdOVkJBb1REbk41YzNSbGJUc                                                                                                                                        HRZWE4wWlhKek1Sa3dGd1lEVlFRREV4QnJkV0psY201bGRHVnpMV0ZrCmJXbHVNSUlCSWpBTkJna3Foa2lHOXcwQkFRRUZBQU9DQVE4QU1JSUJDZ0tDQVFFQTRGS2tobkE1Ly9q                                                                                                                                        MlVlNDcKWDMyVkQ1bTRoakV6SGJDNW53c2NoaGpmM1VnREtvMnhESFRqNldOT25aaVRIQk5OYVlTQzJCcTUwOHVWaUtYcQpYQVJETzFuNVVpUmIwM0psSU54T1VvODBWbGFqaXc                                                                                                                                        yQWUzaWppK1g5MDJyYVBPRzR0NVQxVkNNWnpyL2VBdGROCjMyKy96ckR1UzBtK1RmNExUSVlmMWFmNkR6UDRSdmtDTmFiSVNiaVkyY1lrU1RpQ3hzQ2VuR3Q4OVdVOTJaUHUKYl                                                                                                                                        Bma2FKb0FJcnVnbDVteFZvUUxRSjNFVUpHRkY3dzF1Nk4rRVN1UGpHUnU4MHMySGVaZUdvS241QUtsTDdZcApIbVdKSlg4YWhoQzNJVUhNL3UvYUExcVp1bGJvdEEyREp2RDNjZ                                                                                                                                        3Y1ejNsR0JwV3lSTVkyTnN3MnFoVUNHZXpHCmxScFY0d0lEQVFBQm95Y3dKVEFPQmdOVkhROEJBZjhFQkFNQ0JhQXdFd1lEVlIwbEJBd3dDZ1lJS3dZQkJRVUgKQXdJd0RRWUpL                                                                                                                                        b1pJaHZjTkFRRUxCUUFEZ2dFQkFKQlUyQkZ4TTF1VFJsS1MweTlDcGhPRDR0bUlJaTFJdzdCUwplVnRONDdoOXVpQTkvTjY2NGZwb1BYcGxkcDd5RHZpSHFTRCszRmYxU0NuNjN                                                                                                                                        vcVI2R3hQR0NGbWN4aTZ0TERaCmhIUVdGbis0b2s2WERGalF0ekE5SGN1cVZIWjhTZjc4VWFBMjlDdVV3MUZkUU1GMjVURUVrODhtZWgxQ2k3R3gKSDg1Y205OXdFeldEK1FzZ2                                                                                                                                        5MczMrMmxMQThBYkRDYzR5L29KM3BDc2Q3ZjROMUpGZXhtd0xvS3NvNUdrbGhRZAovUzYrUmJKQU5aajk0WFdaVDIvRFpWd0Q1NFNLTjZOUzJpN0dKYk02M0NubDBpZnN3K3g0T                                                                                                                                        WdyZk53Q0tPYjJYCko4OERXK0JML0JsS2x0dWprMnZHZ09JRFp2N0U0YjFobGJ6eFQzQi9Fc0lBL1lpZjJFaz0KLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQo=
+    client-key-data: LS0tLS1CRUdJTiBSU0EgUFJJVkFURSBLRVktLS0tLQpNSUlFcFFJQkFBS0NBUUVBNEZLa2huQTUvL2oyVWU0N1gzMlZENW00aGpFekhiQzVud3NjaG                                                                                                                                        hqZjNVZ0RLbzJ4CkRIVGo2V05PblppVEhCTk5hWVNDMkJxNTA4dVZpS1hxWEFSRE8xbjVVaVJiMDNKbElOeE9VbzgwVmxhaml3MkEKZTNpamkrWDkwMnJhUE9HNHQ1VDFWQ01ae                                                                                                                                        nIvZUF0ZE4zMisvenJEdVMwbStUZjRMVElZZjFhZjZEelA0UnZrQwpOYWJJU2JpWTJjWWtTVGlDeHNDZW5HdDg5V1U5MlpQdWJQZmthSm9BSXJ1Z2w1bXhWb1FMUUozRVVKR0ZG                                                                                                                                        N3cxCnU2TitFU3VQakdSdTgwczJIZVplR29LbjVBS2xMN1lwSG1XSkpYOGFoaEMzSVVITS91L2FBMXFadWxib3RBMkQKSnZEM2NndjV6M2xHQnBXeVJNWTJOc3cycWhVQ0dlekd                                                                                                                                        sUnBWNHdJREFRQUJBb0lCQUNUR1o2S0NrMytiV1FabApmK1pQdURndWcwbThseHl1OUQ5V212NkE1WEpwYzl0dUR6QnptVW1SdGptdjRhNGdtL2hJZVFya2xzSmFCZEc1CklZcW                                                                                                                                        tTRUZhcHIwSXFPVXBROXIzUXYvVjZrYWRQWUoyWERIaHZTNGFMbHFTa2VTWlBLY2NESHdXcFF4MzkvV1AKUm56eTNRY05pb05kTzQyZHNFeURVSVMrWFFoUXRnNk9GUTJXMjBre                                                                                                                                        lpZOVpCVW83WkV1QWZzNytkV01LK0hPVAp4VjhZY2xvR2xnZEU2V0J4Ym1lZGRUTEVBSjVCRUJOd0RDMFk0clM5WG0vMk9VTExqU09HdHB1Y3I5SFhqb1J5ClhrTGJadkgzbytX                                                                                                                                        UmU0REFJWU96Z0hWQnpJQ2FtZ0tzUWxzZnBuNngrZmJ1SVpKMnRidGF3aTdVd3ljeUJjTnQKOFZaWVR3RUNnWUVBNEtiN1llNGoreEhtakFDS3NYOE5iMG9yZ2cvMTNFTEFMcVB                                                                                                                                        sVGlrN2FhVGJzQVY4Ulp2Rwp6T0x5eEErYlRiRk1wSERXVVNlOUlsdGJmYk5ETFA0YkFhOVc4dkR0RWJnd1ZzS3kvbmxuaVU4MEZuUW1BWjEwCm9BUE9Ua1hLWDF2K004M3JYeW                                                                                                                                        9hMkk5NnhYQ05HVmpZd3pXa05ZczF3S2dHRHFLbGxMRlZxWkVDZ1lFQS81L2sKWU9nYjJOZ3BZZjFLOS9SSFVwdUtBQ2lrQ0wxUGxFdXhkbk54VjNEK0t5OTZET1N4TGpJWDdpc                                                                                                                                        mhtTEJpZG8ragp3ZlFLbEpJcVdOSlk0NVBid3pvTWFjWFFCa29sQnFoMnpxUmhkWUxXQnY3cTM4ZGlZQ3A1cy9GYmsxUjBxa29PCjlYM1dSYzkrZ2g4UU1Ib1M1ZHc1NDNmRHgr                                                                                                                                        RW1GcG14RUo2NXJqTUNnWUVBb20wWTVEMWlGbTFpMjJhbzRKeVUKQWhzR1NndHdIOGpEV3ZWMUhZWUNSdWZEVHdrb1NNdlFlT0s5MDdQVS9kOXJJcG5TMnVwNGZSYkFsNm04c0J                                                                                                                                        NcApRNWFhcnh3eXk5VDRYa0ozV0RZKy9iQWVZUDJwWFJHUytQN0hjeUJTcVkvQnc0TG00dTkyYVkyVG5wMDU1MUd0CnA3Wm8rNjJqTjZCRWdPQm9CNUlQOVlFQ2dZRUEzSDQ4N2                                                                                                                                        1JSDh5bXh1SFpWdmorVmJlb0FSVmJJOTBqa1pkUk0KeFJHYkNJUE1tYytnQlpNV1NmU25zNmFGWmNGdmpUa2xWZDE5YXQ0UmJRQXo4RW5QM0R3c0RPaTJJVmEvVFZqdQo4aHZVZ                                                                                                                                        lJwWUp6eW51Rk14eGlXZFNOdTkwLzJiakcvSkszUlo2V21yZyszcmR3VTFXOVIwa29MeCsyMTMvektmCkN1aiszUVVDZ1lFQW4ycU1UdmJiQzY4MlZNUGJFcWdBNGlxOSt0RXg4                                                                                                                                        Zm1ac0dWSGErOEdPbHdWK2gzUWcxajAKa2wvOG1KUnNPTjlPNGNVaG1VVDlRUzZadWtjWUcxMnNtSkF4UHRvS09GM1ZTQWFvSDk0YlBZTFdFb0Z2SmQxdQpSUXUxVmZIWnJMdyt                                                                                                                                        5dDNERm9XUG04WnQxN2Fmd05Ec2VraVBBaXE4bi9GV29YalBST25JdFY4PQotLS0tLUVORCBSU0EgUFJJVkFURSBLRVktLS0tLQo=
+root@k8smaster:~/.kube# kubectl get nodes
+NAME        STATUS     ROLES    AGE     VERSION
+k8smaster   NotReady   master   6m47s   v1.16.2
+k8snode1    NotReady   <none>   2m13s   v1.16.2
+root@k8smaster:~/.kube# cd /vagrant
+root@k8smaster:/vagrant# ls
+build-machine-k8s  data2         jenkins_home1          kube-node-output-jun22.txt  newfile.txt      rbac.yml   sqldata
+canal.yml          hello.txt     kube-installations.sh  master-output-jun22.txt     node-output.txt  readme.md  Vagrantfile
+config             jenkins_home  kube-master.sh         master-output.txt           proj1            setup.txt
+root@k8smaster:/vagrant# ls
+build-machine-k8s  data2         jenkins_home1          kube-node-output-jun22.txt  newfile.txt      rbac.yml   sqldata
+canal.yml          hello.txt     kube-installations.sh  master-output-jun22.txt     node-output.txt  readme.md  Vagrantfile
+config             jenkins_home  kube-master.sh         master-output.txt           proj1            setup.txt
+root@k8smaster:/vagrant#
+root@k8smaster:/vagrant# ls
+build-machine-k8s  data2         jenkins_home1          kube-node-output-jun22.txt  newfile.txt      rbac.yml   sqldata
+canal.yml          hello.txt     kube-installations.sh  master-output-jun22.txt     node-output.txt  readme.md  Vagrantfile
+config             jenkins_home  kube-master.sh         master-output.txt           proj1            setup.txt
+root@k8smaster:/vagrant# kubectl apply -f canal.yml
+configmap/canal-config created
+customresourcedefinition.apiextensions.k8s.io/felixconfigurations.crd.projectcalico.org created
+customresourcedefinition.apiextensions.k8s.io/bgpconfigurations.crd.projectcalico.org created
+customresourcedefinition.apiextensions.k8s.io/ippools.crd.projectcalico.org created
+customresourcedefinition.apiextensions.k8s.io/clusterinformations.crd.projectcalico.org created
+customresourcedefinition.apiextensions.k8s.io/globalnetworkpolicies.crd.projectcalico.org created
+customresourcedefinition.apiextensions.k8s.io/networkpolicies.crd.projectcalico.org created
+customresourcedefinition.apiextensions.k8s.io/globalnetworksets.crd.projectcalico.org created
+customresourcedefinition.apiextensions.k8s.io/hostendpoints.crd.projectcalico.org created
+serviceaccount/canal created
+error: unable to recognize "canal.yml": no matches for kind "DaemonSet" in version "extensions/v1beta1"
+root@k8smaster:/vagrant# kubectl apply -f canal.yml
+configmap/canal-config unchanged
+daemonset.apps/canal created
+customresourcedefinition.apiextensions.k8s.io/felixconfigurations.crd.projectcalico.org unchanged
+customresourcedefinition.apiextensions.k8s.io/bgpconfigurations.crd.projectcalico.org unchanged
+customresourcedefinition.apiextensions.k8s.io/ippools.crd.projectcalico.org unchanged
+customresourcedefinition.apiextensions.k8s.io/clusterinformations.crd.projectcalico.org unchanged
+customresourcedefinition.apiextensions.k8s.io/globalnetworkpolicies.crd.projectcalico.org unchanged
+customresourcedefinition.apiextensions.k8s.io/networkpolicies.crd.projectcalico.org unchanged
+customresourcedefinition.apiextensions.k8s.io/globalnetworksets.crd.projectcalico.org unchanged
+customresourcedefinition.apiextensions.k8s.io/hostendpoints.crd.projectcalico.org unchanged
+serviceaccount/canal unchanged
+root@k8smaster:/vagrant# kubectl apply -f rbac.yml
+clusterrole.rbac.authorization.k8s.io/calico created
+clusterrole.rbac.authorization.k8s.io/flannel created
+clusterrolebinding.rbac.authorization.k8s.io/canal-flannel created
+clusterrolebinding.rbac.authorization.k8s.io/canal-calico created
+root@k8smaster:/vagrant# kubectl get nodes
+NAME        STATUS   ROLES    AGE     VERSION
+k8smaster   Ready    master   11m     v1.16.2
+k8snode1    Ready    <none>   7m14s   v1.16.2
+root@k8smaster:/vagrant#
+root@k8smaster:/vagrant#
+root@k8smaster:/vagrant#
+root@k8smaster:/vagrant# kubectl get nodes
+NAME        STATUS   ROLES    AGE   VERSION
+k8smaster   Ready    master   62m   v1.16.2
+k8snode1    Ready    <none>   57m   v1.16.2
+root@k8smaster:/vagrant# kubectl get pods -n kube-system
+NAME                                READY   STATUS    RESTARTS   AGE
+canal-85jh8                         3/3     Running   4          51m
+canal-98mm6                         3/3     Running   4          51m
+coredns-5644d7b6d9-hngf7            1/1     Running   0          62m
+coredns-5644d7b6d9-vq958            1/1     Running   0          62m
+etcd-k8smaster                      1/1     Running   0          61m
+kube-apiserver-k8smaster            1/1     Running   0          61m
+kube-controller-manager-k8smaster   1/1     Running   0          61m
+kube-proxy-89qsg                    1/1     Running   0          58m
+kube-proxy-md5qj                    1/1     Running   0          62m
+kube-scheduler-k8smaster            1/1     Running   0          61m
+root@k8smaster:/vagrant# kubectl get pods -n kube-system -o wide
+NAME                                READY   STATUS    RESTARTS   AGE   IP              NODE        NOMINATED NODE   READINESS GATES
+canal-85jh8                         3/3     Running   4          51m   192.167.10.71   k8snode1    <none>           <none>
+canal-98mm6                         3/3     Running   4          51m   192.167.10.70   k8smaster   <none>           <none>
+coredns-5644d7b6d9-hngf7            1/1     Running   0          62m   192.168.1.3     k8snode1    <none>           <none>
+coredns-5644d7b6d9-vq958            1/1     Running   0          62m   192.168.1.2     k8snode1    <none>           <none>
+etcd-k8smaster                      1/1     Running   0          61m   192.167.10.70   k8smaster   <none>           <none>
+kube-apiserver-k8smaster            1/1     Running   0          61m   192.167.10.70   k8smaster   <none>           <none>
+kube-controller-manager-k8smaster   1/1     Running   0          61m   192.167.10.70   k8smaster   <none>           <none>
+kube-proxy-89qsg                    1/1     Running   0          58m   192.167.10.71   k8snode1    <none>           <none>
+kube-proxy-md5qj                    1/1     Running   0          62m   192.167.10.70   k8smaster   <none>           <none>
+kube-scheduler-k8smaster            1/1     Running   0          61m   192.167.10.70   k8smaster   <none>           <none>
+root@k8smaster:/vagrant# vi /etc/kubernetes/admin.conf
+root@k8smaster:/vagrant# cp /etc/kubernetes/admin.conf /vagrant/config
+root@k8smaster:/vagrant#
+root@k8smaster:/vagrant# route
+Kernel IP routing table
+Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+default         10.0.2.2        0.0.0.0         UG    0      0        0 eth0
+10.0.2.0        *               255.255.255.0   U     0      0        0 eth0
+172.17.0.0      *               255.255.0.0     U     0      0        0 docker0
+192.167.10.0    *               255.255.255.0   U     0      0        0 eth1
+192.168.0.7     *               255.255.255.255 UH    0      0        0 cali200d7c4174d
+192.168.0.8     *               255.255.255.255 UH    0      0        0 calief60508344c
+192.168.0.9     *               255.255.255.255 UH    0      0        0 calica50a27518d
+192.168.0.10    *               255.255.255.255 UH    0      0        0 cali42007187bec
+192.168.0.11    *               255.255.255.255 UH    0      0        0 cali3e2d19491d0
+192.168.1.0     192.168.1.0     255.255.255.0   UG    0      0        0 flannel.1
+root@k8smaster:/vagrant#
+login as: vagrant
+vagrant@192.167.10.70's password:
+Welcome to Ubuntu 16.04.6 LTS (GNU/Linux 4.4.0-150-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+109 packages can be updated.
+64 updates are security updates.
+
+
+Last login: Wed Nov  6 08:52:41 2019 from 192.167.10.1
+vagrant@k8smaster:~$
+vagrant@k8smaster:~$ ps -ef | grep api
+root      2311  2237 13 04:28 ?        00:00:17 kube-apiserver --advertise-address=192.167.10.70 --allow-privileged=true --authorizatio                                                                                                                                        n-mode=Node,RBAC --client-ca-file=/etc/kubernetes/pki/ca.crt --enable-admission-plugins=NodeRestriction --enable-bootstrap-token-auth=t                                                                                                                                        rue --etcd-cafile=/etc/kubernetes/pki/etcd/ca.crt --etcd-certfile=/etc/kubernetes/pki/apiserver-etcd-client.crt --etcd-keyfile=/etc/kub                                                                                                                                        ernetes/pki/apiserver-etcd-client.key --etcd-servers=https://127.0.0.1:2379 --insecure-port=0 --kubelet-client-certificate=/etc/kuberne                                                                                                                                        tes/pki/apiserver-kubelet-client.crt --kubelet-client-key=/etc/kubernetes/pki/apiserver-kubelet-client.key --kubelet-preferred-address-                                                                                                                                        types=InternalIP,ExternalIP,Hostname --proxy-client-cert-file=/etc/kubernetes/pki/front-proxy-client.crt --proxy-client-key-file=/etc/k                                                                                                                                        ubernetes/pki/front-proxy-client.key --requestheader-allowed-names=front-proxy-client --requestheader-client-ca-file=/etc/kubernetes/pk                                                                                                                                        i/front-proxy-ca.crt --requestheader-extra-headers-prefix=X-Remote-Extra- --requestheader-group-headers=X-Remote-Group --requestheader-                                                                                                                                        username-headers=X-Remote-User --secure-port=6443 --service-account-key-file=/etc/kubernetes/pki/sa.pub --service-cluster-ip-range=10.9                                                                                                                                        6.0.0/12 --tls-cert-file=/etc/kubernetes/pki/apiserver.crt --tls-private-key-file=/etc/kubernetes/pki/apiserver.key
+vagrant   5069  4986  0 04:30 pts/0    00:00:00 grep --color=auto api
+vagrant@k8smaster:~$ sudo su
+root@k8smaster:/home/vagrant# kubectl get nodes
+NAME        STATUS   ROLES    AGE   VERSION
+k8smaster   Ready    master   19h   v1.16.2
+k8snode1    Ready    <none>   18h   v1.16.2
+root@k8smaster:/home/vagrant# cp /etc/kubernetes/admin.conf /vagrant/config
+root@k8smaster:/home/vagrant# mkdir build-machine
+root@k8smaster:/home/vagrant# cd build-machine/
+root@k8smaster:/home/vagrant/build-machine# nano Dockerfile
+root@k8smaster:/home/vagrant/build-machine#
+root@k8smaster:/home/vagrant/build-machine# cat > Dockerfile
+FROM jenkins/jenkins:lts
+
+
+USER root
+RUN apt-get update -qq \
+    && apt-get install -qqy apt-transport-https ca-certificates curl gnupg2 software-properties-common \
+    && curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add - \
+    && add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable" \
+    && apt-get update  -qq \
+    && apt-get install docker-ce=18.03.1~ce-0~debian -y
+RUN usermod -aG docker jenkins
+RUN apt-get install -y git
+RUN curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.15.0/bin/linux/amd64/kubectl && chmod +x kubectl && cp kubect                                                                                                                                        l /bin
+^C
+root@k8smaster:/home/vagrant/build-machine# docker image build -f Dockerfile -t build-machine .
+Sending build context to Docker daemon  2.56 kB
+Step 1/6 : FROM jenkins/jenkins:lts
+ ---> f32b4bb22e4d
+Step 2/6 : USER root
+ ---> Using cache
+ ---> 1c2e1847dc54
+Step 3/6 : RUN apt-get update -qq     && apt-get install -qqy apt-transport-https ca-certificates curl gnupg2 software-properties-commo                                                                                                                                        n     && curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add -     && add-apt-repository "deb [arch=amd64] https://do                                                                                                                                        wnload.docker.com/linux/debian $(lsb_release -cs) stable"     && apt-get update  -qq     && apt-get install docker-ce=18.03.1~ce-0~debi                                                                                                                                        an -y
+ ---> Using cache
+ ---> bbaefa8f1c42
+Step 4/6 : RUN usermod -aG docker jenkins
+ ---> Using cache
+ ---> fe27b02b06b8
+Step 5/6 : RUN apt-get install -y git
+ ---> Using cache
+ ---> 701779209231
+Step 6/6 : RUN curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.15.0/bin/linux/amd64/kubectl && chmod +x kubectl &                                                                                                                                        & cp kubectl /bin
+ ---> Using cache
+ ---> 90acb9ca2a69
+Successfully built 90acb9ca2a69
+root@k8smaster:/home/vagrant/build-machine# docker image ls build-machine
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+build-machine       latest              90acb9ca2a69        6 weeks ago         1.19 GB
+root@k8smaster:/home/vagrant/build-machine# docker image history build-machine | grep EXPOSE
+<missing>           2 months ago        /bin/sh -c #(nop)  EXPOSE 50000                 0 B
+<missing>           2 months ago        /bin/sh -c #(nop)  EXPOSE 8080                  0 B
+root@k8smaster:/home/vagrant/build-machine#
+root@k8smaster:/home/vagrant/build-machine# chmod 777 /var/run/docker.sock
+root@k8smaster:/home/vagrant/build-machine# docker container run -d -p 9999:8080 -v /var/run/docker.sock:/var/run/docker.sock -v /etc/k                                                                                                                                        ubernetes/admin.conf:/etc/config -e KUBECONFIG=/etc/config -v /vagrant/jh:/var/jenkins_home build-machine
+01ae64443aa0c63b2785bfa0a832ad2db3f69cff785edc321a8df3824fce2657
+root@k8smaster:/home/vagrant/build-machine# docker container exec 01ae64443 cat /var/jenkins_home/secrets/initialAdminPassword
+d0e81ddeb2be43b085d6310dc881c85e
+root@k8smaster:/home/vagrant/build-machine#
+root@k8smaster:/home/vagrant/build-machine# cd /vagrant/jh
+root@k8smaster:/vagrant/jh# ls
+config.xml                                   jenkins.model.JenkinsLocationConfiguration.xml  plugins                   userContent
+copy_reference_file.log                      jenkins.telemetry.Correlator.xml                queue.xml                 users
+hudson.model.UpdateCenter.xml                jobs                                            secret.key                war
+identity.key.enc                             logs                                            secret.key.not-so-secret  workspace
+jenkins.install.InstallUtil.lastExecVersion  nodeMonitors.xml                                secrets
+jenkins.install.UpgradeWizard.state          nodes                                           updates
+root@k8smaster:/vagrant/jh# docker container exec -it 01ae64443 sh
+# apt-get install maven
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+The following additional packages will be installed:
+  ant ant-optional ca-certificates-java default-jre-headless java-common junit junit4 libaopalliance-java libapache-pom-java
+  libasm-java libatinject-jsr330-api-java libavahi-client3 libavahi-common-data libavahi-common3 libbsh-java libcdi-api-java
+  libcglib-java libclassworlds-java libcommons-cli-java libcommons-codec-java libcommons-httpclient-java libcommons-io-java
+  libcommons-lang-java libcommons-lang3-java libcommons-logging-java libcommons-net-java libcommons-parent-java libcups2
+  libdom4j-java libdoxia-core-java libeasymock-java libeclipse-aether-java libgeronimo-interceptor-3.0-spec-java libguava-java
+  libguice-java libhamcrest-java libhttpclient-java libhttpcore-java libisorelax-java libjaxen-java libjaxp1.3-java libjdom1-java
+  libjetty9-java libjpeg62-turbo libjsch-java libjsoup-java libjsr305-java libjzlib-java liblcms2-2 liblog4j1.2-java
+  libmaven-parent-java libmaven2-core-java libmaven3-core-java libmsv-java libnspr4 libnss3 libobjenesis-java libpcsclite1
+  libplexus-ant-factory-java libplexus-archiver-java libplexus-bsh-factory-java libplexus-cipher-java libplexus-classworlds-java
+  libplexus-classworlds2-java libplexus-cli-java libplexus-component-annotations-java libplexus-component-metadata-java
+  libplexus-container-default-java libplexus-container-default1.5-java libplexus-containers-java libplexus-containers1.5-java
+  libplexus-interactivity-api-java libplexus-interpolation-java libplexus-io-java libplexus-sec-dispatcher-java libplexus-utils-java
+  libplexus-utils2-java libqdox2-java librelaxng-datatype-java libservlet3.1-java libsisu-inject-java libsisu-plexus-java
+  libslf4j-java libwagon-java libwagon2-java libx11-6 libx11-data libxalan2-java libxau6 libxbean-java libxcb1 libxdmcp6
+  libxerces2-java libxext6 libxi6 libxml-commons-external-java libxml-commons-resolver1.1-java libxom-java libxpp2-java libxpp3-java
+  libxrender1 libxtst6 openjdk-8-jre-headless x11-common
+Suggested packages:
+  ant-doc ant-gcj default-jdk | java-compiler | java-sdk ant-optional-gcj antlr javacc jython libbcel-java libbsf-java libmail-java
+  libjdepend-java liboro-java libregexp-java default-jre junit-doc libaopalliance-java-doc libatinject-jsr330-api-java-doc
+  libclassworlds-java-doc libcommons-httpclient-java-doc libcommons-io-java-doc libcommons-lang-java-doc libcommons-lang3-java-doc
+  libavalon-framework-java libcommons-logging-java-doc libexcalibur-logkit-java libcommons-net-java-doc cups-common libdom4j-java-doc
+  libeasymock-java-doc libjaxp1.3-java-gcj libjdom1-java-doc jetty9 libjsoup-java-doc libjsr305-java-doc liblcms2-utils
+  liblog4j1.2-java-doc libobjenesis-java-doc pcscd libplexus-cipher-java-doc libplexus-classworlds-java-doc
+  libplexus-classworlds2-java-doc libplexus-cli-java-doc libplexus-container-default-java-doc libplexus-interactivity-api-java-doc
+  libplexus-interpolation-java-doc libplexus-sec-dispatcher-java-doc libplexus-utils-java-doc libplexus-utils2-java-doc
+  libqdox2-java-doc testng libwagon-java-doc libxalan2-java-doc libxsltc-java groovy libequinox-osgi-java libosgi-compendium-java
+  libosgi-core-java libqdox-java libspring-beans-java libspring-context-java libspring-core-java libspring-web-java
+  libxerces2-java-doc libxerces2-java-gcj libxml-commons-resolver1.1-java-doc libxom-java-doc libnss-mdns fonts-dejavu-extra
+  fonts-ipafont-gothic fonts-ipafont-mincho fonts-wqy-microhei fonts-wqy-zenhei fonts-indic
+The following NEW packages will be installed:
+  ant ant-optional ca-certificates-java default-jre-headless java-common junit junit4 libaopalliance-java libapache-pom-java
+  libasm-java libatinject-jsr330-api-java libavahi-client3 libavahi-common-data libavahi-common3 libbsh-java libcdi-api-java
+  libcglib-java libclassworlds-java libcommons-cli-java libcommons-codec-java libcommons-httpclient-java libcommons-io-java
+  libcommons-lang-java libcommons-lang3-java libcommons-logging-java libcommons-net-java libcommons-parent-java libcups2
+  libdom4j-java libdoxia-core-java libeasymock-java libeclipse-aether-java libgeronimo-interceptor-3.0-spec-java libguava-java
+  libguice-java libhamcrest-java libhttpclient-java libhttpcore-java libisorelax-java libjaxen-java libjaxp1.3-java libjdom1-java
+  libjetty9-java libjpeg62-turbo libjsch-java libjsoup-java libjsr305-java libjzlib-java liblcms2-2 liblog4j1.2-java
+  libmaven-parent-java libmaven2-core-java libmaven3-core-java libmsv-java libnspr4 libnss3 libobjenesis-java libpcsclite1
+  libplexus-ant-factory-java libplexus-archiver-java libplexus-bsh-factory-java libplexus-cipher-java libplexus-classworlds-java
+  libplexus-classworlds2-java libplexus-cli-java libplexus-component-annotations-java libplexus-component-metadata-java
+  libplexus-container-default-java libplexus-container-default1.5-java libplexus-containers-java libplexus-containers1.5-java
+  libplexus-interactivity-api-java libplexus-interpolation-java libplexus-io-java libplexus-sec-dispatcher-java libplexus-utils-java
+  libplexus-utils2-java libqdox2-java librelaxng-datatype-java libservlet3.1-java libsisu-inject-java libsisu-plexus-java
+  libslf4j-java libwagon-java libwagon2-java libx11-6 libx11-data libxalan2-java libxau6 libxbean-java libxcb1 libxdmcp6
+  libxerces2-java libxext6 libxi6 libxml-commons-external-java libxml-commons-resolver1.1-java libxom-java libxpp2-java libxpp3-java
+  libxrender1 libxtst6 maven openjdk-8-jre-headless x11-common
+0 upgraded, 105 newly installed, 0 to remove and 9 not upgraded.
+Need to get 61.0 MB of archives.
+After this operation, 152 MB of additional disk space will be used.
+Do you want to continue? [Y/n] Y
+Get:1 http://deb.debian.org/debian stretch/main amd64 libxau6 amd64 1:1.0.8-1 [20.7 kB]
+Get:2 http://security.debian.org/debian-security stretch/updates/main amd64 ant all 1.9.9-1+deb9u1 [1923 kB]
+Get:3 http://deb.debian.org/debian stretch/main amd64 libnspr4 amd64 2:4.12-6 [117 kB]
+Get:4 http://deb.debian.org/debian stretch/main amd64 libnss3 amd64 2:3.26.2-1.1+deb9u1 [1161 kB]
+Get:5 http://security.debian.org/debian-security stretch/updates/main amd64 ant-optional all 1.9.9-1+deb9u1 [350 kB]
+Get:6 http://deb.debian.org/debian stretch/main amd64 ca-certificates-java all 20170929~deb9u3 [15.1 kB]
+Get:7 http://deb.debian.org/debian stretch/main amd64 java-common all 0.58+deb9u1 [13.6 kB]
+Get:8 http://deb.debian.org/debian stretch/main amd64 libavahi-common-data amd64 0.6.32-2 [118 kB]
+Get:9 http://deb.debian.org/debian stretch/main amd64 libavahi-common3 amd64 0.6.32-2 [52.0 kB]
+Get:10 http://deb.debian.org/debian stretch/main amd64 libavahi-client3 amd64 0.6.32-2 [55.3 kB]
+Get:11 http://deb.debian.org/debian stretch/main amd64 libcups2 amd64 2.2.1-8+deb9u4 [307 kB]
+Get:12 http://deb.debian.org/debian stretch/main amd64 liblcms2-2 amd64 2.8-4+deb9u1 [143 kB]
+Get:13 http://deb.debian.org/debian stretch/main amd64 libjpeg62-turbo amd64 1:1.5.1-2 [134 kB]
+Get:14 http://deb.debian.org/debian stretch/main amd64 libpcsclite1 amd64 1.8.20-1 [56.5 kB]
+Get:15 http://deb.debian.org/debian stretch/main amd64 libxdmcp6 amd64 1:1.1.2-3 [26.3 kB]
+Get:16 http://deb.debian.org/debian stretch/main amd64 libxcb1 amd64 1.12-1 [133 kB]
+Get:17 http://deb.debian.org/debian stretch/main amd64 libx11-data all 2:1.6.4-3+deb9u1 [287 kB]
+Get:18 http://deb.debian.org/debian stretch/main amd64 libx11-6 amd64 2:1.6.4-3+deb9u1 [748 kB]
+Get:19 http://deb.debian.org/debian stretch/main amd64 libxext6 amd64 2:1.3.3-1+b2 [52.5 kB]
+Get:20 http://deb.debian.org/debian stretch/main amd64 libxi6 amd64 2:1.7.9-1 [82.6 kB]
+Get:21 http://deb.debian.org/debian stretch/main amd64 libxrender1 amd64 1:0.9.10-1 [33.0 kB]
+Get:22 http://deb.debian.org/debian stretch/main amd64 x11-common all 1:7.7+19 [251 kB]
+Get:23 http://deb.debian.org/debian stretch/main amd64 libxtst6 amd64 2:1.2.3-1 [27.8 kB]
+Get:24 http://deb.debian.org/debian stretch/main amd64 openjdk-8-jre-headless amd64 8u222-b10-1~deb9u1 [27.3 MB]
+Get:25 http://deb.debian.org/debian stretch/main amd64 default-jre-headless amd64 2:1.8-58+deb9u1 [10.1 kB]
+Get:26 http://deb.debian.org/debian stretch/main amd64 junit all 3.8.2-8 [107 kB]
+Get:27 http://deb.debian.org/debian stretch/main amd64 libhamcrest-java all 1.3-6 [378 kB]
+Get:28 http://deb.debian.org/debian stretch/main amd64 junit4 all 4.12-4 [286 kB]
+Get:29 http://deb.debian.org/debian stretch/main amd64 libapache-pom-java all 10-2 [3870 B]
+Get:30 http://deb.debian.org/debian stretch/main amd64 libasm-java all 5.2-2 [596 kB]
+Get:31 http://deb.debian.org/debian stretch/main amd64 libatinject-jsr330-api-java all 1.0+ds1-2 [22.7 kB]
+Get:32 http://deb.debian.org/debian stretch/main amd64 libbsh-java all 2.0b4-18 [266 kB]
+Get:33 http://deb.debian.org/debian stretch/main amd64 libgeronimo-interceptor-3.0-spec-java all 1.0.1-3 [7138 B]
+Get:34 http://deb.debian.org/debian stretch/main amd64 libservlet3.1-java all 8.5.14-1+deb9u3 [394 kB]
+Get:35 http://deb.debian.org/debian stretch/main amd64 libcdi-api-java all 1.0-2 [31.9 kB]
+Get:36 http://deb.debian.org/debian stretch/main amd64 libcglib-java all 3.2.4-1 [273 kB]
+Get:37 http://deb.debian.org/debian stretch/main amd64 libclassworlds-java all 1.1-final-5 [39.3 kB]
+Get:38 http://deb.debian.org/debian stretch/main amd64 libcommons-cli-java all 1.3.1-3 [55.2 kB]
+Get:39 http://deb.debian.org/debian stretch/main amd64 libcommons-codec-java all 1.10-1 [234 kB]
+Get:40 http://deb.debian.org/debian stretch/main amd64 libcommons-parent-java all 39-3 [9350 B]
+Get:41 http://deb.debian.org/debian stretch/main amd64 libcommons-logging-java all 1.2-1 [62.1 kB]
+Get:42 http://deb.debian.org/debian stretch/main amd64 libcommons-httpclient-java all 3.1-12 [298 kB]
+Get:43 http://deb.debian.org/debian stretch/main amd64 libcommons-io-java all 2.5-1 [206 kB]
+Get:44 http://deb.debian.org/debian stretch/main amd64 libcommons-lang-java all 2.6-6 [269 kB]
+Get:45 http://deb.debian.org/debian stretch/main amd64 libcommons-lang3-java all 3.5-1 [437 kB]
+Get:46 http://deb.debian.org/debian stretch/main amd64 libcommons-net-java all 3.5-1 [281 kB]
+Get:47 http://deb.debian.org/debian stretch/main amd64 libjaxen-java all 1.1.6-1 [209 kB]
+Get:48 http://deb.debian.org/debian stretch/main amd64 libisorelax-java all 20041111-9 [62.4 kB]
+Get:49 http://deb.debian.org/debian stretch/main amd64 librelaxng-datatype-java all 1.0+ds1-3 [11.7 kB]
+Get:50 http://deb.debian.org/debian stretch/main amd64 libxml-commons-resolver1.1-java all 1.2-7 [91.9 kB]
+Get:51 http://deb.debian.org/debian stretch/main amd64 libxml-commons-external-java all 1.4.01-2 [245 kB]
+Get:52 http://deb.debian.org/debian stretch/main amd64 libxerces2-java all 2.11.0-7 [1365 kB]
+Get:53 http://deb.debian.org/debian stretch/main amd64 libmsv-java all 2009.1+dfsg1-5 [771 kB]
+Get:54 http://deb.debian.org/debian stretch/main amd64 libxpp2-java all 2.1.10-7 [147 kB]
+Get:55 http://deb.debian.org/debian stretch/main amd64 libxpp3-java all 1.1.4c-2 [349 kB]
+Get:56 http://deb.debian.org/debian stretch/main amd64 libdom4j-java all 1.6.1+dfsg.3-2+deb9u1 [348 kB]
+Get:57 http://deb.debian.org/debian stretch/main amd64 libhttpcore-java all 4.4.6-1 [592 kB]
+Get:58 http://deb.debian.org/debian stretch/main amd64 libhttpclient-java all 4.5.2-2 [705 kB]
+Get:59 http://deb.debian.org/debian stretch/main amd64 libjaxp1.3-java all 1.3.05-2 [450 kB]
+Get:60 http://deb.debian.org/debian stretch/main amd64 libxalan2-java all 2.7.1-9 [3169 kB]
+Get:61 http://deb.debian.org/debian stretch/main amd64 libplexus-interpolation-java all 1.21-1 [61.1 kB]
+Get:62 http://deb.debian.org/debian stretch/main amd64 libplexus-utils-java all 1:1.5.15-4+deb9u1 [209 kB]
+Get:63 http://deb.debian.org/debian stretch/main amd64 libdoxia-core-java all 1.1.4-6 [148 kB]
+Get:64 http://deb.debian.org/debian stretch/main amd64 libobjenesis-java all 2.5.1-1 [46.1 kB]
+Get:65 http://deb.debian.org/debian stretch/main amd64 libeasymock-java all 3.4+ds-1 [113 kB]
+Get:66 http://deb.debian.org/debian stretch/main amd64 libslf4j-java all 1.7.22-1 [134 kB]
+Get:67 http://deb.debian.org/debian stretch/main amd64 libjzlib-java all 1.1.3-1 [69.9 kB]
+Get:68 http://deb.debian.org/debian stretch/main amd64 libjsch-java all 0.1.54-1 [284 kB]
+Get:69 http://deb.debian.org/debian stretch/main amd64 libjsoup-java all 1.10.2-1 [339 kB]
+Get:70 http://deb.debian.org/debian stretch/main amd64 libjsr305-java all 0.1~+svn49-10 [26.5 kB]
+Get:71 http://deb.debian.org/debian stretch/main amd64 libguava-java all 19.0-1 [2028 kB]
+Get:72 http://deb.debian.org/debian stretch/main amd64 libplexus-classworlds-java all 1.5.0-5 [48.2 kB]
+Get:73 http://deb.debian.org/debian stretch/main amd64 libxbean-java all 4.5-4 [814 kB]
+Get:74 http://deb.debian.org/debian stretch/main amd64 libplexus-containers-java all 1.0~beta3.0.7-8 [178 kB]
+Get:75 http://deb.debian.org/debian stretch/main amd64 libplexus-interactivity-api-java all 1.0-alpha-6-7 [14.1 kB]
+Get:76 http://deb.debian.org/debian stretch/main amd64 libwagon-java all 1.0.0-9 [133 kB]
+Get:77 http://deb.debian.org/debian stretch/main amd64 libeclipse-aether-java all 1.0.2-1 [564 kB]
+Get:78 http://deb.debian.org/debian stretch/main amd64 libaopalliance-java all 20070526-5 [9192 B]
+Get:79 http://deb.debian.org/debian stretch/main amd64 libguice-java all 4.0-3 [852 kB]
+Get:80 http://deb.debian.org/debian stretch/main amd64 libjdom1-java all 1.1.3-1 [150 kB]
+Get:81 http://deb.debian.org/debian stretch/main amd64 libjetty9-java all 9.2.21-1+deb9u1 [1806 kB]
+Get:82 http://deb.debian.org/debian stretch/main amd64 liblog4j1.2-java all 1.2.17-7 [428 kB]
+Get:83 http://deb.debian.org/debian stretch/main amd64 libmaven-parent-java all 21-2 [5744 B]
+Get:84 http://deb.debian.org/debian stretch/main amd64 libplexus-container-default-java all 1.0-alpha-9-stable-1-7 [150 kB]
+Get:85 http://deb.debian.org/debian stretch/main amd64 libplexus-ant-factory-java all 1.0~alpha2.1-3 [11.2 kB]
+Get:86 http://deb.debian.org/debian stretch/main amd64 libplexus-io-java all 1.0~alpha5-2 [44.7 kB]
+Get:87 http://deb.debian.org/debian stretch/main amd64 libplexus-archiver-java all 2.2-1+deb9u1 [171 kB]
+Get:88 http://deb.debian.org/debian stretch/main amd64 libplexus-bsh-factory-java all 1.0~alpha7-3.1 [7658 B]
+Get:89 http://deb.debian.org/debian stretch/main amd64 libplexus-cipher-java all 1.7-1 [14.5 kB]
+Get:90 http://deb.debian.org/debian stretch/main amd64 libplexus-sec-dispatcher-java all 1.3.1-6 [27.0 kB]
+Get:91 http://deb.debian.org/debian stretch/main amd64 libmaven2-core-java all 2.2.1-26 [714 kB]
+Get:92 http://deb.debian.org/debian stretch/main amd64 libplexus-classworlds2-java all 2.5.2-1 [46.7 kB]
+Get:93 http://deb.debian.org/debian stretch/main amd64 libplexus-component-annotations-java all 1.6-3 [6650 B]
+Get:94 http://deb.debian.org/debian stretch/main amd64 libplexus-utils2-java all 3.0.22-1 [235 kB]
+Get:95 http://deb.debian.org/debian stretch/main amd64 libplexus-container-default1.5-java all 1.6-3 [185 kB]
+Get:96 http://deb.debian.org/debian stretch/main amd64 libplexus-cli-java all 1.2-5 [9348 B]
+Get:97 http://deb.debian.org/debian stretch/main amd64 libqdox2-java all 2.0~M3-3 [257 kB]
+Get:98 http://deb.debian.org/debian stretch/main amd64 libplexus-component-metadata-java all 1.6-3 [104 kB]
+Get:99 http://deb.debian.org/debian stretch/main amd64 libplexus-containers1.5-java all 1.6-3 [3822 B]
+Get:100 http://deb.debian.org/debian stretch/main amd64 libsisu-inject-java all 0.3.2-2 [346 kB]
+Get:101 http://deb.debian.org/debian stretch/main amd64 libsisu-plexus-java all 0.3.2-1 [182 kB]
+Get:102 http://deb.debian.org/debian stretch/main amd64 libwagon2-java all 2.10-6 [2185 kB]
+Get:103 http://deb.debian.org/debian stretch/main amd64 libmaven3-core-java all 3.3.9-4 [1444 kB]
+Get:104 http://deb.debian.org/debian stretch/main amd64 libxom-java all 1.2.10-1 [170 kB]
+Get:105 http://deb.debian.org/debian stretch/main amd64 maven all 3.3.9-4 [20.2 kB]
+Fetched 61.0 MB in 58s (1047 kB/s)
+debconf: unable to initialize frontend: Dialog
+debconf: (No usable dialog-like program is installed, so the dialog based frontend cannot be used. at /usr/share/perl5/Debconf/FrontEnd                                                                                                                                        /Dialog.pm line 76, <> line 105.)
+debconf: falling back to frontend: Readline
+Extracting templates from packages: 100%
+Selecting previously unselected package libxau6:amd64.
+(Reading database ... 38565 files and directories currently installed.)
+Preparing to unpack .../000-libxau6_1%3a1.0.8-1_amd64.deb ...
+Unpacking libxau6:amd64 (1:1.0.8-1) ...
+Selecting previously unselected package libnspr4:amd64.
+Preparing to unpack .../001-libnspr4_2%3a4.12-6_amd64.deb ...
+Unpacking libnspr4:amd64 (2:4.12-6) ...
+Selecting previously unselected package libnss3:amd64.
+Preparing to unpack .../002-libnss3_2%3a3.26.2-1.1+deb9u1_amd64.deb ...
+Unpacking libnss3:amd64 (2:3.26.2-1.1+deb9u1) ...
+Selecting previously unselected package ca-certificates-java.
+Preparing to unpack .../003-ca-certificates-java_20170929~deb9u3_all.deb ...
+Unpacking ca-certificates-java (20170929~deb9u3) ...
+Selecting previously unselected package java-common.
+Preparing to unpack .../004-java-common_0.58+deb9u1_all.deb ...
+Unpacking java-common (0.58+deb9u1) ...
+Selecting previously unselected package libavahi-common-data:amd64.
+Preparing to unpack .../005-libavahi-common-data_0.6.32-2_amd64.deb ...
+Unpacking libavahi-common-data:amd64 (0.6.32-2) ...
+Selecting previously unselected package libavahi-common3:amd64.
+Preparing to unpack .../006-libavahi-common3_0.6.32-2_amd64.deb ...
+Unpacking libavahi-common3:amd64 (0.6.32-2) ...
+Selecting previously unselected package libavahi-client3:amd64.
+Preparing to unpack .../007-libavahi-client3_0.6.32-2_amd64.deb ...
+Unpacking libavahi-client3:amd64 (0.6.32-2) ...
+Selecting previously unselected package libcups2:amd64.
+Preparing to unpack .../008-libcups2_2.2.1-8+deb9u4_amd64.deb ...
+Unpacking libcups2:amd64 (2.2.1-8+deb9u4) ...
+Selecting previously unselected package liblcms2-2:amd64.
+Preparing to unpack .../009-liblcms2-2_2.8-4+deb9u1_amd64.deb ...
+Unpacking liblcms2-2:amd64 (2.8-4+deb9u1) ...
+Selecting previously unselected package libjpeg62-turbo:amd64.
+Preparing to unpack .../010-libjpeg62-turbo_1%3a1.5.1-2_amd64.deb ...
+Unpacking libjpeg62-turbo:amd64 (1:1.5.1-2) ...
+Selecting previously unselected package libpcsclite1:amd64.
+Preparing to unpack .../011-libpcsclite1_1.8.20-1_amd64.deb ...
+Unpacking libpcsclite1:amd64 (1.8.20-1) ...
+Selecting previously unselected package libxdmcp6:amd64.
+Preparing to unpack .../012-libxdmcp6_1%3a1.1.2-3_amd64.deb ...
+Unpacking libxdmcp6:amd64 (1:1.1.2-3) ...
+Selecting previously unselected package libxcb1:amd64.
+Preparing to unpack .../013-libxcb1_1.12-1_amd64.deb ...
+Unpacking libxcb1:amd64 (1.12-1) ...
+Selecting previously unselected package libx11-data.
+Preparing to unpack .../014-libx11-data_2%3a1.6.4-3+deb9u1_all.deb ...
+Unpacking libx11-data (2:1.6.4-3+deb9u1) ...
+Selecting previously unselected package libx11-6:amd64.
+Preparing to unpack .../015-libx11-6_2%3a1.6.4-3+deb9u1_amd64.deb ...
+Unpacking libx11-6:amd64 (2:1.6.4-3+deb9u1) ...
+Selecting previously unselected package libxext6:amd64.
+Preparing to unpack .../016-libxext6_2%3a1.3.3-1+b2_amd64.deb ...
+Unpacking libxext6:amd64 (2:1.3.3-1+b2) ...
+Selecting previously unselected package libxi6:amd64.
+Preparing to unpack .../017-libxi6_2%3a1.7.9-1_amd64.deb ...
+Unpacking libxi6:amd64 (2:1.7.9-1) ...
+Selecting previously unselected package libxrender1:amd64.
+Preparing to unpack .../018-libxrender1_1%3a0.9.10-1_amd64.deb ...
+Unpacking libxrender1:amd64 (1:0.9.10-1) ...
+Selecting previously unselected package x11-common.
+Preparing to unpack .../019-x11-common_1%3a7.7+19_all.deb ...
+Unpacking x11-common (1:7.7+19) ...
+Selecting previously unselected package libxtst6:amd64.
+Preparing to unpack .../020-libxtst6_2%3a1.2.3-1_amd64.deb ...
+Unpacking libxtst6:amd64 (2:1.2.3-1) ...
+Selecting previously unselected package openjdk-8-jre-headless:amd64.
+Preparing to unpack .../021-openjdk-8-jre-headless_8u222-b10-1~deb9u1_amd64.deb ...
+Unpacking openjdk-8-jre-headless:amd64 (8u222-b10-1~deb9u1) ...
+Selecting previously unselected package default-jre-headless.
+Preparing to unpack .../022-default-jre-headless_2%3a1.8-58+deb9u1_amd64.deb ...
+Unpacking default-jre-headless (2:1.8-58+deb9u1) ...
+Selecting previously unselected package ant.
+Preparing to unpack .../023-ant_1.9.9-1+deb9u1_all.deb ...
+Unpacking ant (1.9.9-1+deb9u1) ...
+Selecting previously unselected package ant-optional.
+Preparing to unpack .../024-ant-optional_1.9.9-1+deb9u1_all.deb ...
+Unpacking ant-optional (1.9.9-1+deb9u1) ...
+Selecting previously unselected package junit.
+Preparing to unpack .../025-junit_3.8.2-8_all.deb ...
+Unpacking junit (3.8.2-8) ...
+Selecting previously unselected package libhamcrest-java.
+Preparing to unpack .../026-libhamcrest-java_1.3-6_all.deb ...
+Unpacking libhamcrest-java (1.3-6) ...
+Selecting previously unselected package junit4.
+Preparing to unpack .../027-junit4_4.12-4_all.deb ...
+Unpacking junit4 (4.12-4) ...
+Selecting previously unselected package libapache-pom-java.
+Preparing to unpack .../028-libapache-pom-java_10-2_all.deb ...
+Unpacking libapache-pom-java (10-2) ...
+Selecting previously unselected package libasm-java.
+Preparing to unpack .../029-libasm-java_5.2-2_all.deb ...
+Unpacking libasm-java (5.2-2) ...
+Selecting previously unselected package libatinject-jsr330-api-java.
+Preparing to unpack .../030-libatinject-jsr330-api-java_1.0+ds1-2_all.deb ...
+Unpacking libatinject-jsr330-api-java (1.0+ds1-2) ...
+Selecting previously unselected package libbsh-java.
+Preparing to unpack .../031-libbsh-java_2.0b4-18_all.deb ...
+Unpacking libbsh-java (2.0b4-18) ...
+Selecting previously unselected package libgeronimo-interceptor-3.0-spec-java.
+Preparing to unpack .../032-libgeronimo-interceptor-3.0-spec-java_1.0.1-3_all.deb ...
+Unpacking libgeronimo-interceptor-3.0-spec-java (1.0.1-3) ...
+Selecting previously unselected package libservlet3.1-java.
+Preparing to unpack .../033-libservlet3.1-java_8.5.14-1+deb9u3_all.deb ...
+Unpacking libservlet3.1-java (8.5.14-1+deb9u3) ...
+Selecting previously unselected package libcdi-api-java.
+Preparing to unpack .../034-libcdi-api-java_1.0-2_all.deb ...
+Unpacking libcdi-api-java (1.0-2) ...
+Selecting previously unselected package libcglib-java.
+Preparing to unpack .../035-libcglib-java_3.2.4-1_all.deb ...
+Unpacking libcglib-java (3.2.4-1) ...
+Selecting previously unselected package libclassworlds-java.
+Preparing to unpack .../036-libclassworlds-java_1.1-final-5_all.deb ...
+Unpacking libclassworlds-java (1.1-final-5) ...
+Selecting previously unselected package libcommons-cli-java.
+Preparing to unpack .../037-libcommons-cli-java_1.3.1-3_all.deb ...
+Unpacking libcommons-cli-java (1.3.1-3) ...
+Selecting previously unselected package libcommons-codec-java.
+Preparing to unpack .../038-libcommons-codec-java_1.10-1_all.deb ...
+Unpacking libcommons-codec-java (1.10-1) ...
+Selecting previously unselected package libcommons-parent-java.
+Preparing to unpack .../039-libcommons-parent-java_39-3_all.deb ...
+Unpacking libcommons-parent-java (39-3) ...
+Selecting previously unselected package libcommons-logging-java.
+Preparing to unpack .../040-libcommons-logging-java_1.2-1_all.deb ...
+Unpacking libcommons-logging-java (1.2-1) ...
+Selecting previously unselected package libcommons-httpclient-java.
+Preparing to unpack .../041-libcommons-httpclient-java_3.1-12_all.deb ...
+Unpacking libcommons-httpclient-java (3.1-12) ...
+Selecting previously unselected package libcommons-io-java.
+Preparing to unpack .../042-libcommons-io-java_2.5-1_all.deb ...
+Unpacking libcommons-io-java (2.5-1) ...
+Selecting previously unselected package libcommons-lang-java.
+Preparing to unpack .../043-libcommons-lang-java_2.6-6_all.deb ...
+Unpacking libcommons-lang-java (2.6-6) ...
+Selecting previously unselected package libcommons-lang3-java.
+Preparing to unpack .../044-libcommons-lang3-java_3.5-1_all.deb ...
+Unpacking libcommons-lang3-java (3.5-1) ...
+Selecting previously unselected package libcommons-net-java.
+Preparing to unpack .../045-libcommons-net-java_3.5-1_all.deb ...
+Unpacking libcommons-net-java (3.5-1) ...
+Selecting previously unselected package libjaxen-java.
+Preparing to unpack .../046-libjaxen-java_1.1.6-1_all.deb ...
+Unpacking libjaxen-java (1.1.6-1) ...
+Selecting previously unselected package libisorelax-java.
+Preparing to unpack .../047-libisorelax-java_20041111-9_all.deb ...
+Unpacking libisorelax-java (20041111-9) ...
+Selecting previously unselected package librelaxng-datatype-java.
+Preparing to unpack .../048-librelaxng-datatype-java_1.0+ds1-3_all.deb ...
+Unpacking librelaxng-datatype-java (1.0+ds1-3) ...
+Selecting previously unselected package libxml-commons-resolver1.1-java.
+Preparing to unpack .../049-libxml-commons-resolver1.1-java_1.2-7_all.deb ...
+Unpacking libxml-commons-resolver1.1-java (1.2-7) ...
+Selecting previously unselected package libxml-commons-external-java.
+Preparing to unpack .../050-libxml-commons-external-java_1.4.01-2_all.deb ...
+Unpacking libxml-commons-external-java (1.4.01-2) ...
+Selecting previously unselected package libxerces2-java.
+Preparing to unpack .../051-libxerces2-java_2.11.0-7_all.deb ...
+Unpacking libxerces2-java (2.11.0-7) ...
+Selecting previously unselected package libmsv-java.
+Preparing to unpack .../052-libmsv-java_2009.1+dfsg1-5_all.deb ...
+Unpacking libmsv-java (2009.1+dfsg1-5) ...
+Selecting previously unselected package libxpp2-java.
+Preparing to unpack .../053-libxpp2-java_2.1.10-7_all.deb ...
+Unpacking libxpp2-java (2.1.10-7) ...
+Selecting previously unselected package libxpp3-java.
+Preparing to unpack .../054-libxpp3-java_1.1.4c-2_all.deb ...
+Unpacking libxpp3-java (1.1.4c-2) ...
+Selecting previously unselected package libdom4j-java.
+Preparing to unpack .../055-libdom4j-java_1.6.1+dfsg.3-2+deb9u1_all.deb ...
+Unpacking libdom4j-java (1.6.1+dfsg.3-2+deb9u1) ...
+Selecting previously unselected package libhttpcore-java.
+Preparing to unpack .../056-libhttpcore-java_4.4.6-1_all.deb ...
+Unpacking libhttpcore-java (4.4.6-1) ...
+Selecting previously unselected package libhttpclient-java.
+Preparing to unpack .../057-libhttpclient-java_4.5.2-2_all.deb ...
+Unpacking libhttpclient-java (4.5.2-2) ...
+Selecting previously unselected package libjaxp1.3-java.
+Preparing to unpack .../058-libjaxp1.3-java_1.3.05-2_all.deb ...
+Unpacking libjaxp1.3-java (1.3.05-2) ...
+Selecting previously unselected package libxalan2-java.
+Preparing to unpack .../059-libxalan2-java_2.7.1-9_all.deb ...
+Unpacking libxalan2-java (2.7.1-9) ...
+Selecting previously unselected package libplexus-interpolation-java.
+Preparing to unpack .../060-libplexus-interpolation-java_1.21-1_all.deb ...
+Unpacking libplexus-interpolation-java (1.21-1) ...
+Selecting previously unselected package libplexus-utils-java.
+Preparing to unpack .../061-libplexus-utils-java_1%3a1.5.15-4+deb9u1_all.deb ...
+Unpacking libplexus-utils-java (1:1.5.15-4+deb9u1) ...
+Selecting previously unselected package libdoxia-core-java.
+Preparing to unpack .../062-libdoxia-core-java_1.1.4-6_all.deb ...
+Unpacking libdoxia-core-java (1.1.4-6) ...
+Selecting previously unselected package libobjenesis-java.
+Preparing to unpack .../063-libobjenesis-java_2.5.1-1_all.deb ...
+Unpacking libobjenesis-java (2.5.1-1) ...
+Selecting previously unselected package libeasymock-java.
+Preparing to unpack .../064-libeasymock-java_3.4+ds-1_all.deb ...
+Unpacking libeasymock-java (3.4+ds-1) ...
+Selecting previously unselected package libslf4j-java.
+Preparing to unpack .../065-libslf4j-java_1.7.22-1_all.deb ...
+Unpacking libslf4j-java (1.7.22-1) ...
+Selecting previously unselected package libjzlib-java.
+Preparing to unpack .../066-libjzlib-java_1.1.3-1_all.deb ...
+Unpacking libjzlib-java (1.1.3-1) ...
+Selecting previously unselected package libjsch-java.
+Preparing to unpack .../067-libjsch-java_0.1.54-1_all.deb ...
+Unpacking libjsch-java (0.1.54-1) ...
+Selecting previously unselected package libjsoup-java.
+Preparing to unpack .../068-libjsoup-java_1.10.2-1_all.deb ...
+Unpacking libjsoup-java (1.10.2-1) ...
+Selecting previously unselected package libjsr305-java.
+Preparing to unpack .../069-libjsr305-java_0.1~+svn49-10_all.deb ...
+Unpacking libjsr305-java (0.1~+svn49-10) ...
+Selecting previously unselected package libguava-java.
+Preparing to unpack .../070-libguava-java_19.0-1_all.deb ...
+Unpacking libguava-java (19.0-1) ...
+Selecting previously unselected package libplexus-classworlds-java.
+Preparing to unpack .../071-libplexus-classworlds-java_1.5.0-5_all.deb ...
+Unpacking libplexus-classworlds-java (1.5.0-5) ...
+Selecting previously unselected package libxbean-java.
+Preparing to unpack .../072-libxbean-java_4.5-4_all.deb ...
+Unpacking libxbean-java (4.5-4) ...
+Selecting previously unselected package libplexus-containers-java.
+Preparing to unpack .../073-libplexus-containers-java_1.0~beta3.0.7-8_all.deb ...
+Unpacking libplexus-containers-java (1.0~beta3.0.7-8) ...
+Selecting previously unselected package libplexus-interactivity-api-java.
+Preparing to unpack .../074-libplexus-interactivity-api-java_1.0-alpha-6-7_all.deb ...
+Unpacking libplexus-interactivity-api-java (1.0-alpha-6-7) ...
+Selecting previously unselected package libwagon-java.
+Preparing to unpack .../075-libwagon-java_1.0.0-9_all.deb ...
+Unpacking libwagon-java (1.0.0-9) ...
+Selecting previously unselected package libeclipse-aether-java.
+Preparing to unpack .../076-libeclipse-aether-java_1.0.2-1_all.deb ...
+Unpacking libeclipse-aether-java (1.0.2-1) ...
+Selecting previously unselected package libaopalliance-java.
+Preparing to unpack .../077-libaopalliance-java_20070526-5_all.deb ...
+Unpacking libaopalliance-java (20070526-5) ...
+Selecting previously unselected package libguice-java.
+Preparing to unpack .../078-libguice-java_4.0-3_all.deb ...
+Unpacking libguice-java (4.0-3) ...
+Selecting previously unselected package libjdom1-java.
+Preparing to unpack .../079-libjdom1-java_1.1.3-1_all.deb ...
+Unpacking libjdom1-java (1.1.3-1) ...
+Selecting previously unselected package libjetty9-java.
+Preparing to unpack .../080-libjetty9-java_9.2.21-1+deb9u1_all.deb ...
+Unpacking libjetty9-java (9.2.21-1+deb9u1) ...
+Selecting previously unselected package liblog4j1.2-java.
+Preparing to unpack .../081-liblog4j1.2-java_1.2.17-7_all.deb ...
+Unpacking liblog4j1.2-java (1.2.17-7) ...
+Selecting previously unselected package libmaven-parent-java.
+Preparing to unpack .../082-libmaven-parent-java_21-2_all.deb ...
+Unpacking libmaven-parent-java (21-2) ...
+Selecting previously unselected package libplexus-container-default-java.
+Preparing to unpack .../083-libplexus-container-default-java_1.0-alpha-9-stable-1-7_all.deb ...
+Unpacking libplexus-container-default-java (1.0-alpha-9-stable-1-7) ...
+Selecting previously unselected package libplexus-ant-factory-java.
+Preparing to unpack .../084-libplexus-ant-factory-java_1.0~alpha2.1-3_all.deb ...
+Unpacking libplexus-ant-factory-java (1.0~alpha2.1-3) ...
+Selecting previously unselected package libplexus-io-java.
+Preparing to unpack .../085-libplexus-io-java_1.0~alpha5-2_all.deb ...
+Unpacking libplexus-io-java (1.0~alpha5-2) ...
+Selecting previously unselected package libplexus-archiver-java.
+Preparing to unpack .../086-libplexus-archiver-java_2.2-1+deb9u1_all.deb ...
+Unpacking libplexus-archiver-java (2.2-1+deb9u1) ...
+Selecting previously unselected package libplexus-bsh-factory-java.
+Preparing to unpack .../087-libplexus-bsh-factory-java_1.0~alpha7-3.1_all.deb ...
+Unpacking libplexus-bsh-factory-java (1.0~alpha7-3.1) ...
+Selecting previously unselected package libplexus-cipher-java.
+Preparing to unpack .../088-libplexus-cipher-java_1.7-1_all.deb ...
+Unpacking libplexus-cipher-java (1.7-1) ...
+Selecting previously unselected package libplexus-sec-dispatcher-java.
+Preparing to unpack .../089-libplexus-sec-dispatcher-java_1.3.1-6_all.deb ...
+Unpacking libplexus-sec-dispatcher-java (1.3.1-6) ...
+Selecting previously unselected package libmaven2-core-java.
+Preparing to unpack .../090-libmaven2-core-java_2.2.1-26_all.deb ...
+Unpacking libmaven2-core-java (2.2.1-26) ...
+Selecting previously unselected package libplexus-classworlds2-java.
+Preparing to unpack .../091-libplexus-classworlds2-java_2.5.2-1_all.deb ...
+Unpacking libplexus-classworlds2-java (2.5.2-1) ...
+Selecting previously unselected package libplexus-component-annotations-java.
+Preparing to unpack .../092-libplexus-component-annotations-java_1.6-3_all.deb ...
+Unpacking libplexus-component-annotations-java (1.6-3) ...
+Selecting previously unselected package libplexus-utils2-java.
+Preparing to unpack .../093-libplexus-utils2-java_3.0.22-1_all.deb ...
+Unpacking libplexus-utils2-java (3.0.22-1) ...
+Selecting previously unselected package libplexus-container-default1.5-java.
+Preparing to unpack .../094-libplexus-container-default1.5-java_1.6-3_all.deb ...
+Unpacking libplexus-container-default1.5-java (1.6-3) ...
+Selecting previously unselected package libplexus-cli-java.
+Preparing to unpack .../095-libplexus-cli-java_1.2-5_all.deb ...
+Unpacking libplexus-cli-java (1.2-5) ...
+Selecting previously unselected package libqdox2-java.
+Preparing to unpack .../096-libqdox2-java_2.0~M3-3_all.deb ...
+Unpacking libqdox2-java (2.0~M3-3) ...
+Selecting previously unselected package libplexus-component-metadata-java.
+Preparing to unpack .../097-libplexus-component-metadata-java_1.6-3_all.deb ...
+Unpacking libplexus-component-metadata-java (1.6-3) ...
+Selecting previously unselected package libplexus-containers1.5-java.
+Preparing to unpack .../098-libplexus-containers1.5-java_1.6-3_all.deb ...
+Unpacking libplexus-containers1.5-java (1.6-3) ...
+Selecting previously unselected package libsisu-inject-java.
+Preparing to unpack .../099-libsisu-inject-java_0.3.2-2_all.deb ...
+Unpacking libsisu-inject-java (0.3.2-2) ...
+Selecting previously unselected package libsisu-plexus-java.
+Preparing to unpack .../100-libsisu-plexus-java_0.3.2-1_all.deb ...
+Unpacking libsisu-plexus-java (0.3.2-1) ...
+Selecting previously unselected package libwagon2-java.
+Preparing to unpack .../101-libwagon2-java_2.10-6_all.deb ...
+Unpacking libwagon2-java (2.10-6) ...
+Selecting previously unselected package libmaven3-core-java.
+Preparing to unpack .../102-libmaven3-core-java_3.3.9-4_all.deb ...
+Unpacking libmaven3-core-java (3.3.9-4) ...
+Selecting previously unselected package libxom-java.
+Preparing to unpack .../103-libxom-java_1.2.10-1_all.deb ...
+Unpacking libxom-java (1.2.10-1) ...
+Selecting previously unselected package maven.
+Preparing to unpack .../104-maven_3.3.9-4_all.deb ...
+Unpacking maven (3.3.9-4) ...
+Setting up libslf4j-java (1.7.22-1) ...
+Setting up libplexus-classworlds-java (1.5.0-5) ...
+Setting up libjaxp1.3-java (1.3.05-2) ...
+Setting up libjpeg62-turbo:amd64 (1:1.5.1-2) ...
+Setting up libhttpcore-java (4.4.6-1) ...
+Setting up libisorelax-java (20041111-9) ...
+Setting up liblcms2-2:amd64 (2.8-4+deb9u1) ...
+Setting up libpcsclite1:amd64 (1.8.20-1) ...
+Setting up libjsoup-java (1.10.2-1) ...
+Setting up libxml-commons-external-java (1.4.01-2) ...
+Setting up libplexus-classworlds2-java (2.5.2-1) ...
+Setting up libclassworlds-java (1.1-final-5) ...
+Setting up java-common (0.58+deb9u1) ...
+Setting up libcommons-net-java (3.5-1) ...
+Setting up libplexus-interpolation-java (1.21-1) ...
+Setting up libplexus-component-annotations-java (1.6-3) ...
+Setting up libnspr4:amd64 (2:4.12-6) ...
+Setting up libplexus-utils2-java (3.0.22-1) ...
+Setting up libjsr305-java (0.1~+svn49-10) ...
+Setting up liblog4j1.2-java (1.2.17-7) ...
+Setting up libxml-commons-resolver1.1-java (1.2-7) ...
+Setting up libservlet3.1-java (8.5.14-1+deb9u3) ...
+Processing triggers for libc-bin (2.24-11+deb9u4) ...
+Setting up libgeronimo-interceptor-3.0-spec-java (1.0.1-3) ...
+Setting up libjaxen-java (1.1.6-1) ...
+Processing triggers for systemd (232-25+deb9u12) ...
+Setting up libapache-pom-java (10-2) ...
+Setting up junit (3.8.2-8) ...
+Setting up libasm-java (5.2-2) ...
+Setting up libobjenesis-java (2.5.1-1) ...
+Setting up libatinject-jsr330-api-java (1.0+ds1-2) ...
+Setting up libmaven-parent-java (21-2) ...
+Setting up libjzlib-java (1.1.3-1) ...
+Setting up libjsch-java (0.1.54-1) ...
+Setting up libxdmcp6:amd64 (1:1.1.2-3) ...
+Setting up libbsh-java (2.0b4-18) ...
+Setting up libcommons-codec-java (1.10-1) ...
+Setting up x11-common (1:7.7+19) ...
+debconf: unable to initialize frontend: Dialog
+debconf: (No usable dialog-like program is installed, so the dialog based frontend cannot be used. at /usr/share/perl5/Debconf/FrontEnd                                                                                                                                        /Dialog.pm line 76.)
+debconf: falling back to frontend: Readline
+update-rc.d: warning: start and stop actions are no longer supported; falling back to defaults
+invoke-rc.d: could not determine current runlevel
+invoke-rc.d: policy-rc.d denied execution of start.
+Processing triggers for ca-certificates (20161130+nmu1+deb9u1) ...
+Updating certificates in /etc/ssl/certs...
+0 added, 0 removed; done.
+Running hooks in /etc/ca-certificates/update.d...
+done.
+Setting up libxpp3-java (1.1.4c-2) ...
+Setting up libaopalliance-java (20070526-5) ...
+Setting up libxpp2-java (2.1.10-7) ...
+Setting up libx11-data (2:1.6.4-3+deb9u1) ...
+Setting up libhamcrest-java (1.3-6) ...
+Setting up libxau6:amd64 (1:1.0.8-1) ...
+Setting up librelaxng-datatype-java (1.0+ds1-3) ...
+Setting up libcommons-cli-java (1.3.1-3) ...
+Setting up libavahi-common-data:amd64 (0.6.32-2) ...
+Setting up libqdox2-java (2.0~M3-3) ...
+Setting up libcglib-java (3.2.4-1) ...
+Setting up libplexus-cipher-java (1.7-1) ...
+Setting up libjetty9-java (9.2.21-1+deb9u1) ...
+Setting up libguava-java (19.0-1) ...
+Setting up libnss3:amd64 (2:3.26.2-1.1+deb9u1) ...
+Setting up libcommons-parent-java (39-3) ...
+Setting up libxerces2-java (2.11.0-7) ...
+Setting up libcdi-api-java (1.0-2) ...
+Setting up libeasymock-java (3.4+ds-1) ...
+Setting up libxalan2-java (2.7.1-9) ...
+Setting up libxom-java (1.2.10-1) ...
+Setting up libplexus-utils-java (1:1.5.15-4+deb9u1) ...
+Setting up libjdom1-java (1.1.3-1) ...
+Setting up libcommons-lang3-java (3.5-1) ...
+Setting up libavahi-common3:amd64 (0.6.32-2) ...
+Setting up libcommons-lang-java (2.6-6) ...
+Setting up libxcb1:amd64 (1.12-1) ...
+Setting up libcommons-io-java (2.5-1) ...
+Setting up libguice-java (4.0-3) ...
+Setting up libx11-6:amd64 (2:1.6.4-3+deb9u1) ...
+Setting up libcommons-logging-java (1.2-1) ...
+Setting up libplexus-container-default-java (1.0-alpha-9-stable-1-7) ...
+Setting up libsisu-inject-java (0.3.2-2) ...
+Setting up libhttpclient-java (4.5.2-2) ...
+Setting up libxrender1:amd64 (1:0.9.10-1) ...
+Setting up libavahi-client3:amd64 (0.6.32-2) ...
+Setting up libcommons-httpclient-java (3.1-12) ...
+Setting up libplexus-ant-factory-java (1.0~alpha2.1-3) ...
+Setting up libplexus-sec-dispatcher-java (1.3.1-6) ...
+Setting up libcups2:amd64 (2.2.1-8+deb9u4) ...
+Setting up libxext6:amd64 (2:1.3.3-1+b2) ...
+Setting up libdoxia-core-java (1.1.4-6) ...
+Setting up libplexus-bsh-factory-java (1.0~alpha7-3.1) ...
+Setting up libxi6:amd64 (2:1.7.9-1) ...
+Setting up libxtst6:amd64 (2:1.2.3-1) ...
+Setting up openjdk-8-jre-headless:amd64 (8u222-b10-1~deb9u1) ...
+update-alternatives: using /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/rmid to provide /usr/bin/rmid (rmid) in auto mode
+update-alternatives: using /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/clhsdb to provide /usr/bin/clhsdb (clhsdb) in auto mode
+update-alternatives: using /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java to provide /usr/bin/java (java) in auto mode
+update-alternatives: using /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/keytool to provide /usr/bin/keytool (keytool) in auto mode
+update-alternatives: using /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/hsdb to provide /usr/bin/hsdb (hsdb) in auto mode
+update-alternatives: using /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/jjs to provide /usr/bin/jjs (jjs) in auto mode
+update-alternatives: using /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/pack200 to provide /usr/bin/pack200 (pack200) in auto mode
+update-alternatives: using /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/rmiregistry to provide /usr/bin/rmiregistry (rmiregistry) in auto                                                                                                                                         mode
+update-alternatives: using /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/unpack200 to provide /usr/bin/unpack200 (unpack200) in auto mode
+update-alternatives: using /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/orbd to provide /usr/bin/orbd (orbd) in auto mode
+update-alternatives: using /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/servertool to provide /usr/bin/servertool (servertool) in auto mod                                                                                                                                        e
+update-alternatives: using /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/tnameserv to provide /usr/bin/tnameserv (tnameserv) in auto mode
+update-alternatives: using /usr/lib/jvm/java-8-openjdk-amd64/jre/lib/jexec to provide /usr/bin/jexec (jexec) in auto mode
+Setting up ca-certificates-java (20170929~deb9u3) ...
+Adding debian:VeriSign_Class_3_Public_Primary_Certification_Authority_-_G4.pem
+Adding debian:SecureSign_RootCA11.pem
+Adding debian:Secure_Global_CA.pem
+Adding debian:Security_Communication_RootCA2.pem
+Adding debian:Entrust_Root_Certification_Authority_-_G2.pem
+Adding debian:Amazon_Root_CA_4.pem
+Adding debian:Cybertrust_Global_Root.pem
+Adding debian:QuoVadis_Root_CA_3.pem
+Adding debian:TC_TrustCenter_Class_3_CA_II.pem
+Adding debian:Go_Daddy_Root_Certificate_Authority_-_G2.pem
+Adding debian:QuoVadis_Root_CA_2.pem
+Adding debian:AffirmTrust_Networking.pem
+Adding debian:COMODO_RSA_Certification_Authority.pem
+Adding debian:Certum_Trusted_Network_CA_2.pem
+Adding debian:TeliaSonera_Root_CA_v1.pem
+Adding debian:Starfield_Root_Certificate_Authority_-_G2.pem
+Adding debian:AffirmTrust_Premium_ECC.pem
+Adding debian:DigiCert_Assured_ID_Root_G3.pem
+Adding debian:GeoTrust_Universal_CA.pem
+Adding debian:TrustCor_ECA-1.pem
+Adding debian:ISRG_Root_X1.pem
+Adding debian:Global_Chambersign_Root_-_2008.pem
+Adding debian:GeoTrust_Global_CA.pem
+Adding debian:Staat_der_Nederlanden_Root_CA_-_G2.pem
+Adding debian:Hongkong_Post_Root_CA_1.pem
+Adding debian:Certum_Root_CA.pem
+Adding debian:QuoVadis_Root_CA.pem
+Adding debian:ePKI_Root_Certification_Authority.pem
+Adding debian:Certinomis_-_Root_CA.pem
+Adding debian:Chambers_of_Commerce_Root_-_2008.pem
+Adding debian:DigiCert_Global_Root_G3.pem
+Adding debian:TWCA_Root_Certification_Authority.pem
+Adding debian:Taiwan_GRCA.pem
+Adding debian:Go_Daddy_Class_2_CA.pem
+Adding debian:D-TRUST_Root_CA_3_2013.pem
+Adding debian:SwissSign_Silver_CA_-_G2.pem
+Adding debian:T-TeleSec_GlobalRoot_Class_3.pem
+Adding debian:SSL.com_Root_Certification_Authority_RSA.pem
+Adding debian:Camerfirma_Global_Chambersign_Root.pem
+Adding debian:T-TeleSec_GlobalRoot_Class_2.pem
+Adding debian:GDCA_TrustAUTH_R5_ROOT.pem
+Adding debian:thawte_Primary_Root_CA_-_G3.pem
+Adding debian:Entrust_Root_Certification_Authority.pem
+Adding debian:Staat_der_Nederlanden_EV_Root_CA.pem
+Adding debian:GlobalSign_ECC_Root_CA_-_R4.pem
+Adding debian:Actalis_Authentication_Root_CA.pem
+Adding debian:Microsec_e-Szigno_Root_CA_2009.pem
+Adding debian:IdenTrust_Commercial_Root_CA_1.pem
+Adding debian:QuoVadis_Root_CA_3_G3.pem
+Adding debian:Verisign_Class_3_Public_Primary_Certification_Authority_-_G3.pem
+Adding debian:Certplus_Root_CA_G1.pem
+Adding debian:Deutsche_Telekom_Root_CA_2.pem
+Adding debian:LuxTrust_Global_Root_2.pem
+Adding debian:EE_Certification_Centre_Root_CA.pem
+Adding debian:SecureTrust_CA.pem
+Adding debian:AC_Raíz_Certicámara_S.A..pem
+Adding debian:VeriSign_Universal_Root_Certification_Authority.pem
+Adding debian:GeoTrust_Primary_Certification_Authority.pem
+Adding debian:Hellenic_Academic_and_Research_Institutions_RootCA_2011.pem
+Adding debian:TrustCor_RootCert_CA-1.pem
+Adding debian:Trustis_FPS_Root_CA.pem
+Adding debian:TWCA_Global_Root_CA.pem
+Adding debian:AC_RAIZ_FNMT-RCM.pem
+Adding debian:DST_Root_CA_X3.pem
+Adding debian:Camerfirma_Chambers_of_Commerce_Root.pem
+Adding debian:IdenTrust_Public_Sector_Root_CA_1.pem
+Adding debian:SwissSign_Gold_CA_-_G2.pem
+Adding debian:EC-ACC.pem
+Adding debian:DigiCert_Assured_ID_Root_CA.pem
+Adding debian:VeriSign_Class_3_Public_Primary_Certification_Authority_-_G5.pem
+Adding debian:QuoVadis_Root_CA_2_G3.pem
+Adding debian:CFCA_EV_ROOT.pem
+Adding debian:Starfield_Services_Root_Certificate_Authority_-_G2.pem
+Adding debian:GlobalSign_Root_CA_-_R2.pem
+Adding debian:OISTE_WISeKey_Global_Root_GB_CA.pem
+Adding debian:OISTE_WISeKey_Global_Root_GA_CA.pem
+Adding debian:OpenTrust_Root_CA_G2.pem
+Adding debian:Symantec_Class_1_Public_Primary_Certification_Authority_-_G4.pem
+Adding debian:SSL.com_Root_Certification_Authority_ECC.pem
+Adding debian:Buypass_Class_2_Root_CA.pem
+Adding debian:Entrust_Root_Certification_Authority_-_EC1.pem
+Adding debian:SSL.com_EV_Root_Certification_Authority_RSA_R2.pem
+Adding debian:Certum_Trusted_Network_CA.pem
+Adding debian:NetLock_Arany_=Class_Gold=_Főtanúsítvány.pem
+Adding debian:Swisscom_Root_CA_2.pem
+Adding debian:Network_Solutions_Certificate_Authority.pem
+Adding debian:Autoridad_de_Certificacion_Firmaprofesional_CIF_A62634068.pem
+Adding debian:SZAFIR_ROOT_CA2.pem
+Adding debian:Certigna.pem
+Adding debian:Izenpe.com.pem
+Adding debian:UTN_USERFirst_Email_Root_CA.pem
+Adding debian:USERTrust_RSA_Certification_Authority.pem
+Adding debian:GlobalSign_ECC_Root_CA_-_R5.pem
+Adding debian:AddTrust_Low-Value_Services_Root.pem
+Adding debian:TÜRKTRUST_Elektronik_Sertifika_Hizmet_Sağlayıcısı_H5.pem
+Adding debian:Buypass_Class_3_Root_CA.pem
+Adding debian:Hellenic_Academic_and_Research_Institutions_RootCA_2015.pem
+Adding debian:Comodo_AAA_Services_root.pem
+Adding debian:Staat_der_Nederlanden_Root_CA_-_G3.pem
+Adding debian:DigiCert_Global_Root_CA.pem
+Adding debian:AffirmTrust_Commercial.pem
+Adding debian:USERTrust_ECC_Certification_Authority.pem
+Adding debian:Verisign_Class_1_Public_Primary_Certification_Authority_-_G3.pem
+Adding debian:Baltimore_CyberTrust_Root.pem
+Adding debian:D-TRUST_Root_Class_3_CA_2_EV_2009.pem
+Adding debian:QuoVadis_Root_CA_1_G3.pem
+Adding debian:GlobalSign_Root_CA.pem
+Adding debian:SSL.com_EV_Root_Certification_Authority_ECC.pem
+Adding debian:ACCVRAIZ1.pem
+Adding debian:GeoTrust_Primary_Certification_Authority_-_G2.pem
+Adding debian:D-TRUST_Root_Class_3_CA_2_2009.pem
+Adding debian:TrustCor_RootCert_CA-2.pem
+Adding debian:DigiCert_Trusted_Root_G4.pem
+Adding debian:Sonera_Class_2_Root_CA.pem
+Adding debian:COMODO_Certification_Authority.pem
+Adding debian:Amazon_Root_CA_1.pem
+Adding debian:ComSign_CA.pem
+Adding debian:TUBITAK_Kamu_SM_SSL_Kok_Sertifikasi_-_Surum_1.pem
+Adding debian:certSIGN_ROOT_CA.pem
+Adding debian:COMODO_ECC_Certification_Authority.pem
+Adding debian:XRamp_Global_CA_Root.pem
+Adding debian:S-TRUST_Universal_Root_CA.pem
+Adding debian:AffirmTrust_Premium.pem
+Adding debian:thawte_Primary_Root_CA.pem
+Adding debian:Symantec_Class_1_Public_Primary_Certification_Authority_-_G6.pem
+Adding debian:E-Tugra_Certification_Authority.pem
+Adding debian:Amazon_Root_CA_3.pem
+Adding debian:GeoTrust_Universal_CA_2.pem
+Adding debian:Verisign_Class_2_Public_Primary_Certification_Authority_-_G3.pem
+Adding debian:Certplus_Class_2_Primary_CA.pem
+Adding debian:DigiCert_Global_Root_G2.pem
+Adding debian:Visa_eCommerce_Root.pem
+Adding debian:Security_Communication_Root_CA.pem
+Adding debian:Atos_TrustedRoot_2011.pem
+Adding debian:SwissSign_Platinum_CA_-_G2.pem
+Adding debian:Hellenic_Academic_and_Research_Institutions_ECC_RootCA_2015.pem
+Adding debian:OpenTrust_Root_CA_G1.pem
+Adding debian:Starfield_Class_2_CA.pem
+Adding debian:Amazon_Root_CA_2.pem
+Adding debian:OpenTrust_Root_CA_G3.pem
+Adding debian:CA_Disig_Root_R2.pem
+Adding debian:Symantec_Class_2_Public_Primary_Certification_Authority_-_G6.pem
+Adding debian:GlobalSign_Root_CA_-_R3.pem
+Adding debian:thawte_Primary_Root_CA_-_G2.pem
+Adding debian:Entrust.net_Premium_2048_Secure_Server_CA.pem
+Adding debian:DigiCert_High_Assurance_EV_Root_CA.pem
+Adding debian:Symantec_Class_2_Public_Primary_Certification_Authority_-_G4.pem
+Adding debian:Certplus_Root_CA_G2.pem
+Adding debian:GeoTrust_Primary_Certification_Authority_-_G3.pem
+Adding debian:DigiCert_Assured_ID_Root_G2.pem
+Adding debian:AddTrust_External_Root.pem
+done.
+Setting up ant (1.9.9-1+deb9u1) ...
+Setting up junit4 (4.12-4) ...
+Setting up default-jre-headless (2:1.8-58+deb9u1) ...
+Setting up ant-optional (1.9.9-1+deb9u1) ...
+Setting up libmsv-java (2009.1+dfsg1-5) ...
+Setting up libxbean-java (4.5-4) ...
+Setting up libplexus-containers-java (1.0~beta3.0.7-8) ...
+Setting up libdom4j-java (1.6.1+dfsg.3-2+deb9u1) ...
+Setting up libplexus-io-java (1.0~alpha5-2) ...
+Setting up libplexus-interactivity-api-java (1.0-alpha-6-7) ...
+Setting up libplexus-container-default1.5-java (1.6-3) ...
+Setting up libwagon-java (1.0.0-9) ...
+Setting up libplexus-cli-java (1.2-5) ...
+Setting up libwagon2-java (2.10-6) ...
+Setting up libplexus-archiver-java (2.2-1+deb9u1) ...
+Setting up libmaven2-core-java (2.2.1-26) ...
+Setting up libeclipse-aether-java (1.0.2-1) ...
+Setting up libplexus-component-metadata-java (1.6-3) ...
+Setting up libplexus-containers1.5-java (1.6-3) ...
+Setting up libsisu-plexus-java (0.3.2-1) ...
+Setting up libmaven3-core-java (3.3.9-4) ...
+Setting up maven (3.3.9-4) ...
+update-alternatives: using /usr/share/maven/bin/mvn to provide /usr/bin/mvn (mvn) in auto mode
+Processing triggers for libc-bin (2.24-11+deb9u4) ...
+Processing triggers for systemd (232-25+deb9u12) ...
+Processing triggers for ca-certificates (20161130+nmu1+deb9u1) ...
+Updating certificates in /etc/ssl/certs...
+0 added, 0 removed; done.
+Running hooks in /etc/ca-certificates/update.d...
+
+done.
+done.
+# exit
+root@k8smaster:/vagrant/jh#
+root@k8smaster:/vagrant/jh# cd ..
+root@k8smaster:/vagrant# ls
+build-machine-k8s  data2         jenkins_home1          kube-master.sh              master-output.txt  proj1      setup.txt
+canal.yml          hello.txt     jh                     kube-node-output-jun22.txt  newfile.txt        rbac.yml   sqldata
+config             jenkins_home  kube-installations.sh  master-output-jun22.txt     node-output.txt    readme.md  Vagrantfile
+root@k8smaster:/vagrant# rm -rf hello.txt
+root@k8smaster:/vagrant# ls
+build-machine-k8s  data2          jh                     kube-node-output-jun22.txt  newfile.txt      proj1      setup.txt
+canal.yml          jenkins_home   kube-installations.sh  master-output-jun22.txt     new.txt          rbac.yml   sqldata
+config             jenkins_home1  kube-master.sh         master-output.txt           node-output.txt  readme.md  Vagrantfile
+root@k8smaster:/vagrant# ls
+build-machine-k8s  data2          jh                     kube-node-output-jun22.txt  newfile.txt      proj1      setup.txt
+canal.yml          jenkins_home   kube-installations.sh  master-output-jun22.txt     new.txt          rbac.yml   sqldata
+config             jenkins_home1  kube-master.sh         master-output.txt           node-output.txt  readme.md  Vagrantfile
+root@k8smaster:/vagrant# cd sqldata/
+root@k8smaster:/vagrant/sqldata# ls
+ibdata1  ib_logfile1  ib_logfile101
+root@k8smaster:/vagrant/sqldata# echo welcome | base64
+d2VsY29tZQo=
+root@k8smaster:/vagrant/sqldata# echo -n welcome | base64
+d2VsY29tZQ==
+root@k8smaster:/vagrant/sqldata# echo d2VsY29tZQ== | base64 --decode
+welcomeroot@k8smaster:/vagrant/sqldata#
