@@ -1,0 +1,11 @@
+rm -rf MyAppDemo || echo "First run"
+git clone https://github.com/AdityaSP/MyAppDemo
+cd MyAppDemo
+mvn install
+docker image build -t adityaprabhakara/nov7apptomcat:$BUILD_NUMBER .
+docker login -u adityaprabhakara -p dockerhubpass1
+docker image push adityaprabhakara/nov7apptomcat:$BUILD_NUMBER
+sed -i "s/DOCKERUSER/adityaprabhakara/" deployment.yml
+sed -i "s/IMAGENAME/nov7apptomcat/" deployment.yml
+sed -i "s/BUILDNUMBER/${BUILD_NUMBER}/" deployment.yml
+kubectl apply -f deployment.yml
